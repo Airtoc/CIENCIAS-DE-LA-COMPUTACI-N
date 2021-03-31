@@ -83,19 +83,37 @@ public class Window extends JFrame {
         btnRespuesta.addActionListener((event) -> {
             
             Burbuja array = new Burbuja();
-            //int[]Lista ={1,2,3,4,5,6,7,8} //Mejor caso
+            int[]Lista2 = {1,2,3,4,5,6,7,8}; //Mejor caso
             int[]Lista = {1,3,2,4,7,5,6,8}; //Caso mixto
-            //int[]Lista = {8,7,6,5,4,3,2,1}; //Peor caso
-            array.burbuja(Lista);
+            int[]Lista3 = {8,7,6,5,4,3,2,1}; //Peor caso
+            
+            System.out.println("Caso mixto");
+            array.bubble(Lista);
             for(int i=0;i<Lista.length;i++){
                 System.out.println(Lista[i]);
                 
             }
             System.out.println("por contador= "+array.getCont());
-            System.out.println(9*((Lista.length*(Lista.length-1))/2)+6*(Lista.length)+7);
-            /*JOptionPane.showMessageDialog(null,
-                "Resultado por el contador (Programa): " + array.getContador() +
-                        "\n Resultado por la formula: "+ array.getFormula());  */      
+            System.out.println("por formula = "+array.getMixto()); 
+            
+            System.out.println("Caso Mejor");
+            array.bubble(Lista2);
+            for(int i=0;i<Lista.length;i++){
+                System.out.println(Lista[i]);
+                
+            }
+            System.out.println("por contador= "+array.getCont());
+            System.out.println("por formula = "+array.getMixto());
+            
+            System.out.println("Caso Peor");
+            array.bubble(Lista3);
+            for(int i=0;i<Lista.length;i++){
+                System.out.println(Lista[i]);
+                
+            }
+            System.out.println("por contador= "+array.getCont());
+            System.out.println("por formula = "+array.getMixto());
+             
         });
         contentPane.add(btnRespuesta);
         repaint();

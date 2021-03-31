@@ -3,7 +3,7 @@ package Models;
 
 
 public class Burbuja {
-    private int cont;
+    private int cont,peor,mejor,mixto;
     
     public void burbuja(int[]A){
          int i, j, aux;
@@ -31,10 +31,46 @@ public class Burbuja {
         cont++;//1 false
     }
     
-
+    public void bubble(int[]A){
+        int n = A.length;
+        int t ;
+        cont = 0;
+        int x = 0;
+        
+        cont+=2;
+        for(int i= 0;i<(n-1);i++){
+            cont += 6;
+            for(int j = i+1; j<n ; j++){
+                cont += 6;
+                if(A[i]<A[j]){
+                    x++;
+                    cont +=7;
+                    t = A[i];
+                    A[i]=A[j];
+                    A[j]=t;
+                }
+            }
+        }
+       mixto = 2+(x*7)+6*(n-1)+6*((n*n-n)/2);
+       peor = 2+6*(n-1)+13*((n*n-n)/2);
+       mejor = 2+6*(n-1)+6*((n*n-n)/2);
+    }
     public int getCont() {
         return cont;
     }
+
+    public int getPeor() {
+        return peor;
+    }
+
+    public int getMejor() {
+        return mejor;
+    }
+
+    public int getMixto() {
+        return mixto;
+    }
+    
     
     
 }
