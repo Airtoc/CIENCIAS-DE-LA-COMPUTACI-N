@@ -13,10 +13,11 @@ public class Window extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-    private JButton btnGraph;
-    private JButton btnRespuesta;
+    private JButton btnMejorC;
+    private JButton btnPeorC;
+    private JButton btnPromedio;
     private JPanel graphPanel;
-    private Graph graficador = new Graph("Ecuacion Complejidad Matrices", "complex", "variable");
+    private Graph graficador = new Graph("Ecuacion Complejidad Burbuja", "complex", "variable");
 
     public Window() {
         setLayout(null);
@@ -32,93 +33,161 @@ public class Window extends JFrame {
         contentPane.setLocation(0, 0);
         add(contentPane);
 
-        // Componentes
-        //? ? Tratemos de usar variables con nombres así claros, lo siento xd es que a veces me atrofio
-        // cuando veo variables tipo btnXda2  ya esta libre? ya acabo in gles
-        // ok
-        btnGraph = new JButton("Ver Graficas");
-        btnGraph.setFocusable(false);
-        btnGraph.setSize(250, 30);
-        btnGraph.setLocation((contentPane.getWidth() - btnGraph.getWidth()) / 2, 100);
+        btnMejorC = new JButton("Mejor caso");
+        btnMejorC.setFocusable(false);
+        btnMejorC.setSize(250, 30);
+        btnMejorC.setLocation((contentPane.getWidth() - btnMejorC.getWidth()) / 2, 100);
 
-        btnGraph.addActionListener((event) -> {
-            //obtener valores cota superior
+        btnMejorC.addActionListener((event) -> {
+            
+            //Algoritmo
+            Burbuja array = new Burbuja();
+            int[]Lista2 = {1,2,3,4,5,6,7,8}; //Mejor caso
+            
+            System.out.println("Mejor Caso");
+            array.burbujaMejor(Lista2);
+            for(int i=0;i<Lista2.length;i++){
+                System.out.println(Lista2[i]);
+            }
+            String text = "por contador= "+array.getCont()+"\n"+
+                    "por formula = "+array.getformula();          
+            JOptionPane.showMessageDialog(null,text);
+            
+            
+            //Grafica
             ArrayList<Double> x = new ArrayList<>(),y = new ArrayList<>();
             for(double i = 0; i< 100;i++){
                 x.add(i);
-                y.add(24*Math.pow(i, 3));
+                y.add(2*((5)*(i*i-(i-1)*(i/2)-i)+5*i+2));
             }
-            graficador.agregarGrafica("Superior-Peor tiempo", x, y);
+            graficador.crearGrafica("Peor", x, y);
            
             x.clear();
             y.clear();
              //obtener valores cota superior
             for(double i = 0; i < 100; i++){
                 x.add(i);
-                y.add((13*Math.pow(i, 3)+4*Math.pow(i, 2)+4*i+3));
+                y.add((5)*(i*i-(i-1)*(i/2)-i)+5*i+2);
             }
-            graficador.agregarGrafica("Formula base", x, y);
+            graficador.agregarGrafica("promedio", x, y);
             
             x.clear();
             y.clear();
              //obtener valores cota superior
             for(double i = 0; i < 100; i++){
                 x.add(i);
-                y.add(4.8*Math.pow(i, 3));
+                y.add(0.5*((5)*(i*i-(i-1)*(i/2)-i)+5*i+2));
             }
-            graficador.agregarGrafica("Inferior-Mejor tiempo", x, y);
+            graficador.agregarGrafica("Mejor", x, y);
             
             repaint();
-            //Peor caso
-            //Mejor Caso
         });
 
-        contentPane.add(btnGraph);
+        contentPane.add(btnMejorC);
+        
+        btnPeorC = new JButton("Peor");
+        btnPeorC.setFocusable(false);
+        btnPeorC.setSize(250, 30);
+        btnPeorC.setLocation((contentPane.getWidth() - btnMejorC.getWidth()) / 2, 200);
 
-        btnRespuesta = new JButton("Operaciones elementales");
-        btnRespuesta.setFocusable(false);
-        btnRespuesta.setSize(250, 30);
-        btnRespuesta.setLocation((contentPane.getWidth() - btnRespuesta.getWidth()) / 2, 200);
-
-        btnRespuesta.addActionListener((event) -> {
+        btnPeorC.addActionListener((event) -> {
             
+            //Algoritmo
             Burbuja array = new Burbuja();
-            int[]Lista2 = {1,2,3,4,5,6,7,8}; //Mejor caso
-            int[]Lista = {1,3,2,4,7,5,6,8}; //Caso mixto
             int[]Lista3 = {8,7,6,5,4,3,2,1}; //Peor caso
             
-            System.out.println("Caso mixto");
-            array.bubble(Lista);
-            for(int i=0;i<Lista.length;i++){
-                System.out.println(Lista[i]);
-                
+            System.out.println("Peor Caso");
+            array.burbujaPeor(Lista3);
+            for(int i=0;i<Lista3.length;i++){
+                System.out.println(Lista3[i]);
             }
-            System.out.println("por contador= "+array.getCont());
-            System.out.println("por formula = "+array.getMixto()); 
+            String text = "por contador= "+array.getCont()+"\n"+
+                    "por formula = "+array.getformula();          
+            JOptionPane.showMessageDialog(null,text);
             
-            System.out.println("Caso Mejor");
-            array.bubble(Lista2);
-            for(int i=0;i<Lista.length;i++){
-                System.out.println(Lista[i]);
-                
-            }
-            System.out.println("por contador= "+array.getCont());
-            System.out.println("por formula = "+array.getMixto());
             
-            System.out.println("Caso Peor");
-            array.bubble(Lista3);
-            for(int i=0;i<Lista.length;i++){
-                System.out.println(Lista[i]);
-                
+            //Grafica
+            ArrayList<Double> x = new ArrayList<>(),y = new ArrayList<>();
+            for(double i = 0; i< 100;i++){
+                x.add(i);
+                y.add(2*((5+7)*(i*i-(i-1)*(i/2)-i)+5*i+2));
             }
-            System.out.println("por contador= "+array.getCont());
-            System.out.println("por formula = "+array.getMixto());
-             
+            graficador.crearGrafica("Peor", x, y);
+           
+            x.clear();
+            y.clear();
+             //obtener valores cota superior
+            for(double i = 0; i < 100; i++){
+                x.add(i);
+                y.add(((5+7)*(i*i-(i-1)*(i/2)-i)+5*i+2));
+            }
+            graficador.agregarGrafica("Promedio", x, y);
+            
+            x.clear();
+            y.clear();
+             //obtener valores cota superior
+            for(double i = 0; i < 100; i++){
+                x.add(i);
+                y.add(0.5*(((5+7)*(i*i-(i-1)*(i/2)-i)+5*i+2)));
+            }
+            graficador.agregarGrafica("Mejor", x, y);
+            
+            repaint();
         });
-        contentPane.add(btnRespuesta);
-        repaint();
 
+        contentPane.add(btnPeorC);
         
+        btnPromedio = new JButton("Caso promedio");
+        btnPromedio.setFocusable(false);
+        btnPromedio.setSize(250, 30);
+        btnPromedio.setLocation((contentPane.getWidth() - btnMejorC.getWidth()) / 2, 300);
+
+        btnPromedio.addActionListener((event) -> {
+            //Algoritmo
+            Burbuja array = new Burbuja();
+            int[]Lista = {1,3,2,4,7,5,6,8};
+            
+            System.out.println("Caso Promedio");
+            array.burbujaMixto(Lista);
+            for(int i=0;i<Lista.length;i++){
+                System.out.println(Lista[i]);
+            }
+            String text = "por contador= "+array.getCont()+"\n"+
+                    "por formula = "+array.getformula();          
+            JOptionPane.showMessageDialog(null,text); 
+            
+            
+            //Grafica
+            ArrayList<Double> x = new ArrayList<>(),y = new ArrayList<>();
+            for(double i = 0; i< 100;i++){
+                x.add(i);
+                y.add(2*((5+7/2)*(i*i-(i-1)*(i/2)-i)+5*i+2));
+            }
+            graficador.crearGrafica("Peor", x, y);
+           
+            x.clear();
+            y.clear();
+             //obtener valores cota superior
+            for(double i = 0; i < 100; i++){
+                x.add(i);
+                y.add((5+7/2)*(i*i-(i-1)*(i/2)-i)+5*i+2);
+            }
+            graficador.agregarGrafica("Promedio", x, y);
+            
+            x.clear();
+            y.clear();
+             //obtener valores cota superior
+            for(double i = 0; i < 100; i++){
+                x.add(i);
+                y.add(0.5*((5+7/2)*(i*i-(i-1)*(i/2)-i)+5*i+2));
+            }
+            graficador.agregarGrafica("Mejor", x, y);
+            
+            repaint();
+        });
+
+        contentPane.add(btnPromedio);
+        repaint();
         graphPanel = graficador.getGrafica();
         graphPanel.setSize(900, 550);
         graphPanel.setLocation(contentPane.getWidth(), 0);

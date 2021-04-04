@@ -1,76 +1,73 @@
-
 package Models;
 
-
 public class Burbuja {
-    private int cont,peor,mejor,mixto;
-    
-    public void burbuja(int[]A){
-         int i, j, aux;
-         cont=0;
-         cont++;
-        // i=0
-        for (i = 0; i < A.length - 1; i++) {
-            cont += 4;
-            //3 comparacion, resta , suma
-            //1 J=0
-            for (j = 0; j < A.length - i - 1; j++) {
-                cont +=8;
-                    //4 comparacion, resta, resta , suma
-                    //4 del if
-                if (A[j + 1] < A[j]) {
-                    cont += 9;
-                    aux = A[j + 1]; //3 accede asigna suma
-                    A[j + 1] = A[j]; //4 , accede,suma,asigna,accede
-                    A[j] = aux; // 2,accede agrega
+
+    private int cont,formula;
+
+    public void burbujaMixto(int[]a) {
+        int i, N = a.length, j, temp;
+        cont = 2;
+        for (i = 0; i < N; i++) {
+            cont += 5;
+            for (j = i + 1; j < N; j++) {
+                cont += 2;
+                cont += 3;
+                if (a[i] > a[j]) {
+                    cont += 7;
+                    temp = a[i];
+                    a[i] = a[j];
+                    a[j] = temp;
                 }
-                cont++; // 1 false
-            }
-            cont++;//1 false
+            } 
         }
-        cont++;//1 false
+        formula = (5+7/2)*(N*N-(N-1)*(N/2)-N)+5*N+2;
     }
     
-    public void bubble(int[]A){
-        int n = A.length;
-        int t ;
-        cont = 0;
-        int x = 0;
+    public void burbujaMejor(int[]a) {
+        int i, N = a.length, j, temp;
+        cont = 2;
+        for (i = 0; i < N; i++) {
+            cont = cont + 5;
+            for (j = i + 1; j < N; j++) {
+                cont += 2;
+                cont += 3;
+                if (a[i] > a[j]) {
+                    cont += 7;
+                    temp = a[i];
+                    a[i] = a[j];
+                    a[j] = temp;
+                }
+            }
+            
+        }
         
-        cont+=2;
-        for(int i= 0;i<(n-1);i++){
-            cont += 6;
-            for(int j = i+1; j<n ; j++){
-                cont += 6;
-                if(A[i]<A[j]){
-                    x++;
-                    cont +=7;
-                    t = A[i];
-                    A[i]=A[j];
-                    A[j]=t;
+        formula = (5)*(N*N-(N-1)*(N/2)-N)+5*N+2;
+    }
+    
+    public void burbujaPeor(int[]a) {
+        int i, N = a.length, j, temp;
+        cont=2;
+        for (i = 0; i < N; i++) {
+            cont += 5;
+            for (j = i + 1; j < N; j++) {
+                cont += 2;
+                cont += 3;
+                if (a[i] > a[j]) {
+                    cont += 7;
+                    temp = a[i];
+                    a[i] = a[j];
+                    a[j] = temp;
                 }
             }
-        }
-       mixto = 2+(x*7)+6*(n-1)+6*((n*n-n)/2);
-       peor = 2+6*(n-1)+13*((n*n-n)/2);
-       mejor = 2+6*(n-1)+6*((n*n-n)/2);
+         }
+        formula = (5+7)*(N*N-(N-1)*(N/2)-N)+5*N+2;
     }
+
     public int getCont() {
         return cont;
     }
-
-    public int getPeor() {
-        return peor;
-    }
-
-    public int getMejor() {
-        return mejor;
-    }
-
-    public int getMixto() {
-        return mixto;
-    }
     
-    
-    
+    public int getformula() {
+        return formula;
+    }
 }

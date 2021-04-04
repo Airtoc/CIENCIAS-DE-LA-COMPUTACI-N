@@ -106,7 +106,7 @@ public class Pruebas {
             System.out.println(c);
         }
 
-        public void ejemplo5(){
+        /*public void ejemplo5(){
             for(i=0;i<n-1;i++){
                 for(j=i+1;j<n;j++){
                     if(a[i]>a[j]){
@@ -118,11 +118,32 @@ public class Pruebas {
                     }
                 }
             }
+        }*/
+
+        public void ejemplo6(){
+
+            int c=1,i,n=10,j,h=7;
+            
+            for(i=0; i<n; i++){
+                
+                c = c+5;
+                for (j=i+1; j<n; j++){
+                    c=c+4;
+                    h=h+3;
+                }
+//            }
+            c++;
+            double formula = 4*(n*(n) -n- (n-1)*(n)/2)+5*(n)+2;
+            System.out.println("Por contador: "+c);
+            System.out.println("Por formula: "+ formula);
+            
+        }
         }
 
     public static void main(String[] args) throws Exception {
-        Pruebas ab = new Pruebas();
-        ab.ejemplo4();
+
+        Pruebas test = new Pruebas();
+        test.ejemplo6();
         /*
         ab.ejemplo1();
         ab.ejemplo2();
