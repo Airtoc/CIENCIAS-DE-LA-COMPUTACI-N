@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Radix {
 
-    // Variables.
+    // Variables de contadores.
     public int contadorMax = 0;
     public int contadorSort = 0;
     public int contadorRadixSort = 0;

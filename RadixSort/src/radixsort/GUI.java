@@ -1,6 +1,7 @@
 package radixsort;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -61,7 +62,7 @@ public class GUI extends JFrame {
             contentPane.add(buttons[i]);
         }
 
-        // Button[0]
+        // Button[0]: Ecuaciones
         buttons[0].setText("Resultado: Ecuación y contador");
         buttons[0].setLocation((contentPane.getWidth() - buttons[0].getWidth()) / 2, 100);
         buttons[0].addActionListener((event) -> {
@@ -75,21 +76,77 @@ public class GUI extends JFrame {
 
         });
 
-        // Button[1]
+        // Button[1]: Graficar
         buttons[1].setText("Ver: Gráficas");
         buttons[1].setLocation((contentPane.getWidth() - buttons[1].getWidth()) / 2, 200);
         buttons[1].addActionListener((event) -> {
             // Acciones.
             System.out.println("Graficando...");
             
+            // Elementos necesarios.
+            ArrayList<Double> posX = new ArrayList<>();
+            ArrayList<Double> posY = new ArrayList<>();
+            
+            // Graficando..
+            
+            /*
+            MEJOR CASO.
+            Ecuación: 2*n.. // TEMPORAL
+            
+            */
+            for (double i = 0; i < 100; i++) {
+                
+                posX.add(i);
+                posY.add(2*i); // TEMPORAL
+                
+            }
+            
+            grapher.agregarGrafica("Mejor caso", posX, posY);
+            posX.clear();
+            posY.clear();
+            
+            /*
+            CASO REGULAR.
+            Ecuación: 2*n.. // TEMPORAL
+            
+            */
+            for (double i = 0; i < 100; i++) {
+                
+                posX.add(i);
+                posY.add(4*i); // TEMPORAL
+                
+            }
+            
+            grapher.agregarGrafica("Caso regular", posX, posY);
+            posX.clear();
+            posY.clear();
+            
+            /*
+            PEOR CASO.
+            Ecuación: 2*n.. // TEMPORAL
+            
+            */
+            for (double i = 0; i < 100; i++) {
+                
+                posX.add(i);
+                posY.add(3*i); // TEMPORAL
+                
+            }
+            
+            grapher.agregarGrafica("Peor caso", posX, posY);
+            posX.clear();
+            posY.clear();
+            
+            repaint();
             
         });
 
-        // Button[2]
+        // Button[2]: Salir.
         buttons[2].setText("Cerrar y salir");
         buttons[2].setLocation((contentPane.getWidth() - buttons[2].getWidth()) / 2, 300);
         buttons[2].addActionListener((event) -> {
             // Acciones.
+            System.out.println("Cerrando...");
             System.exit(0);
         });
 

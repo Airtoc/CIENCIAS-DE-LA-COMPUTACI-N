@@ -1,7 +1,5 @@
 package radixsort;
 
-
-import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
