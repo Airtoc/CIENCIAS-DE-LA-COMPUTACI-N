@@ -23,7 +23,7 @@ public class Radix {
             }
         }
 
-        contador += 3; // Formulas sumadas * K 1inse
+        contador += 3; // Formulas sumadas * K
         for (int exp = 1; maximo / exp > 0; exp = exp*10) {
             System.out.println("Hola: "+(maximo/exp));
             contador += 4;
