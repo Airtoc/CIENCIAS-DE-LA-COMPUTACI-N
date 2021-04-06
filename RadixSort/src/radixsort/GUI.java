@@ -13,6 +13,7 @@ public class GUI extends JFrame {
     // Variables.
     private double valorContador;
     private double valorEcuacion;
+    int[]lista = {1,3,4,2,7,6,5,8};
 
     // Panel principal.
     private JPanel contentPane;
@@ -66,13 +67,18 @@ public class GUI extends JFrame {
         buttons[0].setText("Resultado: Ecuación y contador");
         buttons[0].setLocation((contentPane.getWidth() - buttons[0].getWidth()) / 2, 100);
         buttons[0].addActionListener((event) -> {
-            // Acciones.
-            valorEcuacion = 0;
-            valorContador = 0;
             System.out.println("Calculando...");
 
             // Imprime.
-            JOptionPane.showMessageDialog(null, "Por ecuación: " + valorEcuacion + "\n" + "Por contador: " + valorContador);
+            
+            Radix radixTest = new Radix();
+            radixTest.radixSort(lista);
+            for (int i = 0; i < lista.length; i++) {
+                System.out.println(lista[i]);
+            }
+            // (85*lista.length) + (231)
+            valorContador = radixTest.getContador();
+            JOptionPane.showMessageDialog(null, "Por ecuación: " + (27*lista.length+79) + "\n" + "Por contador: " + valorContador);
 
         });
 
@@ -90,50 +96,18 @@ public class GUI extends JFrame {
             // Graficando..
             
             /*
-            MEJOR CASO.
-            Ecuación: 2*n.. // TEMPORAL
+            RADIX SORT.
+            Ecuación: 27*n+79
             
             */
             for (double i = 0; i < 100; i++) {
                 
                 posX.add(i);
-                posY.add(2*i); // TEMPORAL
+                posY.add(27*i+79);
                 
             }
             
-            grapher.agregarGrafica("Mejor caso", posX, posY);
-            posX.clear();
-            posY.clear();
-            
-            /*
-            CASO REGULAR.
-            Ecuación: 2*n.. // TEMPORAL
-            
-            */
-            for (double i = 0; i < 100; i++) {
-                
-                posX.add(i);
-                posY.add(4*i); // TEMPORAL
-                
-            }
-            
-            grapher.agregarGrafica("Caso regular", posX, posY);
-            posX.clear();
-            posY.clear();
-            
-            /*
-            PEOR CASO.
-            Ecuación: 2*n.. // TEMPORAL
-            
-            */
-            for (double i = 0; i < 100; i++) {
-                
-                posX.add(i);
-                posY.add(3*i); // TEMPORAL
-                
-            }
-            
-            grapher.agregarGrafica("Peor caso", posX, posY);
+            grapher.agregarGrafica("Gráfica", posX, posY);
             posX.clear();
             posY.clear();
             

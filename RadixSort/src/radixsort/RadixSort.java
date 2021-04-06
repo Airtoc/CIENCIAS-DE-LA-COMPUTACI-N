@@ -6,7 +6,7 @@ public class RadixSort {
         
         GUI menu = new GUI();
         menu.setVisible(true);
-        
+
     }
     
 }
