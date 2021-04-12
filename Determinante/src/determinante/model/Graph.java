@@ -1,4 +1,4 @@
-package radixsort;
+package determinante.model;
 
 import java.util.ArrayList;
 import javax.swing.JPanel;

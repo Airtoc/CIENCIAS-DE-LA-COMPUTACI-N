@@ -1,10 +1,15 @@
-package determinante;
+package determinante.model;
 
 public class Determinante {
     
     private int contador;
+    private double formula;
+    private double[][] matriz;
+    private double size;
     
     public double calcularDeterminante(double[][] matriz){
+        this.matriz = matriz;
+        size = matriz.length;
         
         contador = 0;
         contador += 2; // i, False.
@@ -48,7 +53,17 @@ public class Determinante {
     }
 
     public int getContador() {
+        
         return contador;
+        
     }
+
+    public double getFormula() {
+        
+        return formula = (16*(Math.pow(size,2)-(2*size)+1+(((size-2)*(size-1))*((2*size)-3))/6))+5*((Math.pow(size,2)-size-(size*(size-1)/2)))+(5*(size-1))+2;
+        
+    }
+    
+    
     
 }
