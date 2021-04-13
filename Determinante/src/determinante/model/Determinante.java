@@ -3,10 +3,10 @@ package determinante.model;
 public class Determinante {
     
     private int contador;
-    private double formula;
+    private String formula;
     private double[][] matriz;
     private double size;
-    
+     
     public double calcularDeterminante(double[][] matriz){
         this.matriz = matriz;
         size = matriz.length;
@@ -47,7 +47,15 @@ public class Determinante {
             
         }
         
-        System.out.println(traza);
+        if (Double.isNaN(traza)){
+            
+            System.out.println("No se puede calcular determinante.");
+            
+        }else {
+            
+             System.out.println(traza);
+             
+        }
         
         return 0;
     }
@@ -58,12 +66,12 @@ public class Determinante {
         
     }
 
-    public double getFormula() {
+    public String getFormula() {
         
-        return formula = (16*(Math.pow(size,2)-(2*size)+1+(((size-2)*(size-1))*((2*size)-3))/6))+5*((Math.pow(size,2)-size-(size*(size-1)/2)))+(5*(size-1))+2;
-        
+        double formulaTemp = (16*(Math.pow(size,2)-(2*size)+1+(((size-2)*(size-1))*((2*size)-3))/6))+5*((Math.pow(size,2)-size-(size*(size-1)/2)))+(5*(size-1))+2;
+   
+        return formula = Double.toString(formulaTemp);
+  
     }
-    
-    
     
 }
