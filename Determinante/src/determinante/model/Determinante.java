@@ -1,5 +1,7 @@
 package determinante.model;
 
+import javax.swing.JOptionPane;
+
 public class Determinante {
     
     private int contador;
@@ -49,11 +51,11 @@ public class Determinante {
         
         if (Double.isNaN(traza)){
             
-            System.out.println("No se puede calcular determinante.");
+            JOptionPane.showMessageDialog(null,"No se puede calcular determinante.");
             
         }else {
             
-             System.out.println(traza);
+             JOptionPane.showMessageDialog(null,"El determinante es : "+ traza);
              
         }
         
