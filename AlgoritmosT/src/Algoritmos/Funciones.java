@@ -2,10 +2,15 @@
 package Algoritmos;
 
 public class Funciones {
-    private double funcion;
+    private String funcion;
+    
+    public Funciones(String txt){
+        funcion = txt;
+
+    }
     
     public double f(double x){
-        return Math.pow(x,3)+4*(Math.pow(x,2))-10;
+        return x*x*x+4*x*x-10;
     }
     
     public void algoritmo(){
