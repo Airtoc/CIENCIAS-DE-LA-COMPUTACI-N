@@ -8,6 +8,7 @@ public class Determinante {
     private String formula;
     private double[][] matriz;
     private double size;
+    private boolean isNan = false;
      
     public double calcularDeterminante(double[][] matriz){
         this.matriz = matriz;
@@ -21,6 +22,20 @@ public class Determinante {
             contador += 3; // <, ++, -.
             contador += 2; // Asginación y suma.
             //contador ++; // False.
+            
+            // Intercambiar columnas.
+            int iterador = i + 1;
+            while (matriz[i][i] == 0 && iterador < matriz.length) {
+                if (hayColumnasCeros(matriz,i,i)) {
+                    isNan = true;
+                    break;
+                }
+                double[] temp = matriz[i];
+                matriz[i] = matriz[iterador];
+                matriz[iterador] = temp;
+                iterador++;
+
+            }
             
             for (int j = i+1; j < (matriz.length); j++) {
                 
@@ -51,7 +66,7 @@ public class Determinante {
         
         if (Double.isNaN(traza)){
             
-            JOptionPane.showMessageDialog(null,"No se puede calcular determinante.");
+            JOptionPane.showMessageDialog(null,"No se puede calcular determinante: 0");
             
         }else {
             
@@ -74,6 +89,18 @@ public class Determinante {
    
         return formula = Double.toString(formulaTemp);
   
+    }
+    
+    public boolean hayColumnasCeros(double[][] ref, int row, int col) {
+        
+        int contadorColumnasCeros = 0;
+        for (int i = row + 1; i < ref.length; i++) {
+            if (ref[i][col] == 0) {
+                contadorColumnasCeros++;
+            }
+        }
+        
+        return contadorColumnasCeros == ((ref.length - 1) - row);
     }
     
 }
