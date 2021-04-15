@@ -4,12 +4,9 @@ package Algoritmos;
 public class Funciones {
     private String funcion;
     
-    public Funciones(String txt){
-        funcion = txt;
-
-    }
     
     public double f(double x){
+        
         return x*x*x+4*x*x-10;
     }
     

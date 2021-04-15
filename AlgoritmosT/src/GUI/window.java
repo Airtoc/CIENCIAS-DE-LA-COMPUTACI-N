@@ -5,6 +5,7 @@ import Algoritmos.Euclides;
 import Algoritmos.Funciones;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Arrays;
 import javax.swing.*;
 
 public class window extends JFrame {
@@ -55,8 +56,7 @@ public class window extends JFrame {
         Raices.setLocation(40, 300);
 
         Raices.addActionListener((event) -> {
-            String funcion = JOptionPane.showInputDialog(null, "Inserte la Expresion");
-            Funciones fun = new Funciones(funcion);
+            Funciones fun = new Funciones();
             fun.algoritmo();
         });
         contentPane.add(Raices);
@@ -69,10 +69,18 @@ public class window extends JFrame {
 
         BusquedaBi.addActionListener((event) -> {
             BusquedaBi Bus = new BusquedaBi();
-
-            int[] vector = {1, 4, 7, 8, 9, 14, 23, 47, 56, 60, 61, 63, 65, 66, 68, 69, 70, 73, 76, 77, 79, 80, 82};
-            int valorBuscado = 69;
-            Bus.busquedaBinaria(vector, valorBuscado);
+            int size = Integer.parseInt(JOptionPane.showInputDialog(null,"Inserte el tamaño del arreglo"));
+            double[] arreglo = new double[size];
+            for (int i=0;i<size;i++){
+                arreglo[i] = Math.floor(Math.random()*(size-0+1)+(0));
+            }
+            Arrays.sort(arreglo);
+            for (int i=0;i<size;i++){
+                System.out.println(arreglo[i]);
+            }
+            double valorBuscado = Double.parseDouble(JOptionPane.showInputDialog(null,"Inserte el numero a buscar"));
+            Bus.busquedaBinaria(arreglo, valorBuscado);
+            ///int[] vector = {1, 4, 7, 8, 9, 14, 23, 47, 56, 60, 61, 63, 65, 66, 68, 69, 70, 73, 76, 77, 79, 80, 82};
         });
         contentPane.add(BusquedaBi);
 
