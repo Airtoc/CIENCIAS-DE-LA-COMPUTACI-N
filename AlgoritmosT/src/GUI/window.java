@@ -63,13 +63,10 @@ public class window extends JFrame {
             Raices cal = new Raices(num,numeros,operaciones,a,b);
             cal.raiz();
             if(cal.isCalcular()){
-                JOptionPane.showMessageDialog(null,String.valueOf(cal.m));
+                JOptionPane.showMessageDialog(null,"La raiz se encuentra en : "+ String.valueOf(cal.m));
             }else{
                 JOptionPane.showMessageDialog(null,"No hay raiz en el intervalo");
             }
-            
-            //Funciones fun = new Funciones();
-            //fun.algoritmo();
         });
         contentPane.add(Raices);
 
@@ -90,8 +87,11 @@ public class window extends JFrame {
             for (int i = 0; i < size; i++) {
                 System.out.println(arreglo[i]);
             }
+            for(int i=0;i<5;i++){
             double valorBuscado = Double.parseDouble(JOptionPane.showInputDialog(null, "Inserte el numero a buscar"));
             Bus.busquedaBinaria(arreglo, valorBuscado);
+        }
+            
             ///int[] vector = {1, 4, 7, 8, 9, 14, 23, 47, 56, 60, 61, 63, 65, 66, 68, 69, 70, 73, 76, 77, 79, 80, 82};
         });
         contentPane.add(BusquedaBi);

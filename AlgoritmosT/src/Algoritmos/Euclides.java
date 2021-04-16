@@ -10,7 +10,7 @@ public class Euclides {
         int temp = 0;
 
         while(a%b != 0){
-            cont += 4;
+            cont ++;
             System.out.println(a+"--"+b+"--"+a%b);
             temp = b;
             b = a%b;
