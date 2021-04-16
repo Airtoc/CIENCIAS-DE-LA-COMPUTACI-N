@@ -3,6 +3,7 @@ package GUI;
 import Algoritmos.BusquedaBi;
 import Algoritmos.Euclides;
 import Algoritmos.Funciones;
+import Algoritmos.Raices;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Arrays;
@@ -13,6 +14,8 @@ public class window extends JFrame {
     private JPanel contentPane;
     private JButton BusquedaBi, Euclides, Raices;
     private JLabel titulo;
+    int num, i,numeros[],a,b;    
+    String operaciones[];
 
     public window() {
         setLayout(null);
@@ -56,8 +59,17 @@ public class window extends JFrame {
         Raices.setLocation(40, 300);
 
         Raices.addActionListener((event) -> {
-            Funciones fun = new Funciones();
-            fun.algoritmo();
+            datos();
+            Raices cal = new Raices(num,numeros,operaciones,a,b);
+            cal.raiz();
+            if(cal.isCalcular()){
+                JOptionPane.showMessageDialog(null,String.valueOf(cal.m));
+            }else{
+                JOptionPane.showMessageDialog(null,"No hay raiz en el intervalo");
+            }
+            
+            //Funciones fun = new Funciones();
+            //fun.algoritmo();
         });
         contentPane.add(Raices);
 
@@ -69,16 +81,16 @@ public class window extends JFrame {
 
         BusquedaBi.addActionListener((event) -> {
             BusquedaBi Bus = new BusquedaBi();
-            int size = Integer.parseInt(JOptionPane.showInputDialog(null,"Inserte el tamaño del arreglo"));
+            int size = Integer.parseInt(JOptionPane.showInputDialog(null, "Inserte el tamaño del arreglo"));
             double[] arreglo = new double[size];
-            for (int i=0;i<size;i++){
-                arreglo[i] = Math.floor(Math.random()*(size-0+1)+(0));
+            for (int i = 0; i < size; i++) {
+                arreglo[i] = Math.floor(Math.random() * (size - 0 + 1) + (0));
             }
             Arrays.sort(arreglo);
-            for (int i=0;i<size;i++){
+            for (int i = 0; i < size; i++) {
                 System.out.println(arreglo[i]);
             }
-            double valorBuscado = Double.parseDouble(JOptionPane.showInputDialog(null,"Inserte el numero a buscar"));
+            double valorBuscado = Double.parseDouble(JOptionPane.showInputDialog(null, "Inserte el numero a buscar"));
             Bus.busquedaBinaria(arreglo, valorBuscado);
             ///int[] vector = {1, 4, 7, 8, 9, 14, 23, 47, 56, 60, 61, 63, 65, 66, 68, 69, 70, 73, 76, 77, 79, 80, 82};
         });
@@ -86,5 +98,20 @@ public class window extends JFrame {
 
         add(contentPane);
 
+    }
+    private void datos(){
+        
+        num = Integer.parseInt(JOptionPane.showInputDialog("¿De qué grado es tu polinómio?"));
+        operaciones = new String[(num)];
+        numeros = new int[(num+1)];
+        for(i = 0; i < (num+1); i++){
+            numeros[i] = Integer.parseInt(JOptionPane.showInputDialog("Ingresa el número x^"+(num-i)));
+            if( i != num){
+                operaciones[i] = JOptionPane.showInputDialog("Ingresa una suma o resta.");
+            }
+            
+        }
+        a = Integer.parseInt(JOptionPane.showInputDialog("¿Cuál es el extremo izquierdo del intervalo?"));
+        b = Integer.parseInt(JOptionPane.showInputDialog("¿Cuál es el extremo derecho del intervalo?"));
     }
 }

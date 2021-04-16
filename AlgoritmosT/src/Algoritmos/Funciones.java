@@ -1,33 +1,39 @@
-
 package Algoritmos;
 
 public class Funciones {
-    private String funcion;
-    
-    
-    public double f(double x){
-        
-        return x*x*x+4*x*x-10;
+
+    int num, x, i;
+    int numeros[];
+    String operaciones[];
+
+    public Funciones(int num, int numeros[], String operaciones[]) {
+        this.num = num;
+        this.numeros = new int[num];
+        this.numeros = numeros;
+        this.operaciones = new String[num];
+        this.operaciones = operaciones;
+
     }
-    
-    public void algoritmo(){
-        double a,b,m;
-        a = -2;
-        b = 5;
-        if(f(a)*f(b)>0){
-            System.out.println("no existe raiz en [a,b]");
-        }
-        m = (a+b)/2;
-        while(Math.abs(f(m))>=0.000001){
-            if(f(a)*f(m)<0){
-                b=m;
-            }else{
-                a=m;
+
+    public double calcular(double x) {
+        double com = 0;
+        com = numeros[0] * Math.pow(x, num);//2
+        System.out.println(com);
+        for (i = 1; i <= num; i++) {
+
+            if (operaciones[i - 1].equals("+")) {
+
+                com = com + numeros[i] * Math.pow(x, num - i);
+                System.out.println(numeros[i] + " *" + Math.pow(x, num - i) + " = " + com);
+            } else {
+
+                com = com - numeros[i] * Math.pow(x, num - i);
+                System.out.println(numeros[i] + " *" + Math.pow(x, num - i) + " = " + com);
             }
-            m = (a+b)/2;
+
         }
-        System.out.println("La raiz se encuentra en "+m);
+        System.out.println(" ");
+        return com;
     }
-    
-    
+
 }
