@@ -1,6 +1,7 @@
 package View;
 
 import Controllers.ArticuloController;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JFrame;
@@ -13,6 +14,8 @@ import java.awt.event.*;
 //import javax.swing.JScrollPane;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class Resultado extends JFrame implements ActionListener {
 
@@ -22,6 +25,7 @@ public class Resultado extends JFrame implements ActionListener {
     private final int[][] data;
 
     private JLabel[][] result;
+    private JScrollPane scroll;
     private JPanel panel;
     private JButton btnItems;
     private ArrayList<ArrayList<Integer>> results;
@@ -30,6 +34,7 @@ public class Resultado extends JFrame implements ActionListener {
         ancho = 1200;
         alto = 500;
         panel = new JPanel();
+        
         btnItems = new JButton("Resultado");
         data = controller.getMatriz();
         result = new JLabel[data.length][data[0].length];
@@ -42,9 +47,12 @@ public class Resultado extends JFrame implements ActionListener {
         Border border = LineBorder.createGrayLineBorder();
         //JScrollPane jsp = new JScrollPane(panel);
         
-        panel.setSize(new Dimension(ancho,alto-100));
+        panel.setSize(ancho,alto-100);
+        panel.setPreferredSize(new Dimension(50000,alto-100));
         panel.setLayout(null);
         panel.setVisible(true);
+        panel.setOpaque(true);
+        panel.setBackground(Color.yellow);
         panel.setLocation(0, 0);
         
         int contador = 0;
@@ -56,7 +64,7 @@ public class Resultado extends JFrame implements ActionListener {
                     result[i][j] = new JLabel(String.valueOf(contador));
                     contador++;
                 }else if(i > 0 && j > 2 ){
-                    result[i][j] = new JLabel("<html><body><p> "+ data[i][j] +"<br>_______<br>" + "):(" + " </p></body></html>");
+                    result[i][j] = new JLabel("<html><body><p> "+ data[i][j] +"<br>_______<br>" + "Smilley face no se que poner" + " </p></body></html>");
                 }else{
                     result[i][j] = new JLabel("<html><body><p> "+ data[i][j] +" </p></body></html>");
                 }
@@ -72,8 +80,9 @@ public class Resultado extends JFrame implements ActionListener {
         result[0][0].setText("A");
         result[0][1].setText("Peso");
         result[0][2].setText("Valor");
-
-        add(panel);
+        scroll = new JScrollPane();
+        scroll.add(panel);
+        add(scroll);
         
         btnItems.setSize(new Dimension(150,40));
         btnItems.setLocation((this.getWidth()-btnItems.getWidth())/2, panel.getHeight()+10);
