@@ -48,8 +48,9 @@ public class subsecuencia {
         sol2 = "Sigue por el norte en caso de igualdad: ";
         DisplaySol1(d, auxejey, auxejey.length - 1, auxejex.length - 1);
         DisplaySol2(b, auxejex, auxejex.length - 1, auxejey.length - 1);
-        JOptionPane.showMessageDialog(null,sol1);
-        JOptionPane.showMessageDialog(null,sol2);
+        //JOptionPane.showMessageDialog(null,sol1);
+        //JOptionPane.showMessageDialog(null,sol2);
+        
         //solucion1.setText(sol1);
         //solucion2.setText(sol2);
     }
@@ -124,5 +125,15 @@ public class subsecuencia {
             DisplaySol2(b, x, i, j - 1);
         }
     }
+
+    public String getSol1() {
+        return sol1;
+    }
+
+    public String getSol2() {
+        return sol2;
+    }
+    
+    
 
 }

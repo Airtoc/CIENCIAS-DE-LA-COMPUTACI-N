@@ -7,6 +7,7 @@ package GUI;
 
 import Logic.subsecuencia;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -41,6 +42,7 @@ public class Ventana extends javax.swing.JFrame {
         resultadotxt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        resultadotxt2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,8 +66,6 @@ public class Ventana extends javax.swing.JFrame {
         resultado.setText("Resultado :");
 
         titulo.setText("Subsecuencia mas larga");
-
-        resultadotxt.setText("jTextField1");
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -109,7 +109,9 @@ public class Ventana extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(resultado)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(resultadotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(resultadotxt2)
+                                .addComponent(resultadotxt, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -133,7 +135,9 @@ public class Ventana extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(resultado)
                     .addComponent(resultadotxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(resultadotxt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,16 +148,19 @@ public class Ventana extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void calcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularActionPerformed
-        System.out.println("xdxdxd");
         subsecuencia algoritmo = new subsecuencia(textfield1.getText(),textfield2.getText(),tabla);
         algoritmo.calcular();
+        resultadotxt.setText(algoritmo.getSol1());
+        resultadotxt2.setText(algoritmo.getSol2());
     }//GEN-LAST:event_calcularActionPerformed
 
     private void textfield2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textfield2ActionPerformed
@@ -163,6 +170,15 @@ public class Ventana extends javax.swing.JFrame {
     public JTable getTabla() {
         return tabla;
     }
+
+    public JTextField getResultadotxt() {
+        return resultadotxt;
+    }
+
+    public JTextField getResultadotxt2() {
+        return resultadotxt2;
+    }
+    
      
     
 
@@ -173,7 +189,8 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel resultado;
-    private javax.swing.JTextField resultadotxt;
+    public javax.swing.JTextField resultadotxt;
+    public javax.swing.JTextField resultadotxt2;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField textfield1;
     private javax.swing.JTextField textfield2;
