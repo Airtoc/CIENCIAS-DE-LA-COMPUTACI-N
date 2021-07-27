@@ -1,5 +1,6 @@
 package GUI;
 
+import Gauss.Gauss;
 import Graffene.Graeffe;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -67,15 +68,17 @@ public class Ventana extends JFrame implements ActionListener {
         if (event.getSource() == generarC) {
 
             try {
+                
                 int n = Integer.parseInt(grado.getText());
                 panel = new Expresion(n);
+                panel.removeInputElements();
                 panel.initInputElements();
                 //panel.setOpaque(true);
                 //panel.setBackground(Color.red);
                 panel.setSize(new Dimension(700, 290));
                 panel.setLocation(10, 160);
                 //panel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-                add(panel);
+                add(panel);  
                 repaint();
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Por favor ingrese un numero", "Error", JOptionPane.ERROR_MESSAGE);
@@ -86,7 +89,19 @@ public class Ventana extends JFrame implements ActionListener {
                 //Se obtienen las raices usando graffene
                 Graeffe g = new Graeffe(panel.getCoeficientes());
                 g.mostrarRaices();
+                double[] raices = g.getRaicesReales();
+                for(int i = 0;i<raices.length;i++){
+                    System.out.println(raices[i]);
+                }
+                Gauss ga = new Gauss(raices,panel.getFn(),panel.getNvalues());
+                double[] soluciones = ga.obtenerMatriz();
+                String valores = "";
+                for(int i = 0;i<soluciones.length;i++){
+                    valores += "("+soluciones[i]+") ("+raices[i]+")^n + ";
+                                    }
+                System.out.println("la ecuacion completa es: fn = "+valores);
                 //metodo de graffene obtenido de http://www.sc.ehu.es/sbweb/fisica_/numerico/raices/graeffe.xhtml
+                
 
                 //ahora, toca obtener el otro numero y luego armar el string con la ecuacion
             } catch (NumberFormatException e) {

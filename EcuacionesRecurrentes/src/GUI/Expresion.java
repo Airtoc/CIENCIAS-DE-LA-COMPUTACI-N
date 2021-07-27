@@ -10,17 +10,21 @@ public class Expresion extends JPanel {
 
     private JTextField[] polinomio, valorN, valorFn;
     private JLabel txtCoeficiente, txtFN, txtN;
-    private double[] coeficientes;
+    private double[] coeficientes,n,fn;
+    private int gradop;
 
     public Expresion(int grado) {
-        coeficientes = new double[grado];
-        polinomio = new JTextField[grado];
-        valorN = new JTextField[2];
-        valorFn = new JTextField[2];
+        coeficientes = new double[grado+1];
+        n = new double[grado];
+        fn = new double[grado];
+        polinomio = new JTextField[grado+1];
+        valorN = new JTextField[grado];
+        valorFn = new JTextField[grado];
         txtCoeficiente = new JLabel("Coeficientes");
         txtFN = new JLabel("Valores de Fn");
         txtN = new JLabel("Valores de N");
-
+        gradop = grado;
+        
     }
 
     public void initInputElements() {
@@ -28,8 +32,9 @@ public class Expresion extends JPanel {
         txtCoeficiente.setLocation(0, 0);
         txtCoeficiente.setVisible(true);
         txtCoeficiente.setFont(new Font("Arial", Font.BOLD, 25));
-        add(txtCoeficiente);
-
+        add(txtCoeficiente); 
+        
+        //Genera campos para añadir los coeficientes del polinomio
         for (int i = 0; i < polinomio.length; i++) {
             polinomio[i] = new JTextField();
             polinomio[i].setBounds(i * 50 + 6, 30, 40, 30);
@@ -37,7 +42,7 @@ public class Expresion extends JPanel {
             polinomio[i].setFont(new Font("Arial", Font.ITALIC, 15));
             add(polinomio[i]);
         }
-
+        //Genera campos para añadir los valores iniciales de n 
         txtN.setSize(new Dimension(150, 50));
         txtN.setLocation(0, 90);
         txtN.setVisible(true);
@@ -46,21 +51,21 @@ public class Expresion extends JPanel {
 
         for (int i = 0; i < valorN.length; i++) {
             valorN[i] = new JTextField();
-            valorN[i].setBounds(10, 150 + (i * 50 + 6), 40, 40);
+            valorN[i].setBounds(i*50+6,150, 40,30);
             valorN[i].setHorizontalAlignment(JLabel.CENTER);
             valorN[i].setFont(new Font("Arial", Font.PLAIN, 15));
             add(valorN[i]);
         }
-
+        // Genera campos para añadir los valores iniciales de fn
         txtFN.setSize(new Dimension(150, 50));
-        txtFN.setLocation(150, 90);
+        txtFN.setLocation(0, 200);
         txtFN.setVisible(true);
         txtFN.setFont(new Font("Arial", Font.PLAIN, 20));
         add(txtFN);
 
         for (int i = 0; i < valorFn.length; i++) {
             valorFn[i] = new JTextField();
-            valorFn[i].setBounds(150, 150 + (i * 50 + 6), 40, 40);
+            valorFn[i].setBounds(i*50+6, 250, 40, 30);
             valorFn[i].setHorizontalAlignment(JLabel.CENTER);
             valorFn[i].setFont(new Font("Arial", Font.BOLD, 15));
             add(valorFn[i]);
@@ -76,11 +81,27 @@ public class Expresion extends JPanel {
     }
 
     public double[] getCoeficientes() {
-
+        //Retorna los coeficientes de el polinomio
         for (int i = 0; i < polinomio.length; i++) {
             coeficientes[i] = Double.parseDouble(polinomio[i].getText());
         }
         return coeficientes;
-    }
+    }    
+    
+    public double[] getFn() {
+        //Retorna los coeficientes de el polinomio
+        for (int i = 0; i < valorFn.length; i++) {
+            fn[i] = Double.parseDouble(valorFn[i].getText());
+        }
+        return fn;
+    } 
+    public double[] getNvalues() {
+        //Retorna los coeficientes de el polinomio
+        for (int i = 0; i < valorN.length; i++) {
+            n[i] = Double.parseDouble(valorN[i].getText());
+        }
+        return n;
+    } 
+    
 
 }

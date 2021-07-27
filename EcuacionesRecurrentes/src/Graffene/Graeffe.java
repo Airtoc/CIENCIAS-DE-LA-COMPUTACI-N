@@ -9,6 +9,7 @@ public class Graeffe {
 
     public int n;
     public double[] raicesReales;
+
     public Complejo[] raicesComplejas = new Complejo[4];
     public int numReales;
     public int numComplejas;
@@ -225,27 +226,33 @@ public class Graeffe {
         hallarRaices();
         //raíces reales
         System.out.println("Raíces reales");
-        
+         
+
         for (int i = 0; i < numReales; i++) {
-            System.out.println((double) Math.round(raicesReales[i] * 100) / 100 +    
-        " --->"+valorPolinomio(raicesReales[i]));
+            System.out.println((double) raicesReales[i] * 100 / 100);/* +    
+        " --->"+valorPolinomio(raicesReales[i]));*/
         }
-        
+
         System.out.println("");
-        
+
         //raíces complejas
-        
         System.out.println("Raíces complejas");
         for (int i = 0; i < numComplejas; i++) {
-            System.out.println(raicesComplejas[2 * i] +
-            " --->"+valorPolinomio(raicesComplejas[2*i]));
-            
-            System.out.println(raicesComplejas[2 * i + 1] +       
-            " --->"+valorPolinomio(raicesComplejas[2*i]));
+            System.out.println(raicesComplejas[2 * i]
+                    + " --->" + valorPolinomio(raicesComplejas[2 * i]));
+
+            System.out.println(raicesComplejas[2 * i + 1]
+                    + " --->" + valorPolinomio(raicesComplejas[2 * i]));
         }
         System.out.println("");
     }
+
+    public double[] getRaicesReales() {
+        return raicesReales;
+    }
+    
 }
+
 
 class ExcepcionDivideCero extends Exception {
 
