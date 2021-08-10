@@ -11,7 +11,7 @@ import javax.swing.*;
 
 public class Ventana extends JFrame implements ActionListener {
 
-    private JLabel titulo, descripcion;
+    private JLabel titulo, descripcion, resultado;
     private JButton generarC, calcular;
     private JTextField grado;
     private Expresion panel;
@@ -22,34 +22,43 @@ public class Ventana extends JFrame implements ActionListener {
         grado = new JTextField();
         generarC = new JButton("Generar campos");
         calcular = new JButton("Calcular");
-
+        resultado = new JLabel();
+        
     }
 
     public void initComponents() {
         titulo.setSize(new Dimension(800, 40));
         titulo.setLocation(250, 20);
-        titulo.setFont(new Font("Arial", Font.BOLD, 25));
+        titulo.setFont(new Font("Agency FB", Font.BOLD, 40));
         add(titulo);
 
-        descripcion.setSize(new Dimension(800, 20));
-        descripcion.setLocation(10, 90);
-        descripcion.setFont(new Font("Arial", Font.PLAIN, 20));
+        descripcion.setSize(new Dimension(800, 40));
+        descripcion.setLocation(10, 80);
+        descripcion.setFont(new Font("Agency FB", Font.BOLD, 25));
         add(descripcion);
 
-        grado.setSize(new Dimension(70, 20));
-        grado.setLocation(10, 120);
+        grado.setSize(new Dimension(90, 30));
+        grado.setLocation(15, 120);
         add(grado);
 
         generarC.setSize(150, 30);
-        generarC.setLocation(100, 120);
+        generarC.setLocation(450, 120);
         generarC.addActionListener(this);
+        generarC.setForeground(Color.WHITE);
+        generarC.setBackground(Color.BLACK);
         add(generarC);
 
         calcular.setSize(150, 30);
-        calcular.setLocation(250, 120);
+        calcular.setLocation(610, 120);
         calcular.addActionListener(this);
+        calcular.setForeground(Color.WHITE);
+        calcular.setBackground(Color.BLACK);
         add(calcular);
-
+        
+        resultado.setLocation(120, 300);
+        resultado.setSize(new Dimension(800,40));
+        resultado.setFont(new Font("Agency FB", Font.PLAIN, 23));
+        add(resultado);
     }
 
     public void initTemplate() {
@@ -99,7 +108,15 @@ public class Ventana extends JFrame implements ActionListener {
                 for(int i = 0;i<soluciones.length;i++){
                     valores += "("+soluciones[i]+") ("+raices[i]+")^n + ";
                                     }
+                
+                
+                // Impresión del resultado:
+                
+                
+                
                 System.out.println("la ecuacion completa es: fn = "+valores);
+                
+                resultado.setText("La ecuacion completa es: fn = "+valores);
                 //metodo de graffene obtenido de http://www.sc.ehu.es/sbweb/fisica_/numerico/raices/graeffe.xhtml
                 
 

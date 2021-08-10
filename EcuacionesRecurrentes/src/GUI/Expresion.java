@@ -31,7 +31,7 @@ public class Expresion extends JPanel {
         txtCoeficiente.setSize(new Dimension(150, 25));
         txtCoeficiente.setLocation(0, 0);
         txtCoeficiente.setVisible(true);
-        txtCoeficiente.setFont(new Font("Arial", Font.BOLD, 25));
+        txtCoeficiente.setFont(new Font("Agency FB", Font.PLAIN, 20));
         add(txtCoeficiente); 
         
         //Genera campos para añadir los coeficientes del polinomio
@@ -39,35 +39,36 @@ public class Expresion extends JPanel {
             polinomio[i] = new JTextField();
             polinomio[i].setBounds(i * 50 + 6, 30, 40, 30);
             polinomio[i].setHorizontalAlignment(JLabel.CENTER);
-            polinomio[i].setFont(new Font("Arial", Font.ITALIC, 15));
+            polinomio[i].setFont(new Font("Agency FB", Font.PLAIN, 20));
             add(polinomio[i]);
         }
         //Genera campos para añadir los valores iniciales de n 
-        txtN.setSize(new Dimension(150, 50));
-        txtN.setLocation(0, 90);
+        txtN.setSize(new Dimension(150, 25));
+        txtN.setLocation(0, 70);
         txtN.setVisible(true);
-        txtN.setFont(new Font("Arial", Font.PLAIN, 20));
+        txtN.setFont(new Font("Agency FB", Font.PLAIN, 20));
         add(txtN);
 
         for (int i = 0; i < valorN.length; i++) {
             valorN[i] = new JTextField();
-            valorN[i].setBounds(i*50+6,150, 40,30);
+            //valorN[1].setBounds(i, i, WIDTH, HEIGHT);
+            valorN[i].setBounds(i*50+6,100, 40,30);
             valorN[i].setHorizontalAlignment(JLabel.CENTER);
-            valorN[i].setFont(new Font("Arial", Font.PLAIN, 15));
+            valorN[i].setFont(new Font("Agency FB", Font.PLAIN, 15));
             add(valorN[i]);
         }
         // Genera campos para añadir los valores iniciales de fn
-        txtFN.setSize(new Dimension(150, 50));
-        txtFN.setLocation(0, 200);
+        txtFN.setSize(new Dimension(100, 25));
+        txtFN.setLocation(0, 140);
         txtFN.setVisible(true);
-        txtFN.setFont(new Font("Arial", Font.PLAIN, 20));
+        txtFN.setFont(new Font("Agency FB", Font.PLAIN, 20));
         add(txtFN);
 
         for (int i = 0; i < valorFn.length; i++) {
             valorFn[i] = new JTextField();
-            valorFn[i].setBounds(i*50+6, 250, 40, 30);
+            valorFn[i].setBounds(i*50+6, 170, 40, 30);
             valorFn[i].setHorizontalAlignment(JLabel.CENTER);
-            valorFn[i].setFont(new Font("Arial", Font.BOLD, 15));
+            valorFn[i].setFont(new Font("Agency FB", Font.PLAIN, 20));
             add(valorFn[i]);
         }
 
