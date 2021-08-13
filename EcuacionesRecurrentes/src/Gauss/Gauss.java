@@ -87,12 +87,13 @@ public class Gauss {
             for (int i = 0; i < n; i++) {
 
                 for (int j = 0; j < n; j++) {
-                    double valor = raices[j]*valoresFn[i];
+                    double valor = Math.pow(raices[j],valoresN[i]);//*valoresFn[i];
                     if(valor == 0){
                         m[i][j] = 1;
                     }else{
                         m[i][j] = valor;
                     }
+                    System.out.println(m[i][j]);
 
                 }
                 r[i] = valoresFn[i];//Double.parseDouble(String.valueOf(jTable.getValueAt(i, n)));

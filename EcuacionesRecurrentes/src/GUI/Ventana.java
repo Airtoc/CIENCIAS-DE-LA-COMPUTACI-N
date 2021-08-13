@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.Collections;
 import javax.swing.*;
 
 public class Ventana extends JFrame implements ActionListener {
@@ -23,7 +25,7 @@ public class Ventana extends JFrame implements ActionListener {
         generarC = new JButton("Generar campos");
         calcular = new JButton("Calcular");
         resultado = new JLabel();
-        
+
     }
 
     public void initComponents() {
@@ -54,9 +56,9 @@ public class Ventana extends JFrame implements ActionListener {
         calcular.setForeground(Color.WHITE);
         calcular.setBackground(Color.BLACK);
         add(calcular);
-        
+
         resultado.setLocation(0, 300);
-        resultado.setSize(new Dimension(800,60));
+        resultado.setSize(new Dimension(800, 60));
         resultado.setFont(new Font("Agency FB", Font.BOLD, 20));
         add(resultado);
     }
@@ -77,17 +79,13 @@ public class Ventana extends JFrame implements ActionListener {
         if (event.getSource() == generarC) {
 
             try {
-                
                 int n = Integer.parseInt(grado.getText());
                 panel = new Expresion(n);
                 panel.removeInputElements();
                 panel.initInputElements();
-                //panel.setOpaque(true);
-                //panel.setBackground(Color.red);
                 panel.setSize(new Dimension(700, 290));
                 panel.setLocation(10, 160);
-                //panel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-                add(panel);  
+                add(panel);
                 repaint();
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Por favor ingrese un numero", "Error", JOptionPane.ERROR_MESSAGE);
@@ -95,26 +93,41 @@ public class Ventana extends JFrame implements ActionListener {
         } else if (event.getSource() == calcular) {
 
             try {
-                //Se obtienen las raices usando graffene
+                //Se obtienen las raices usando Newton
                 Newton raiz = new Newton(panel.getCoeficientes());
-                
-                //Graeffe g = new Graeffe(panel.getCoeficientes());
-                //g.mostrarRaices();
                 double[] raices = raiz.getRaices();
-                for(int i = 0;i<raices.length;i++){
+                double aux;
+                //se invierten las raices 
+                for (int i = 0; i < raices.length / 2; i++) {
+                    aux = raices[i];
+                    raices[i] = raices[raices.length - 1 - i];
+                    raices[raices.length - 1 - i] = aux;
+                }
+                //Se imprimen las raices en consola
+                for (int i = 0; i < raices.length; i++) {
                     System.out.println(raices[i]);
                 }
-                Gauss ga = new Gauss(raices,panel.getFn(),panel.getNvalues());
+                //Crea una sistema de ecuaciones 
+                Gauss ga = new Gauss(raices, panel.getFn(), panel.getNvalues());
+                
+                //Soluciona el sistema de ecuaciones
                 double[] soluciones = ga.obtenerMatriz();
+                
+                //Imprime la ecuacion en consola y en la pantalla
+                
                 String valores = "";
-                for(int i = 0;i<soluciones.length;i++){
-                    valores += "("+soluciones[i]+")</br> ("+raices[i]+")ⁿ +";
-                                    }
+                for (int i = 0; i < soluciones.length; i++) {
+                    if(i!=soluciones.length-1){
+                        valores += "(" + Math.round(soluciones[i]*1000.0)/1000.0 + ")</br> (" + Math.round(raices[i]*1000.0)/1000.0 + ")ⁿ +";
+                    }else{
+                        valores += "(" + Math.round(soluciones[i]*1000.0)/1000.0 + ")</br> (" +Math.round(raices[i]*1000.0)/1000.0 + ")ⁿ";
+                    }
+                }
                 valores += "</html>";
-                
-                System.out.println("<html>la ecuacion completa es: fn = "+valores);
-                
-                resultado.setText("<html>La ecuacion completa es: fn = "+valores);
+
+                System.out.println("<html>la ecuacion completa es: fn = " + valores);
+
+                resultado.setText("<html>La ecuacion completa es: fn = " + valores);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Por favor ingrese un numero", "Error", JOptionPane.ERROR_MESSAGE);
             }
