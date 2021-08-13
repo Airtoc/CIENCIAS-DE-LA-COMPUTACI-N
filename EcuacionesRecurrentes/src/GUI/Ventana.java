@@ -2,6 +2,7 @@ package GUI;
 
 import Gauss.Gauss;
 import Graffene.Graeffe;
+import Newton.Newton;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -55,9 +56,9 @@ public class Ventana extends JFrame implements ActionListener {
         calcular.setBackground(Color.BLACK);
         add(calcular);
         
-        resultado.setLocation(120, 300);
-        resultado.setSize(new Dimension(800,40));
-        resultado.setFont(new Font("Agency FB", Font.PLAIN, 23));
+        resultado.setLocation(0, 300);
+        resultado.setSize(new Dimension(800,60));
+        resultado.setFont(new Font("Agency FB", Font.BOLD, 20));
         add(resultado);
     }
 
@@ -96,27 +97,30 @@ public class Ventana extends JFrame implements ActionListener {
 
             try {
                 //Se obtienen las raices usando graffene
-                Graeffe g = new Graeffe(panel.getCoeficientes());
-                g.mostrarRaices();
-                double[] raices = g.getRaicesReales();
-                for(int i = 0;i<raices.length;i++){
+                Newton raiz = new Newton(panel.getCoeficientes());
+                
+                //Graeffe g = new Graeffe(panel.getCoeficientes());
+                //g.mostrarRaices();
+                //double[] raices = g.getRaicesReales();
+                /*for(int i = 0;i<raices.length;i++){
                     System.out.println(raices[i]);
                 }
                 Gauss ga = new Gauss(raices,panel.getFn(),panel.getNvalues());
                 double[] soluciones = ga.obtenerMatriz();
                 String valores = "";
                 for(int i = 0;i<soluciones.length;i++){
-                    valores += "("+soluciones[i]+") ("+raices[i]+")^n + ";
+                    valores += "("+soluciones[i]+")</br> ("+raices[i]+")ⁿ +";
                                     }
+                valores += "</html>";
                 
                 
                 // Impresión del resultado:
                 
                 
                 
-                System.out.println("la ecuacion completa es: fn = "+valores);
+                System.out.println("<html>la ecuacion completa es: fn = "+valores);
                 
-                resultado.setText("La ecuacion completa es: fn = "+valores);
+                resultado.setText("<html>La ecuacion completa es: fn = "+valores);*/
                 //metodo de graffene obtenido de http://www.sc.ehu.es/sbweb/fisica_/numerico/raices/graeffe.xhtml
                 
 

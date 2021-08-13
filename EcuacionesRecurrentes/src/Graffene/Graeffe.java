@@ -229,11 +229,11 @@ public class Graeffe {
          
 
         for (int i = 0; i < numReales; i++) {
-            System.out.println((double) raicesReales[i] * 100 / 100);/* +    
+            System.out.println("Raiz #"+i+": "+(double) raicesReales[i] * 100 / 100);/* +    
         " --->"+valorPolinomio(raicesReales[i]));*/
         }
 
-        System.out.println("");
+        System.out.println("//////////////////////////////////");
 
         //raíces complejas
         System.out.println("Raíces complejas");
@@ -244,7 +244,7 @@ public class Graeffe {
             System.out.println(raicesComplejas[2 * i + 1]
                     + " --->" + valorPolinomio(raicesComplejas[2 * i]));
         }
-        System.out.println("");
+        System.out.println("////////////////////////////////////");
     }
 
     public double[] getRaicesReales() {

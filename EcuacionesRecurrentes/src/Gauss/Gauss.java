@@ -13,6 +13,7 @@ public class Gauss {
     private double[] raices;
     private double[] valoresN;
     private double[] valoresFn;
+    private String matriz = "";
     
     
     
@@ -29,7 +30,7 @@ public class Gauss {
         for (int i = 0; i < n; i++) {
             double d, c = 0;
             d = a[i][i];// seleccionamos el pivote
-            //jTextArea.append(Double.toString(1 / d) + "*fila" + (i + 1) + "\n");// muesra en el area de texto el pivote seleccionado
+            
             for (int j = 0; j < n; j++) {// pasamos a convertir en 1 al pivote seleionado
                 a[i][j] = ((a[i][j]) / d);
             }
@@ -39,31 +40,35 @@ public class Gauss {
             for (int j = 0; j < n; j++) {
 
                 for (int k = 0; k < n; k++) {
-                    //jTextArea.append(Double.toString(m[j][k]) + "\t");
+                    
                 }
-                //jTextArea.append("|\t" + Double.toString(r[j]) + "\n");
+                
             }
-            //jTextArea.append("\n\n");// fin paso a motrar las opraciones realizadas en la matriz aumentada
+            System.out.println("\n\n");// fin paso a motrar las opraciones realizadas en la matriz aumentada
+            
 
             for (int x = 0; x < n; x++) {
                 if (i != x) {
                     c = a[x][i];
-                    //jTextArea.append("-" + Double.toString(c) + " * fila" + (i + 1) + "+ fila" + (x + 1) + "\n");// mustra en pantalla las opraciones que se realizaran por fila
+                    matriz+=("");
+                    matriz+=("-" + Double.toString(c) + " * fila" + (i + 1) + "+ fila" + (x + 1) + "\n");// mustra en pantalla las opraciones que se realizaran por fila
                     for (int y = 0; y < n; y++) {// se hace cero a todos los elemntos de la colunma que no sean el pivote
                         a[x][y] = a[x][y] - c * a[i][y];
 
                     }
+                    matriz+=("");
                     b[x] = b[x] - c * b[i];
 
                     // paso a mostrar las opraciones realizadas en la matriz aumentada
                     for (int j = 0; j < n; j++) {
 
                         for (int k = 0; k < n; k++) {
-                            //jTextArea.append(Double.toString(m[j][k]) + "\t");
+                            matriz+=(Double.toString(a[j][k]) + "\t");
                         }
-                        //jTextArea.append("|\t" + Double.toString(r[j]) + "\n");
+                        matriz+=("|\t" + Double.toString(b[j]) + "\n");
                     }
-                    //jTextArea.append("\n\n");// fin paso a motrar las opraciones realizadas en la matriz aumentada
+                    System.out.println(matriz);
+                    System.out.println("\n\n");// fin paso a motrar las opraciones realizadas en la matriz aumentada
 
                 }// fin if (i != x)
             }// fin for (int x = 0; x <= r.length - 1; x++)
