@@ -1,7 +1,6 @@
 package GUI;
 
 import Gauss.Gauss;
-import Graffene.Graeffe;
 import Newton.Newton;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -101,8 +100,8 @@ public class Ventana extends JFrame implements ActionListener {
                 
                 //Graeffe g = new Graeffe(panel.getCoeficientes());
                 //g.mostrarRaices();
-                //double[] raices = g.getRaicesReales();
-                /*for(int i = 0;i<raices.length;i++){
+                double[] raices = raiz.getRaices();
+                for(int i = 0;i<raices.length;i++){
                     System.out.println(raices[i]);
                 }
                 Gauss ga = new Gauss(raices,panel.getFn(),panel.getNvalues());
@@ -113,18 +112,9 @@ public class Ventana extends JFrame implements ActionListener {
                                     }
                 valores += "</html>";
                 
-                
-                // Impresión del resultado:
-                
-                
-                
                 System.out.println("<html>la ecuacion completa es: fn = "+valores);
                 
-                resultado.setText("<html>La ecuacion completa es: fn = "+valores);*/
-                //metodo de graffene obtenido de http://www.sc.ehu.es/sbweb/fisica_/numerico/raices/graeffe.xhtml
-                
-
-                //ahora, toca obtener el otro numero y luego armar el string con la ecuacion
+                resultado.setText("<html>La ecuacion completa es: fn = "+valores);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Por favor ingrese un numero", "Error", JOptionPane.ERROR_MESSAGE);
             }
