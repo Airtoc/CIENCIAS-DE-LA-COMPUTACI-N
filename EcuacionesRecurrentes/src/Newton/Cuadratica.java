@@ -21,14 +21,14 @@ public class Cuadratica {
         
         if (d > 0) {
             raices[0] = rUnica / (2 * a);
-            //System.out.println("x1 = " + rUnica / (2 * a));
+            System.out.println("x1 = " + rUnica / (2 * a));
             raices[1] = rDos / (2 * a);
-            //System.out.println("x1 = " + rDos / (2 * a));
+            System.out.println("x1 = " + rDos / (2 * a));
         } else if (d == 0) {
             raices[0] = GT;
             raices[1] = GT;
-            //System.out.println("x1 = " + GT);
-            //System.out.println("x2 = " + GT);
+            System.out.println("x1 = " + GT);
+            System.out.println("x2 = " + GT);
 
         } else if (d < 0) {
             System.out.println("no hay raices");

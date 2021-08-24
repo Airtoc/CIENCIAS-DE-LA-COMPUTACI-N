@@ -77,6 +77,7 @@ public class Newton {
     
     //metodo que retorna el polinomio para ser derivado 
     public String getPolinomio() {
+        funcion = "";
         funcion += (Math.round(numeros[0]) + "x^" + grado + " ");
         for (i = 1; i <= grado; i++) {
 
@@ -89,7 +90,7 @@ public class Newton {
             }
 
         }
-        //System.out.println(funcion);
+        System.out.println(funcion);
         return funcion;
     }
     
@@ -133,24 +134,27 @@ public class Newton {
                 tempo = x;
                 x = x - calcularfuncion(x) / (derivativeVal(polinomio, x));//x-(y1/y2)
                 e = Math.abs((x - tempo) / x);
-                //System.out.println("x" + 1 + " = " + x + " Error" + " = " + e + "\n");
+                System.out.println("x" + 1 + " = " + x + " Error" + " = " + e + "\n");
                 i = i + 1;
             } while (x != tempo && i < 100);
 
             if (i == 100) {
                 System.out.println("no converge");
             } else {
-                
-                
-                
+               
                 //guarda la primera raiz obtenida
-                //System.out.println("\n Solucion x = " + x);
-                raices[rep] = x;
+                System.out.println("\n Solucion x = " + x);
+                raices[rep] = Math.round(x*100.0)/100.0;
                 System.out.println("mis raices #0 = " + raices[0]);              
                 grado --;
                 //si al reducir el grado sigue siendo menor a 2 , realiza division sintetica y repite el proceso
+                System.out.println(grado);
                 if (grado != 2) {
+                    System.out.println("XDXDXD");
                     numeros = divisionSintetica(x);
+                    for(int j=0;j<numeros.length;j++){
+                        System.out.println(numeros[j]);
+                    }
                     rep++;
                     calcularRaiz();
                     
