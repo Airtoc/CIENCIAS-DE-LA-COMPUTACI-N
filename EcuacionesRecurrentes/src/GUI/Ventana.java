@@ -2,6 +2,7 @@ package GUI;
 
 import Gauss.Gauss;
 import Newton.Newton;
+import Newton.Raices;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -152,8 +153,11 @@ public class Ventana extends JFrame implements ActionListener {
         } else if (event.getSource() == calculate) {
 
             try {
+                
+                double[] coeficientes = panel.getCoeficientes();
+                Raices ra = new Raices(coeficientes);
                 //Se obtienen las raices usando Newton
-                Newton raiz = new Newton(panel.getCoeficientes());
+               /*Newton raiz = new Newton(panel.getCoeficientes());
                 double[] raices = raiz.getRaices();
                 double aux;
                 //se invierten las raices 
@@ -165,9 +169,14 @@ public class Ventana extends JFrame implements ActionListener {
                 //Se imprimen las raices en consola
                 for (int i = 0; i < raices.length; i++) {
                     System.out.println(raices[i]);
-                }
+                }*/
                 //Crea una sistema de ecuaciones 
+                double[] raices = ra.getRaices();
                 Gauss ga = new Gauss(raices, panel.getFn(), panel.getNvalues());
+                int[] multiplicidad = ga.getCont();
+                for (int i = 0; i < raices.length; i++) {
+                    System.out.println(multiplicidad[i]);
+                }
                 
                 //Soluciona el sistema de ecuaciones
                 double[] soluciones = ga.obtenerMatriz();
@@ -177,9 +186,9 @@ public class Ventana extends JFrame implements ActionListener {
                 String valores = "";
                 for (int i = 0; i < soluciones.length; i++) {
                     if(i!=soluciones.length-1){
-                        valores += "(" + Math.round(soluciones[i]*1000.0)/1000.0 + ")</br> (" + Math.round(raices[i]*1000.0)/1000.0 + ")ⁿ +";
+                        valores += "(" + Math.round(soluciones[i]*1000.0)/1000.0 + ")</br> (" + Math.round(raices[i]*1000.0)/1000.0 + ")ⁿ (n^"+ multiplicidad[i]+") +";
                     }else{
-                        valores += "(" + Math.round(soluciones[i]*1000.0)/1000.0 + ")</br> (" +Math.round(raices[i]*1000.0)/1000.0 + ")ⁿ";
+                        valores += "(" + Math.round(soluciones[i]*1000.0)/1000.0 + ")</br> (" +Math.round(raices[i]*1000.0)/1000.0 + ")ⁿ (n^"+ multiplicidad[i]+")";
                     }
                 }
                 valores += "</html>";

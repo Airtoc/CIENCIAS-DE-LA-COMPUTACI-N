@@ -17,12 +17,14 @@ public class Gauss {
     private double[] valoresN;
     private double[] valoresFn;
     private String matriz = "";
+    int[] cont ;
     
 
     public Gauss(double[] a, double b[], double c[]) {
         raices = a;
         valoresFn = b;
         valoresN = c;
+        cont = verificarMulti();
 
     }
 
@@ -98,7 +100,7 @@ public class Gauss {
     }
 
     public double[] obtenerMatriz() {
-        int[] cont = verificarMulti();
+        //cont = verificarMulti();
         int n = valoresN.length;
         double m[][] = new double[n][n];// almacena los coeficientes de la matriz aumentada 
         double r[] = new double[n];
@@ -133,4 +135,10 @@ public class Gauss {
         }
         return r;
     }
+
+    public int[] getCont() {
+        //cont = verificarMulti();
+        return cont;
+    }
+    
 }
