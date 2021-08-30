@@ -2,15 +2,17 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Font;
 import Logic.Listas;
 import Logic.Nodo;;
 
 public class App extends JFrame implements ActionListener {
 
-    private static int WIDTH = 1200;
-    private static int HEIGHT = 900;
+    private static int WIDTH = 800;
+    private static int HEIGHT = 600;
     private JLabel lblTitle;
     private JPanel optionsPanel, mainPanel;
     private JScrollPane scrollPanel;
@@ -20,8 +22,7 @@ public class App extends JFrame implements ActionListener {
     private int codigo;
     private Listas lista;
     // --Tipos para manipular el Table.
-    private String[] columnNames;
-    private Object[][] data;
+    
     
     public App() {
         setTitle("Listas");
@@ -30,7 +31,7 @@ public class App extends JFrame implements ActionListener {
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
-        setLocationRelativeTo(null);
+        //setLocationRelativeTo(null);
         setVisible(true);
     }
 
@@ -40,43 +41,60 @@ public class App extends JFrame implements ActionListener {
         mainPanel.setBounds(0, 0, WIDTH, 100);
         mainPanel.setBackground(new Color(92, 219, 149));
         add(mainPanel);
-            // --Table
-        columnNames = {
-            "Código",
-            "Nombre"
-        };
-        
-        table = new JTable();
             // --ScrollPanel
-        scrollPanel = new JScrollPanel();
+        scrollPanel = new JScrollPane();
+        scrollPanel.setBounds(0, 100, WIDTH/2, HEIGHT-100);
+        add(scrollPanel);
+            // --Table
+        String[] columnas = { "Código", "Nombre"};
+        DefaultTableModel tableModel = new DefaultTableModel(columnas, 0);
+        table = new JTable(tableModel) {
+           boolean[] columnEditables = new boolean[] { false, false };
+    
+            public boolean isCellEditable(int row, int column) {
+                return columnEditables[column];
+            }
+        };
+        scrollPanel.setViewportView(table);
+            // --Title
+        lblTitle = new JLabel ("Listas");
+        lblTitle.setFont(new Font("consolas", Font.BOLD + Font.ITALIC, 80));
+        lblTitle.setForeground(new Color(5, 56, 107));
+        mainPanel.add(lblTitle);
 
         // -OptionsPanel
         optionsPanel = new JPanel(null);
-        optionsPanel.setBounds(WIDTH/2, 100, (WIDTH/2)-200, HEIGHT-100);
+        optionsPanel.setBounds(WIDTH/2, 100, WIDTH/2, HEIGHT-100);
         optionsPanel.setBackground(new Color(92, 219, 149));
+        add(optionsPanel);
             // --btnAdd
         btnAdd = new JButton("Agregar Nodo");
-        btnAdd.setBounds(x, y, width, height);
+        btnAdd.setBounds(10, 0, 365, 30);
         btnAdd.setBackground(new Color(5, 56, 107));
         btnAdd.setForeground(new Color(237 ,245 ,225));
+        btnAdd.setFont(new Font("consolas", Font.BOLD, 20));
+        btnAdd.setFocusable(false);
         optionsPanel.add(btnAdd);
             // --btnDelete
-        btnDelete = new JButon("Eliminar Nodo");
-        btnDelete.setBounds(x, y, w, h);
+        btnDelete = new JButton("Eliminar Nodo");
+        btnDelete.setBounds(10, 40, 365, 30);
         btnDelete.setBackground(new Color(5, 56, 107));
         btnDelete.setForeground(new Color(237 ,245 ,225));
+        btnDelete.setFont(new Font("consolas", Font.BOLD, 20));
         optionsPanel.add(btnDelete);
             // --btnEdit
         btnEdit = new JButton("Buscar Nodo");
-        btnEdit.setBounds(x, y, w, h);
+        btnEdit.setBounds(10, 80, 365, 30);
         btnEdit.setBackground(new Color(5, 56, 107));
         btnEdit.setForeground(new Color(237 ,245 ,225));
+        btnEdit.setFont(new Font("consolas", Font.BOLD, 20));
         optionsPanel.add(btnEdit);
             // --btnClean
         btnClean = new JButton("Limpiar");
-        btnClean.setBounds(x, y, w, h);
+        btnClean.setBounds(10, 120, 365, 30);
         btnClean.setBackground(new Color(5, 56, 107));
         btnClean.setForeground(new Color(237 ,245 ,225));
+        btnClean.setFont(new Font("consolas", Font.BOLD, 20));
         optionsPanel.add(btnClean);
     }
 

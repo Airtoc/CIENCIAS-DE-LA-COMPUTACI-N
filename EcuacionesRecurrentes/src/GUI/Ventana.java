@@ -15,7 +15,7 @@ public class Ventana extends JFrame implements ActionListener {
 
     private JLabel title, description, result;
     private JPanel mainPanel, mathPanel;
-    private JButton generateFields, calculate;
+    private JButton generateFields, calculate, btnClean;
     private JTextField grade;
     private Expresion panel;
     static int WIDTH = 800;
@@ -29,6 +29,7 @@ public class Ventana extends JFrame implements ActionListener {
         result = new JLabel();
         generateFields = new JButton("Generar campos");
         calculate = new JButton("Calcular");
+        btnClean = new JButton("*");
         grade = new JTextField();
     }
 
@@ -83,6 +84,15 @@ public class Ventana extends JFrame implements ActionListener {
         result.setSize(new Dimension(800, 60));
         result.setFont(new Font("Helvetica", Font.BOLD, 20));
         add(result);
+
+        // --Clean 
+        btnClean.setSize(40, 40);
+        btnClean.setLocation(0, 0);
+        btnClean.addActionListener(this);
+        btnClean.setFocusable(false);
+        btnClean.setFont(new Font("Helvetica", Font.BOLD, 20));
+        btnClean.setBackground(new Color(221,223,212));
+        mainPanel.add(btnClean);
     }
     
 
@@ -142,7 +152,7 @@ public class Ventana extends JFrame implements ActionListener {
             try {
                 int n = Integer.parseInt(grade.getText());
                 panel = new Expresion(n);
-                panel.removeInputElements();
+                //panel.removeInputElements();
                 panel.initInputElements();
                 panel.setBounds(0, HEIGHT/4, WIDTH, (3*HEIGHT)/4);
                 add(panel);
@@ -199,6 +209,8 @@ public class Ventana extends JFrame implements ActionListener {
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Por favor ingrese un numero", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        }else if (event.getSource() == btnClean){
+           
         }
 
     }
