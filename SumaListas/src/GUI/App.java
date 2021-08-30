@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import Logic.*;
 
 public class App extends JFrame implements ActionListener {
     
@@ -76,8 +77,9 @@ public class App extends JFrame implements ActionListener {
         if (event.getSource() == btnMath) {
             try {
                 System.out.println("Calculando..");
-
-
+                Calc calculate = new Calc(txtA.getText(), txtB.getText());
+                calculate.start();
+                txtResult.setText(calculate.getResult());
             } catch (Exception error) {
                 System.out.println("Mal");
             }
