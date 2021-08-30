@@ -6,8 +6,7 @@ public class Nodo {
     Nodo sig;
     Nodo ant;
 
-
-    public Nodo(int co, String na){
+    public Nodo(int co, String na) {
         this.codigo = co;
         this.nombre = na;
         this.sig = null;
@@ -15,38 +14,38 @@ public class Nodo {
 
     }
 
-    //Getters & Setters:
-    public void setNombre(String nombre){
+    // Getters & Setters:
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    public void setCodigo(int codigo){
+
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
-    
-    public void setSiguiente(Nodo siguiente){
+
+    public void setSiguiente(Nodo siguiente) {
         this.sig = siguiente;
     }
-    public void setAnterior(Nodo anterior){
+
+    public void setAnterior(Nodo anterior) {
         this.ant = anterior;
     }
 
-    public String getNombre(){
+    public String getNombre() {
         return this.nombre;
     }
-    
-    public int getCodigo(){
+
+    public int getCodigo() {
+
         return this.codigo;
     }
-    
-    public Nodo getSiguiente(){
+
+    public Nodo getSiguiente() {
         return this.sig;
     }
 
-    public Nodo getAnterior(){
+    public Nodo getAnterior() {
         return this.ant;
     }
-
-
 
 }
