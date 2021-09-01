@@ -143,7 +143,10 @@ public class App extends JFrame implements ActionListener {
                 } else {
                     // Añade el nodo
                     lista.addNodo(nodo, lista.getCabeza());
+                    
                 }
+                eliminar();
+                //imprimir();
                 JOptionPane.showMessageDialog(null, "Se ha añadido el nodo correctamente");
             } catch (Exception e) {
                 System.out.println("La embarramos #001");
@@ -187,6 +190,7 @@ public class App extends JFrame implements ActionListener {
         // --ShowEvent
         if (event.getSource() == btnShow) {
             try {
+                eliminar();
                 imprimir();
 
             } catch (Exception e) {

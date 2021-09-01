@@ -1,24 +1,35 @@
 package Logic;
 
 import javax.swing.*;
+
+import jdk.nashorn.internal.ir.Node;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Listas {
-    private Nodo inicio;
+public class List {
+    private Node inicio;
     private String lista = "";
     LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
 
-    public Listas() {
+    public List() {
         this.inicio = null;
         map.clear();
     }
 
-    public void addNodo(Nodo nuevo, Nodo anterior){
-        map.clear();
+    public void mostrarlista(Node list) {
+        if (list != null) {   
+            lista += "Nombre: " + list.getNombre() + "\n";
+            lista += "Codigo: " + list.getCodigo() + "\n\n";
+            map.put(list.getNombre(),list.getCodigo());
+            mostrarlista(list.getSiguiente());
+        }
+    }
+
+    public void addNodo(Node nuevo, Node anterior){
         if(nuevo.getCodigo() == anterior.getCodigo()){
-            JOptionPane.showMessageDialog(null,"El nodo se encuentra repetido");
+            System.out.println("El nodo está repetido");
         }else{
             if(nuevo != anterior){
                 if(nuevo.getCodigo() < anterior.getCodigo()){
@@ -46,7 +57,7 @@ public class Listas {
         
     }
 
-    public void buscarNodo(Nodo list, int codigo) {
+    public void buscarNodo(Node list, int codigo) {
         if (codigo == list.getCodigo()) {
             JOptionPane.showMessageDialog(null,"El nodo se encuentra en la lista");
         } else {
@@ -59,20 +70,19 @@ public class Listas {
         }
     }
 
-    public void eliminarNodo(Nodo list, int codigo) {
+    public void eliminarNodo(Node list, int codigo) {
         map.clear();
         if (list.getCodigo() == codigo) { // Se comprueban que los codigos sean iguales
-            // asignaciones basicas 
-            //Primer nodo 
+            // PRIMERO
             if (list.getAnterior() == null) {
                 this.inicio = list.getSiguiente();
                 list.getSiguiente().setAnterior(null);
             }
-            //Ultimo nodo
+            // ULTIMO
             if (list.getSiguiente() == null) {
                 list.getAnterior().setSiguiente(null);
             }
-            //Nodo intermedio 
+            // MEDIO
             if (list.getAnterior() != null && list.getSiguiente() != null) {
                 list.getAnterior().setSiguiente(list.getSiguiente());
                 list.getSiguiente().setAnterior(list.getAnterior());
@@ -82,15 +92,8 @@ public class Listas {
         }
     }
 
-    public void mostrarlista(Nodo list) {
-        if (list != null) {   
-            map.put(list.getNombre(),list.getCodigo());
-            mostrarlista(list.getSiguiente());
-        }
-    }
-
     // Getters & Setters :
-    public Nodo getCabeza() {
+    public Node getCabeza() {
         return this.inicio;
     }
 
@@ -101,7 +104,7 @@ public class Listas {
         return this.map;
     }
 
-    public void setCabeza(Nodo cabeza) {
+    public void setCabeza(Node cabeza) {
         this.inicio = cabeza;
     }
 
