@@ -1,10 +1,9 @@
-package Logic;
+package logic;
 
 import javax.swing.*;
 
 import jdk.nashorn.internal.ir.Node;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
