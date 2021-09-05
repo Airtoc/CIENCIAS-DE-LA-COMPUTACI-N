@@ -1,17 +1,20 @@
-
 package Logic;
 
 public class StudentNode {
+
     int codigo;
     String nombre;
     StudentNode sig;
     StudentNode ant;
+    CourseNode cabeza;
 
-    public StudentNode(int co, String na) {
+
+    public StudentNode(int co, String na,CourseNode ca) {
         this.codigo = co;
         this.nombre = na;
         this.sig = null;
         this.ant = null;
+        this.cabeza =ca;
 
     }
 
@@ -48,5 +51,15 @@ public class StudentNode {
     public StudentNode getAnterior() {
         return this.ant;
     }
+
+    public CourseNode getCabeza() {
+        return cabeza;
+    }
+
+    public void setCabeza(CourseNode cabeza) {
+        this.cabeza = cabeza;
+    }
+    
+    
 
 }

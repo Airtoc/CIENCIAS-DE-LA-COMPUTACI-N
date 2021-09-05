@@ -218,16 +218,24 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_delStudentActionPerformed
 
     private void delCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delCourseActionPerformed
-        // TODO add your handling code here:
+        String name = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
+        lista.eliminarMateria(lista.getCabeza(), name);
+        JOptionPane.showMessageDialog(null, "se ha eliminado el nodo de la lista");
+        eliminar();
+        imprimir();
+        modelCourse.fireTableDataChanged();
+        System.out.println("cambios hechos");
     }//GEN-LAST:event_delCourseActionPerformed
 
     private void newListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newListActionPerformed
         lista = new Lista();
         JOptionPane.showMessageDialog(null, "Se ha creado una lista vacia");
     }//GEN-LAST:event_newListActionPerformed
-
+    
+ 
+    //Basicos
     public void eliminar() {
-        
+
         int rowCount = coursesTable.getRowCount();
         // Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
@@ -247,7 +255,9 @@ public class Window extends javax.swing.JFrame {
         }
 
     }
-
+    
+    
+    //Main y otras cosas:
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

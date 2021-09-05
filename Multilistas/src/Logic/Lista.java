@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Lista {
     private CourseNode inicio;
+    private StudentNode est;
     private ArrayList<String> cursos = new ArrayList<String>();
     private ArrayList<String> estudiantes = new ArrayList<String>();
     
@@ -19,6 +20,7 @@ public class Lista {
         limpiar();
     }
     
+    //Basics
     public void limpiar(){
         cursos.clear();
         estudiantes.clear();
@@ -37,7 +39,14 @@ public class Lista {
         }
 
     }
-
+    public void mostrarlista(CourseNode list) {
+        if (list != null) {   
+            cursos.add(list.getCurso());
+            mostrarlista(list.getSiguiente());
+        }
+    }
+    
+    //Materias
     public void addMateria(CourseNode nuevo, CourseNode anterior){
         cursos.clear();
         if(nuevo.getCurso() == anterior.getCurso()){
@@ -91,14 +100,64 @@ public class Lista {
             eliminarMateria(list.getSiguiente(), nombre);
         }
     }
+    
+    
+    //Estudiantes
 
-    public void mostrarlista(CourseNode list) {
-        if (list != null) {   
-            cursos.add(list.getCurso());
-            mostrarlista(list.getSiguiente());
+    public void addStudent(StudentNode nuevo, StudentNode anterior){
+        estudiantes.clear();
+        if(nuevo.getNombre()== anterior.getNombre()){
+            JOptionPane.showMessageDialog(null,"El Curso ya se encuentra añadido");
+        }else{
+            if(nuevo != anterior){
+                if(ordenar(nuevo.getNombre(),anterior.getNombre()) == false){
+                    nuevo.setSiguiente(anterior);
+                    anterior.setAnterior(nuevo);
+                    if(est == anterior)
+                        est = nuevo;
+                }else{
+                    if(anterior.getSiguiente() != null){
+                        if(ordenar(nuevo.getNombre(),anterior.getSiguiente().getNombre()) == false){
+                            nuevo.setSiguiente(anterior.getSiguiente());
+                            nuevo.setAnterior(anterior);
+                            anterior.setSiguiente(nuevo);                
+                        }else{
+                            addStudent(nuevo,anterior.getSiguiente());
+                        }
+                    }else{
+                        anterior.setSiguiente(nuevo);
+                        nuevo.setAnterior(anterior);
+                        nuevo.setSiguiente(null);
+                    }
+                }
+            }
         }
+        
     }
 
+    public void eliminarStudent(StudentNode list, String nombre) {
+        estudiantes.clear();
+        if (list.getNombre() == nombre) { // Se comprueban que los codigos sean iguales
+            // asignaciones basicas 
+            //Primer nodo 
+            if (list.getAnterior() == null) {
+                this.est = list.getSiguiente();
+                list.getSiguiente().setAnterior(null);
+            }
+            //Ultimo nodo
+            if (list.getSiguiente() == null) {
+                list.getAnterior().setSiguiente(null);
+            }
+            //Nodo intermedio 
+            if (list.getAnterior() != null && list.getSiguiente() != null) {
+                list.getAnterior().setSiguiente(list.getSiguiente());
+                list.getSiguiente().setAnterior(list.getAnterior());
+            }
+        } else {
+            eliminarStudent(list.getSiguiente(), nombre);
+        }
+    }
+    
     // Getters & Setters :
     public CourseNode getCabeza() {
         return this.inicio;
