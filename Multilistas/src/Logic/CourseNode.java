@@ -15,7 +15,7 @@ public class CourseNode {
         this.cabezaStudent = null;
 
     }
-
+    
     // Getters & Setters:
     public void setNombre(String nombre) {
         this.curso = nombre;

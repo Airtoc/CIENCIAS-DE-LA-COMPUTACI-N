@@ -11,6 +11,7 @@ import java.util.List;
 //import java.util.Map;
 
 public class Lista {
+
     //Cabeza lista materias
     private CourseNode inicio;
     //materia seleccionada
@@ -23,6 +24,8 @@ public class Lista {
 
     public Lista() {
         this.inicio = null;
+        this.courseSelect = null;
+        this.inicioEstudiante = null;
         limpiar();
     }
 
@@ -53,13 +56,13 @@ public class Lista {
             mostrarlista(list.getSiguiente());
         }
     }
-     public void mostrarEstudiantes(StudentNode list) {
-        if (list != null) {   
-            estudiantes.put(list.getNombre(),list.getCodigo());
+
+    public void mostrarEstudiantes(StudentNode list) {
+        if (list != null) {
+            estudiantes.put(list.getNombre(), list.getCodigo());
             mostrarEstudiantes(list.getSiguiente());
         }
     }
-
 
     //Materias
     public void addMateria(CourseNode nuevo, CourseNode anterior) {
@@ -96,8 +99,8 @@ public class Lista {
 
     public void eliminarMateria(CourseNode lista, String nombre) {
         cursos.clear();
-        asignarMateria(lista,nombre);
-        if (courseSelect.getCabezaStudent()!= null) {
+        asignarMateria(lista, nombre);
+        if (courseSelect.getCabezaStudent() != null) {
             JOptionPane.showMessageDialog(null, "Elimine primero todos los estudiantes de la materia seleccionada");
         } else {
             if (lista.getCurso().equals(nombre) == true) { // Se comprueban que los codigos sean iguales
@@ -122,17 +125,23 @@ public class Lista {
         }
     }
 
-    public void asignarMateria(CourseNode lista, String nombre) {
-        if (lista != null) {
-            if (lista.getCurso().equals(nombre)) {
-                courseSelect = lista;
-            } else {
-                mostrarlista(lista.getSiguiente());
-            }
-        }
-    }
-    
     //Estudiantes
+    public void asignarMateria(CourseNode lista, String nombre) {
+        limpiar();
+        System.out.println("peticion: " + lista.getCurso() + " nombre : " + nombre);
+        if (lista.getCurso().equals(nombre)) {
+            courseSelect = lista;
+
+        } else {
+            System.out.println("diferente");
+            if (lista.getSiguiente() != null) {
+                asignarMateria(lista.getSiguiente(), nombre);
+            }
+
+        }
+
+    }
+
     public void addStudent(StudentNode nuevo, StudentNode anterior) {
         //Limpia el mapa
         estudiantes.clear();
@@ -145,8 +154,11 @@ public class Lista {
                 //
                 if (ordenar(nuevo.getNombre(), anterior.getNombre()) == false) {
                     nuevo.setSiguiente(anterior);
+                    nuevo.setCabeza(courseSelect);
                     anterior.setAnterior(nuevo);
+                    anterior.setCabeza(null);
                     if (inicioEstudiante == anterior) {
+                        courseSelect.setCabezaStudent(nuevo);
                         inicioEstudiante = nuevo;
                     }
                 } else {
@@ -171,24 +183,29 @@ public class Lista {
 
     public void eliminarStudent(StudentNode list, String nombre) {
         estudiantes.clear();
-        if (list.getNombre() == nombre) { // Se comprueban que los codigos sean iguales
-            // asignaciones basicas 
-            //Primer nodo 
-            if (list.getAnterior() == null) {
-                this.inicioEstudiante = list.getSiguiente();
-                list.getSiguiente().setAnterior(null);
-            }
-            //Ultimo nodo
-            if (list.getSiguiente() == null) {
-                list.getAnterior().setSiguiente(null);
-            }
-            //Nodo intermedio 
-            if (list.getAnterior() != null && list.getSiguiente() != null) {
-                list.getAnterior().setSiguiente(list.getSiguiente());
-                list.getSiguiente().setAnterior(list.getAnterior());
-            }
+        System.out.println(list.getNombre());
+        if (list.getAnterior() == null && list.getSiguiente() == null) {
+            courseSelect.setCabezaStudent(null);
         } else {
-            eliminarStudent(list.getSiguiente(), nombre);
+            if (list.getNombre().equals(nombre) == true) { // Se comprueban que los codigos sean iguales
+                // asignaciones basicas 
+                //Primer nodo 
+                if (list.getAnterior() == null) {
+                    courseSelect.setCabezaStudent(list.getSiguiente());
+                    list.getSiguiente().setAnterior(null);
+                }
+                //Ultimo nodo
+                if (list.getSiguiente() == null) {
+                    list.getAnterior().setSiguiente(null);
+                }
+                //Nodo intermedio 
+                if (list.getAnterior() != null && list.getSiguiente() != null) {
+                    list.getAnterior().setSiguiente(list.getSiguiente());
+                    list.getSiguiente().setAnterior(list.getAnterior());
+                }
+            } else {
+                eliminarStudent(list.getSiguiente(), nombre);
+            }
         }
     }
 
@@ -216,6 +233,9 @@ public class Lista {
     public LinkedHashMap<String, Integer> getEstudiantes() {
         return estudiantes;
     }
-    
+
+    public void setInicioEstudiante(StudentNode inicioEstudiante) {
+        this.inicioEstudiante = inicioEstudiante;
+    }
 
 }

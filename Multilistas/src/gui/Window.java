@@ -194,7 +194,7 @@ public class Window extends javax.swing.JFrame {
     
     public void eliminarEstudiantes() {
 
-        int rowCount = coursesTable.getRowCount();
+        int rowCount = studentsTable.getRowCount();
         // Remove rows one by one from the end of the table
         for (int i = rowCount - 1; i >= 0; i--) {
 
@@ -225,10 +225,10 @@ public class Window extends javax.swing.JFrame {
         }
     }
 
+    //Action Listeners:
 
     private void showListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showListActionPerformed
-//        eliminar();
-//        imprimir();
+        eliminarEstudiantes();
         String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
         lista.asignarMateria(lista.getCabeza(), materia);
         eliminarEstudiantes();
@@ -256,18 +256,23 @@ public class Window extends javax.swing.JFrame {
         String name = JOptionPane.showInputDialog(null, "inserte el nombre del estudiante");
         int codigo = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte el Codigo del estudiante"));
         String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
+        
+        
         //Asignar materia;
         lista.asignarMateria(lista.getCabeza(), materia);
+        
         //Crea el nodo estudiante 
         StudentNode student = new StudentNode(codigo, name);
-
+        
         //Asignacion del estudiante
+        
         if (lista.getCourseSelec().getCabezaStudent() == null) {
             // si no hay un nodo inicial , se convierte en el primero
             lista.getCourseSelec().setCabezaStudent(student);
             lista.getCourseSelec().getCabezaStudent().setCabeza(lista.getCourseSelec());
         } else {
             // Añade el nodo
+            lista.setInicioEstudiante(lista.getCourseSelec().getCabezaStudent());
             lista.addStudent(student, lista.getCourseSelec().getCabezaStudent());
 
         }
@@ -278,7 +283,18 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_addStudentActionPerformed
 
     private void delStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delStudentActionPerformed
-        // TODO add your handling code here:
+
+        String name = JOptionPane.showInputDialog(null, "inserte el nombre del estudiante");
+        String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
+        
+        
+        //Asignar materia;
+        lista.asignarMateria(lista.getCabeza(), materia);
+        lista.eliminarStudent(lista.getCabeza().getCabezaStudent(), name);
+        JOptionPane.showMessageDialog(null, "se ha eliminado el nodo de la lista");
+        eliminarEstudiantes();
+        imprimirEstudiantes();
+        System.out.println("cambios hechos");
     }//GEN-LAST:event_delStudentActionPerformed
 
     private void delCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delCourseActionPerformed
