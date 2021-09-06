@@ -6,15 +6,16 @@ public class StudentNode {
     String nombre;
     StudentNode sig;
     StudentNode ant;
+    StudentNode cabezaStu;
     CourseNode cabeza;
 
 
-    public StudentNode(int co, String na,CourseNode ca) {
+    public StudentNode(int co, String na) {
         this.codigo = co;
         this.nombre = na;
         this.sig = null;
         this.ant = null;
-        this.cabeza =ca;
+        this.cabeza = null;
 
     }
 
@@ -58,6 +59,14 @@ public class StudentNode {
 
     public void setCabeza(CourseNode cabeza) {
         this.cabeza = cabeza;
+    }
+
+    public StudentNode getCabezaStu() {
+        return cabezaStu;
+    }
+
+    public void setCabezaStu(StudentNode cabezaStu) {
+        this.cabezaStu = cabezaStu;
     }
     
     

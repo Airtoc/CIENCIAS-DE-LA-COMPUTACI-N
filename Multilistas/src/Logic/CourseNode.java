@@ -6,11 +6,13 @@ public class CourseNode {
     String curso;
     CourseNode sig;
     CourseNode ant;
+    StudentNode cabezaStudent;
 
     public CourseNode(String nombre) {
         this.curso = nombre;
         this.sig = null;
         this.ant = null;
+        this.cabezaStudent = null;
 
     }
 
@@ -39,4 +41,13 @@ public class CourseNode {
         return this.ant;
     }
 
+    public StudentNode getCabezaStudent() {
+        return cabezaStudent;
+    }
+
+    public void setCabezaStudent(StudentNode abj) {
+        this.cabezaStudent = abj;
+    }
+    
+    
 }

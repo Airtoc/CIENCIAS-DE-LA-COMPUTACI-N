@@ -1,20 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import Logic.CourseNode;
 import Logic.Lista;
+import Logic.StudentNode;
 import java.util.ArrayList;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author andre
- */
 public class Window extends javax.swing.JFrame {
 
     private Lista lista;
@@ -188,9 +181,58 @@ public class Window extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Basicos
+    public void eliminar() {
+
+        int rowCount = coursesTable.getRowCount();
+        // Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+
+            modelCourse.removeRow(i);
+        }
+    }
+    
+    public void eliminarEstudiantes() {
+
+        int rowCount = coursesTable.getRowCount();
+        // Remove rows one by one from the end of the table
+        for (int i = rowCount - 1; i >= 0; i--) {
+
+            modelStudent.removeRow(i);
+        }
+    }
+
+    public void imprimir() {
+        lista.limpiar();
+        lista.mostrarlista(lista.getCabeza());
+        ArrayList<String> a = lista.getCursos();
+        Object[] fila = new Object[1];
+        for (int i = 0; i < a.size(); i++) {
+            fila[0] = a.get(i);
+            modelCourse.addRow(fila);
+        }
+
+    }
+
+    public void imprimirEstudiantes() {
+        lista.mostrarEstudiantes(lista.getCourseSelec().getCabezaStudent());
+        Object[] fila = new Object[2];
+        Map<String, Integer> a = lista.getEstudiantes();
+        for (String i : a.keySet()) {
+            fila[0] = i;
+            fila[1] = a.get(i);
+            modelStudent.addRow(fila);
+        }
+    }
+
+
     private void showListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showListActionPerformed
-        eliminar();
-        imprimir();
+//        eliminar();
+//        imprimir();
+        String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
+        lista.asignarMateria(lista.getCabeza(), materia);
+        eliminarEstudiantes();
+        imprimirEstudiantes();
     }//GEN-LAST:event_showListActionPerformed
 
     private void addCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCourseActionPerformed
@@ -210,7 +252,29 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_addCourseActionPerformed
 
     private void addStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentActionPerformed
-        System.out.println("XDXDXDXD");
+        //Datos basicos
+        String name = JOptionPane.showInputDialog(null, "inserte el nombre del estudiante");
+        int codigo = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte el Codigo del estudiante"));
+        String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
+        //Asignar materia;
+        lista.asignarMateria(lista.getCabeza(), materia);
+        //Crea el nodo estudiante 
+        StudentNode student = new StudentNode(codigo, name);
+
+        //Asignacion del estudiante
+        if (lista.getCourseSelec().getCabezaStudent() == null) {
+            // si no hay un nodo inicial , se convierte en el primero
+            lista.getCourseSelec().setCabezaStudent(student);
+            lista.getCourseSelec().getCabezaStudent().setCabeza(lista.getCourseSelec());
+        } else {
+            // Añade el nodo
+            lista.addStudent(student, lista.getCourseSelec().getCabezaStudent());
+
+        }
+        eliminar();
+        imprimir();
+        JOptionPane.showMessageDialog(null, "Se ha añadido el nodo correctamente");
+
     }//GEN-LAST:event_addStudentActionPerformed
 
     private void delStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delStudentActionPerformed
@@ -218,7 +282,9 @@ public class Window extends javax.swing.JFrame {
     }//GEN-LAST:event_delStudentActionPerformed
 
     private void delCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delCourseActionPerformed
+        System.out.println("Entro");
         String name = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
+        System.out.println("salio");
         lista.eliminarMateria(lista.getCabeza(), name);
         JOptionPane.showMessageDialog(null, "se ha eliminado el nodo de la lista");
         eliminar();
@@ -231,32 +297,7 @@ public class Window extends javax.swing.JFrame {
         lista = new Lista();
         JOptionPane.showMessageDialog(null, "Se ha creado una lista vacia");
     }//GEN-LAST:event_newListActionPerformed
-    
- 
-    //Basicos
-    public void eliminar() {
 
-        int rowCount = coursesTable.getRowCount();
-        // Remove rows one by one from the end of the table
-        for (int i = rowCount - 1; i >= 0; i--) {
-
-            modelCourse.removeRow(i);
-        }
-    }
-
-    public void imprimir() {
-        lista.limpiar();
-        lista.mostrarlista(lista.getCabeza());
-        ArrayList<String> a = lista.getCursos();
-        Object[] fila = new Object[1];
-        for (int i = 0; i < a.size(); i++) {
-            fila[0] = a.get(i);
-            modelCourse.addRow(fila);
-        }
-
-    }
-    
-    
     //Main y otras cosas:
     public static void main(String args[]) {
         try {
