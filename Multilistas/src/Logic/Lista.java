@@ -20,7 +20,8 @@ public class Lista {
     private StudentNode inicioEstudiante;
     //Cosas para el map
     private ArrayList<String> cursos = new ArrayList<String>();
-    LinkedHashMap<String, Integer> estudiantes = new LinkedHashMap<String, Integer>();
+    private ArrayList<String> estudiantes = new ArrayList<String>();
+   
 
     public Lista() {
         this.inicio = null;
@@ -59,7 +60,7 @@ public class Lista {
 
     public void mostrarEstudiantes(StudentNode list) {
         if (list != null) {
-            estudiantes.put(list.getNombre(), list.getCodigo());
+            estudiantes.add(list.getNombre());
             mostrarEstudiantes(list.getSiguiente());
         }
     }
@@ -101,11 +102,10 @@ public class Lista {
         cursos.clear();
         asignarMateria(lista, nombre);
         if (courseSelect.getCabezaStudent() != null) {
+            //Verifica que aun tenga estudiantes
             JOptionPane.showMessageDialog(null, "Elimine primero todos los estudiantes de la materia seleccionada");
         } else {
             if (lista.getCurso().equals(nombre) == true) { // Se comprueban que los codigos sean iguales
-                // asignaciones basicas 
-                //Primer nodo 
                 if (lista.getAnterior() == null) {
                     this.inicio = lista.getSiguiente();
                     lista.getSiguiente().setAnterior(null);
@@ -183,7 +183,7 @@ public class Lista {
 
     public void eliminarStudent(StudentNode list, String nombre) {
         estudiantes.clear();
-        System.out.println(list.getNombre());
+        //Si solo queda un nodo elimina 
         if (list.getAnterior() == null && list.getSiguiente() == null) {
             courseSelect.setCabezaStudent(null);
         } else {
@@ -230,10 +230,11 @@ public class Lista {
         this.courseSelect = selec;
     }
 
-    public LinkedHashMap<String, Integer> getEstudiantes() {
+    public ArrayList<String> getEstudiantes() {
         return estudiantes;
     }
 
+    
     public void setInicioEstudiante(StudentNode inicioEstudiante) {
         this.inicioEstudiante = inicioEstudiante;
     }

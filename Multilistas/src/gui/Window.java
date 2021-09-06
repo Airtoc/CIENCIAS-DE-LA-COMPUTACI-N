@@ -4,7 +4,6 @@ import Logic.CourseNode;
 import Logic.Lista;
 import Logic.StudentNode;
 import java.util.ArrayList;
-import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -72,13 +71,13 @@ public class Window extends javax.swing.JFrame {
 
         studentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Estudiante", "Codigo"
+                "Estudiante"
             }
         ));
         jScrollPane2.setViewportView(studentsTable);
@@ -135,27 +134,28 @@ public class Window extends javax.swing.JFrame {
                         .addGap(61, 61, 61)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(234, 234, 234)
+                                .addComponent(newList, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(showList)
                                 .addGap(18, 18, 18)
-                                .addComponent(addCourse)
-                                .addGap(18, 18, 18)
-                                .addComponent(addStudent)
-                                .addGap(18, 18, 18)
-                                .addComponent(delStudent)
-                                .addGap(18, 18, 18)
-                                .addComponent(delCourse))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(66, 66, 66)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(newList, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(addCourse)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(addStudent)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(delStudent)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(delCourse))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +191,7 @@ public class Window extends javax.swing.JFrame {
             modelCourse.removeRow(i);
         }
     }
-    
+
     public void eliminarEstudiantes() {
 
         int rowCount = studentsTable.getRowCount();
@@ -216,11 +216,10 @@ public class Window extends javax.swing.JFrame {
 
     public void imprimirEstudiantes() {
         lista.mostrarEstudiantes(lista.getCourseSelec().getCabezaStudent());
-        Object[] fila = new Object[2];
-        Map<String, Integer> a = lista.getEstudiantes();
-        for (String i : a.keySet()) {
-            fila[0] = i;
-            fila[1] = a.get(i);
+        ArrayList<String> a = lista.getEstudiantes();
+        Object[] fila = new Object[1];
+        for (int i = 0; i < a.size(); i++) {
+            fila[0] = a.get(i);
             modelStudent.addRow(fila);
         }
     }
@@ -254,18 +253,15 @@ public class Window extends javax.swing.JFrame {
     private void addStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentActionPerformed
         //Datos basicos
         String name = JOptionPane.showInputDialog(null, "inserte el nombre del estudiante");
-        int codigo = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte el Codigo del estudiante"));
         String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
-        
-        
+
         //Asignar materia;
         lista.asignarMateria(lista.getCabeza(), materia);
-        
+
         //Crea el nodo estudiante 
-        StudentNode student = new StudentNode(codigo, name);
-        
+        StudentNode student = new StudentNode(name);
+
         //Asignacion del estudiante
-        
         if (lista.getCourseSelec().getCabezaStudent() == null) {
             // si no hay un nodo inicial , se convierte en el primero
             lista.getCourseSelec().setCabezaStudent(student);
@@ -286,27 +282,24 @@ public class Window extends javax.swing.JFrame {
 
         String name = JOptionPane.showInputDialog(null, "inserte el nombre del estudiante");
         String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
-        
-        
+
         //Asignar materia;
         lista.asignarMateria(lista.getCabeza(), materia);
         lista.eliminarStudent(lista.getCabeza().getCabezaStudent(), name);
-        JOptionPane.showMessageDialog(null, "se ha eliminado el nodo de la lista");
+        JOptionPane.showMessageDialog(null, "se ha eliminado el estudiante del curso");
+        //Imprimir tabla
         eliminarEstudiantes();
         imprimirEstudiantes();
-        System.out.println("cambios hechos");
     }//GEN-LAST:event_delStudentActionPerformed
 
     private void delCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delCourseActionPerformed
-        System.out.println("Entro");
+
         String name = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
-        System.out.println("salio");
         lista.eliminarMateria(lista.getCabeza(), name);
-        JOptionPane.showMessageDialog(null, "se ha eliminado el nodo de la lista");
+        JOptionPane.showMessageDialog(null, "se ha eliminado la materia correctamente");
+        //Imprimir tabla
         eliminar();
         imprimir();
-        modelCourse.fireTableDataChanged();
-        System.out.println("cambios hechos");
     }//GEN-LAST:event_delCourseActionPerformed
 
     private void newListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newListActionPerformed

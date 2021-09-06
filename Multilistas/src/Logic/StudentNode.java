@@ -1,8 +1,6 @@
 package Logic;
 
 public class StudentNode {
-
-    int codigo;
     String nombre;
     StudentNode sig;
     StudentNode ant;
@@ -10,8 +8,7 @@ public class StudentNode {
     CourseNode cabeza;
 
 
-    public StudentNode(int co, String na) {
-        this.codigo = co;
+    public StudentNode(String na) {
         this.nombre = na;
         this.sig = null;
         this.ant = null;
@@ -24,10 +21,6 @@ public class StudentNode {
         this.nombre = nombre;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
     public void setSiguiente(StudentNode siguiente) {
         this.sig = siguiente;
     }
@@ -38,11 +31,6 @@ public class StudentNode {
 
     public String getNombre() {
         return this.nombre;
-    }
-
-    public int getCodigo() {
-
-        return this.codigo;
     }
 
     public StudentNode getSiguiente() {
