@@ -265,6 +265,7 @@ public class Window extends javax.swing.JFrame {
         if (lista.getCourseSelec().getCabezaStudent() == null) {
             // si no hay un nodo inicial , se convierte en el primero
             lista.getCourseSelec().setCabezaStudent(student);
+            
             lista.getCourseSelec().getCabezaStudent().setCabeza(lista.getCourseSelec());
         } else {
             // Añade el nodo
@@ -285,7 +286,7 @@ public class Window extends javax.swing.JFrame {
 
         //Asignar materia;
         lista.asignarMateria(lista.getCabeza(), materia);
-        lista.eliminarStudent(lista.getCabeza().getCabezaStudent(), name);
+        lista.eliminarStudent(lista.getCourseSelec().getCabezaStudent(), name);
         JOptionPane.showMessageDialog(null, "se ha eliminado el estudiante del curso");
         //Imprimir tabla
         eliminarEstudiantes();

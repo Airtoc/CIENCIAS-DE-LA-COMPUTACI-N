@@ -21,7 +21,6 @@ public class Lista {
     //Cosas para el map
     private ArrayList<String> cursos = new ArrayList<String>();
     private ArrayList<String> estudiantes = new ArrayList<String>();
-   
 
     public Lista() {
         this.inicio = null;
@@ -106,6 +105,7 @@ public class Lista {
             JOptionPane.showMessageDialog(null, "Elimine primero todos los estudiantes de la materia seleccionada");
         } else {
             if (lista.getCurso().equals(nombre) == true) { // Se comprueban que los codigos sean iguales
+               
                 if (lista.getAnterior() == null) {
                     this.inicio = lista.getSiguiente();
                     lista.getSiguiente().setAnterior(null);
@@ -146,7 +146,7 @@ public class Lista {
         //Limpia el mapa
         estudiantes.clear();
         //verifica que los nombres no se repitan
-        if (nuevo.getNombre() == anterior.getNombre()) {
+        if (nuevo.getNombre().equals(anterior.getNombre())== true) {
             JOptionPane.showMessageDialog(null, "El estudiante ya se encuentra registrado");
         } else {
             //verifican que sean diferentes
@@ -184,29 +184,32 @@ public class Lista {
     public void eliminarStudent(StudentNode list, String nombre) {
         estudiantes.clear();
         //Si solo queda un nodo elimina 
-        if (list.getAnterior() == null && list.getSiguiente() == null) {
-            courseSelect.setCabezaStudent(null);
-        } else {
-            if (list.getNombre().equals(nombre) == true) { // Se comprueban que los codigos sean iguales
-                // asignaciones basicas 
-                //Primer nodo 
-                if (list.getAnterior() == null) {
-                    courseSelect.setCabezaStudent(list.getSiguiente());
-                    list.getSiguiente().setAnterior(null);
-                }
-                //Ultimo nodo
-                if (list.getSiguiente() == null) {
-                    list.getAnterior().setSiguiente(null);
-                }
-                //Nodo intermedio 
-                if (list.getAnterior() != null && list.getSiguiente() != null) {
-                    list.getAnterior().setSiguiente(list.getSiguiente());
-                    list.getSiguiente().setAnterior(list.getAnterior());
-                }
-            } else {
-                eliminarStudent(list.getSiguiente(), nombre);
+
+        if (list.getNombre().equals(nombre) == true) { // Se comprueban que los codigos sean iguales
+            // asignaciones basicas 
+            //Primer nodo 
+            if (list.getAnterior() == null && list.getSiguiente() == null) {
+                courseSelect.setCabezaStudent(null);
+                System.out.println("XDXDXD");
             }
+            if (list.getAnterior() == null && list.getSiguiente() != null) {
+                courseSelect.setCabezaStudent(list.getSiguiente());
+                list.getSiguiente().setAnterior(null);
+            }
+            //Ultimo nodo
+            if (list.getSiguiente() == null && list.getAnterior() != null) {
+                list.getAnterior().setSiguiente(null);
+            }
+            //Nodo intermedio 
+            if (list.getAnterior() != null && list.getSiguiente() != null) {
+                list.getAnterior().setSiguiente(list.getSiguiente());
+                list.getSiguiente().setAnterior(list.getAnterior());
+            }
+        } else {
+            System.out.println("se lo salto");
+            eliminarStudent(list.getSiguiente(), nombre);
         }
+
     }
 
     // Getters & Setters :
@@ -234,7 +237,6 @@ public class Lista {
         return estudiantes;
     }
 
-    
     public void setInicioEstudiante(StudentNode inicioEstudiante) {
         this.inicioEstudiante = inicioEstudiante;
     }
