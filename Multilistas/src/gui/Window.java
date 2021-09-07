@@ -228,14 +228,14 @@ public class Window extends javax.swing.JFrame {
 
     private void showListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showListActionPerformed
         eliminarEstudiantes();
-        String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
+        String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia").trim();
         lista.asignarMateria(lista.getCabeza(), materia);
         eliminarEstudiantes();
         imprimirEstudiantes();
     }//GEN-LAST:event_showListActionPerformed
 
     private void addCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCourseActionPerformed
-        String name = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
+        String name = JOptionPane.showInputDialog(null, "inserte el nombre de la materia").trim();
         CourseNode nodo = new CourseNode(name);
         if (lista.getCabeza() == null) {
             // si no hay un nodo inicial , se convierte en el primero
@@ -252,8 +252,8 @@ public class Window extends javax.swing.JFrame {
 
     private void addStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentActionPerformed
         //Datos basicos
-        String name = JOptionPane.showInputDialog(null, "inserte el nombre del estudiante");
-        String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
+        String name = JOptionPane.showInputDialog(null, "inserte el nombre del estudiante").trim();
+        String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia").trim();
 
         //Asignar materia;
         lista.asignarMateria(lista.getCabeza(), materia);
@@ -273,16 +273,16 @@ public class Window extends javax.swing.JFrame {
             lista.addStudent(student, lista.getCourseSelec().getCabezaStudent());
 
         }
-        eliminar();
-        imprimir();
+        eliminarEstudiantes();
+        imprimirEstudiantes();
         JOptionPane.showMessageDialog(null, "Se ha añadido el nodo correctamente");
 
     }//GEN-LAST:event_addStudentActionPerformed
 
     private void delStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delStudentActionPerformed
 
-        String name = JOptionPane.showInputDialog(null, "inserte el nombre del estudiante");
-        String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
+        String name = JOptionPane.showInputDialog(null, "inserte el nombre del estudiante").trim();
+        String materia = JOptionPane.showInputDialog(null, "inserte el nombre de la materia").trim();
 
         //Asignar materia;
         lista.asignarMateria(lista.getCabeza(), materia);
@@ -295,7 +295,7 @@ public class Window extends javax.swing.JFrame {
 
     private void delCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delCourseActionPerformed
 
-        String name = JOptionPane.showInputDialog(null, "inserte el nombre de la materia");
+        String name = JOptionPane.showInputDialog(null, "inserte el nombre de la materia").trim();
         lista.eliminarMateria(lista.getCabeza(), name);
         JOptionPane.showMessageDialog(null, "se ha eliminado la materia correctamente");
         //Imprimir tabla

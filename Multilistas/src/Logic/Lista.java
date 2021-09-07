@@ -199,6 +199,7 @@ public class Lista {
             //Ultimo nodo
             if (list.getSiguiente() == null && list.getAnterior() != null) {
                 list.getAnterior().setSiguiente(null);
+                System.out.println("here is");
             }
             //Nodo intermedio 
             if (list.getAnterior() != null && list.getSiguiente() != null) {
