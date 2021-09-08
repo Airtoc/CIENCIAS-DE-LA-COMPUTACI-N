@@ -1,43 +1,40 @@
 package GUI;
 
-import java.awt.EventQueue;
+import javax.swing.*;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-
-public class Ventana {
-
-	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Ventana window = new Ventana();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+public class Ventana extends JFrame implements ActionListener {
+	
+	private static int WIDTH = 800;
+	private static int HEIGHT = 600;
+	private JPanel contentPanel, optionsPanel, graphPanel;
+	
+	public Ventana(String title) {
+		setTitle(title);
+		setLayout(null);
+		setSize(WIDTH, HEIGHT);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public Ventana() {
-		initialize();
+	public void loadComponents() {
+		// Content Panel.
+		contentPanel = new JPanel();
+		setContentPane(contentPanel);
+		
+		optionsPanel = new JPanel();
+		contentPanel.add(optionsPanel);
+		
+		
+		
+		
+		setVisible(true);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-
+	@Override
+    public void actionPerformed(ActionEvent event) {
+       
+    }
 }
