@@ -50,6 +50,4 @@ public class NodoFila {
 		this.arriba = arriba;
 	}
 	
-	
-	
 }

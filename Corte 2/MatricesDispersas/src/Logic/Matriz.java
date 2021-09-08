@@ -1,78 +1,74 @@
 package Logic;
 
+import javax.swing.JOptionPane;
+
 public class Matriz {
 	private NodoColumna inicio;
 	private String lista = "";
+	private String tipo = "";
 
-	public Matriz() {
-
+	public Matriz(String tp) {
+		tipo = tp;
 		this.inicio = null;
 	}
 
-	public void addDato(int fila, int columna, int valor) {
-
-	}
 	// Metodos necesarios
 
-	public void addNodoColumna(NodoColumna nuevo, NodoColumna anterior) {
-		if (nuevo != anterior) {
-			if (nuevo.getCol() > anterior.getCol()) {
-				nuevo.setSiguiente(anterior);
-				anterior.setAnterior(nuevo);
-				if (inicio == anterior)
-					inicio = nuevo;
-			} else {
-				if (anterior.getSiguiente() != null) {
-					if (nuevo.getCol() < anterior.getSiguiente().getCol()) {
-						nuevo.setSiguiente(anterior.getSiguiente());
-						nuevo.setAnterior(anterior);
-						anterior.setSiguiente(nuevo);
-					} else {
-						addNodoColumna(nuevo, anterior.getSiguiente());
+	public void addNodoColumna(NodoColumna nuevo, NodoColumna anterior, NodoFila fila) {
+		if(anterior != null) {
+			if(nuevo.getCol() == anterior.getCol()) {
+				//Si se repite la columna solo se añade la fila
+				addNodoFila(fila,anterior.getCabeza(),anterior);
+			}else {
+				if(nuevo.getCol()<anterior.getCol()) {
+					if(anterior == inicio) {
+						nuevo.setSiguiente(inicio);
+						inicio.setAnterior(nuevo);
+						inicio = nuevo;
+						addNodoFila(fila,nuevo.getCabeza(),nuevo);
+						
+					}else {
+						anterior.getAnterior()
 					}
-				} else {
-					anterior.setSiguiente(nuevo);
-					nuevo.setAnterior(anterior);
-					nuevo.setSiguiente(null);
 				}
 			}
 		}
 	}
 
-	public void addNodoFila(NodoFila nuevo, NodoColumna lista,int columna) {
-		//A el metodo se le pasa la cabeza de las columnas 
-		if(columna == lista.getCol()) {
-			NodoFila anterior = lista.getCabeza();
-			if (nuevo != anterior) {
-				if (nuevo.getFila() > anterior.getFila()) {
-					nuevo.setAbajo(anterior);
-					anterior.setArriba(nuevo);
-					if (lista.getCabeza() == anterior) {
-						lista.setCabeza(nuevo);
-					} else {
-						if (anterior.getAbajo() != null) {
-							if (nuevo.getFila() < anterior.getAbajo().getFila()) {
-								nuevo.setArriba(anterior.getAbajo());
-								nuevo.setArriba(anterior);
-								anterior.setAbajo(nuevo);
-							} else {
-								addNodoFila(nuevo, lista.getSiguiente(), columna);
-							}
-						} else {
-							anterior.setAbajo(nuevo);
-							nuevo.setArriba(anterior);
-							nuevo.setAbajo(null);
-						}
-					}
-				}
-			}
-		}else {
-			addNodoFila(nuevo, lista.getSiguiente(), columna);
-		}
+	public void addNodoFila(NodoFila nuevo,NodoFila listaFil, NodoColumna listaCol ) {
+		
+		if(lista != null){
+            if(nuevo.getFila() == listaFil.getFila()){
+                JOptionPane.showMessageDialog(null, "Ya existe un valor en esta posición");
+            }else{
+                if(nuevo.getFila()<listaFil.getFila()){
+                    if(listaFil == listaCol.getCabeza()){
+                        listaCol.getCabeza().setArriba(nuevo);
+                        nuevo.setAbajo(listaCol.getCabeza());
+                        listaCol.setCabeza(nuevo);
+                    }else{
+                        listaFil.getArriba().setAbajo(nuevo);
+                        nuevo.setArriba(listaFil.getArriba());
+                        nuevo.setAbajo(listaFil);
+                        listaFil.setArriba(nuevo);
+                    }
+                }else{
+                    if(listaFil.getAbajo() == null){
+                        listaFil.setAbajo(nuevo);
+                        nuevo.setArriba(listaFil);
+                    }else{
+                        addNodoFila(nuevo,listaFil.getAbajo(),listaCol);
+                    }
+                }
+            }
+        }else{
+            listaCol.setCabeza(nuevo);
+        }
 	}
 
 	public void mostrarlista(NodoColumna list) {
 		if (list != null) {
+			lista += "xd";
 			mostrarlista(list.getSiguiente());
 		}
 	}
