@@ -4,8 +4,9 @@ import javax.swing.JOptionPane;
 
 public class Matriz {
 	private NodoColumna inicio;
-	private String lista = "";
+	private String listaCo = "";
 	private String tipo = "";
+	private String listaFilas ="";
 
 	public Matriz(String tp) {
 		tipo = tp;
@@ -20,7 +21,7 @@ public class Matriz {
 				//Si se repite la columna solo se añade la fila
 				addNodoFila(fila,anterior.getCabeza(),anterior);
 			}else {
-				if(nuevo.getCol()<anterior.getCol()) {
+				if(nuevo.getCol() < anterior.getCol()) {
 					if(anterior == inicio) {
 						nuevo.setSiguiente(inicio);
 						inicio.setAnterior(nuevo);
@@ -28,7 +29,19 @@ public class Matriz {
 						addNodoFila(fila,nuevo.getCabeza(),nuevo);
 						
 					}else {
-						anterior.getAnterior()
+						anterior.getAnterior().setSiguiente(nuevo);
+						nuevo.setAnterior(anterior.getAnterior());
+						nuevo.setSiguiente(anterior);
+						anterior.setAnterior(nuevo);
+						addNodoFila(fila,nuevo.getCabeza(),nuevo);
+					}
+				}else {
+					if(anterior.getSiguiente() == null) {
+						anterior.setSiguiente(nuevo);
+						nuevo.setAnterior(anterior);
+						addNodoFila(fila,anterior.getSiguiente().getCabeza(),anterior.getSiguiente());
+					}else {
+						addNodoColumna(nuevo,anterior.getSiguiente(),fila);
 					}
 				}
 			}
@@ -37,7 +50,7 @@ public class Matriz {
 
 	public void addNodoFila(NodoFila nuevo,NodoFila listaFil, NodoColumna listaCol ) {
 		
-		if(lista != null){
+		if(listaFil != null){
             if(nuevo.getFila() == listaFil.getFila()){
                 JOptionPane.showMessageDialog(null, "Ya existe un valor en esta posición");
             }else{
@@ -63,14 +76,28 @@ public class Matriz {
             }
         }else{
             listaCol.setCabeza(nuevo);
+            System.out.println(listaCol.getCabeza().getFila());
         }
 	}
 
 	public void mostrarlista(NodoColumna list) {
 		if (list != null) {
-			lista += "xd";
+			listaCo += "Columna: "+list.getCol()+"\n";
+			System.out.println("Columna: "+list.getCol()+"\n");//imprime columna
+			mostrarListaFilas(list.getCabeza());
 			mostrarlista(list.getSiguiente());
 		}
+		//System.out.println(listaCo);
+		//System.out.println(listaFilas);
+		
+	}
+	public void mostrarListaFilas(NodoFila list) {
+		if(list != null) {
+			listaFilas += "Fila : "+list.getFila()+" Valor: "+list.getValor()+"\n";
+			System.out.println("Fila : "+list.getFila()+" Valor: "+list.getValor());
+			mostrarListaFilas(list.getAbajo());
+		}
+		
 	}
 
 	// Getters & Setters :
@@ -83,12 +110,22 @@ public class Matriz {
 		this.inicio = inicio;
 	}
 
-	public String getLista() {
-		return lista;
+	public String getListaCo() {
+		return listaCo;
 	}
 
-	public void setLista(String lista) {
-		this.lista = lista;
+	public void setListaCo(String listaCo) {
+		this.listaCo = listaCo;
 	}
+
+	public String getListaFilas() {
+		return listaFilas;
+	}
+
+	public void setListaFilas(String listaFilas) {
+		this.listaFilas = listaFilas;
+	}
+
+	
 
 }
