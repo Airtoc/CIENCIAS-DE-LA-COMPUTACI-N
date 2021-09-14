@@ -16,16 +16,18 @@ public class Window extends JFrame implements ActionListener {
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	private JPanel optionsPanel, mathPanel;
-	private JButton btnMath;
-	private JTextPane txtMathA, txtMathB;
+	private JButton btnMath, btnShow, btnClean;
+	private JTextPane txtMathA, txtMathB, txtMathProductAB;
 	private JScrollPane scrollMathA, scrollMathB;
 	private JLabel lblTitle, lblMatrixA, lblMatrixB;
 	private boolean checkDataMatrixA, checkDataMatrixB = false;
-	private Matriz a, b;
+	private Matriz a, b, r;
+	private int MaxColA, MaxColB, MaxFilA, MaxFilB;
 
 	public Window(String title) {
 		a = new Matriz("a");
 		b = new Matriz("b");
+		r = new Matriz("resultado");
 		setTitle(title);
 		setSize(WIDTH, HEIGHT);
 		setResizable(false);
@@ -34,7 +36,7 @@ public class Window extends JFrame implements ActionListener {
 	}
 
 	public void loadComponents() {
-		
+
 		optionsPanel = new JPanel(null);
 		// optionsPanel.setBounds(0,0,400,600);
 		optionsPanel.setBackground(Color.gray);
@@ -72,17 +74,31 @@ public class Window extends JFrame implements ActionListener {
 		btnMath.setBounds(10, 500, 380, 50);
 		btnMath.addActionListener(this);
 		optionsPanel.add(btnMath);
-		add(optionsPanel, BorderLayout.CENTER);
 
+		btnShow = new JButton("Imprimir");
+		btnShow.setFocusable(false);
+		btnShow.setBounds(380, 500, 380, 50);
+		btnShow.addActionListener(this);
+		optionsPanel.add(btnShow);
+
+		txtMathProductAB = new JTextPane();
+		txtMathProductAB.setBounds(400, 10, 380, 500);
+		optionsPanel.add(txtMathProductAB);
+
+		add(optionsPanel, BorderLayout.CENTER);
 		setVisible(true);
 	}
 
-	public void addA() {
-		// Action listener A
-		int columna = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte la columna").trim());
-		int fila = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte la fila").trim());
-		int valor = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte el valor").trim());
-		// Añade la columna
+	public void cleanData() {
+		a = new Matriz("a");
+		b = new Matriz("b");
+		r = new Matriz("r");
+		txtMathA.setText("");
+		txtMathB.setText("");
+	}
+
+	public void addA(int columna, int fila, int valor) {
+
 		NodoColumna col = new NodoColumna(columna);
 		NodoFila fil = new NodoFila(fila, valor);
 
@@ -98,12 +114,8 @@ public class Window extends JFrame implements ActionListener {
 
 	}
 
-	public void addB() {
-		// Action listener B
-		int columna = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte la columna").trim());
-		int fila = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte la fila").trim());
-		int valor = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte el valor").trim());
-		// Añade la columna
+	public void addB(int columna, int fila, int valor) {
+
 		NodoColumna col = new NodoColumna(columna);
 		NodoFila fil = new NodoFila(fila, valor);
 
@@ -118,11 +130,28 @@ public class Window extends JFrame implements ActionListener {
 		}
 	}
 
+	public void addResultado(int columna, int fila, int valor) {
+
+		NodoColumna col = new NodoColumna(columna);
+		NodoFila fil = new NodoFila(fila, valor);
+
+		if (r.getInicio() == null) {
+			// si no hay un nodo inicial , se convierte en el primero
+			r.setInicio(col);
+			col.setCabeza(fil);
+		} else {
+			// Añade el nodo
+			r.addNodoColumna(col, a.getInicio(), fil);
+
+		}
+
+	}
+
 	public void max() {
-		int MaxColA = a.nColumnas(a.getInicio());
-		int MaxColB = b.nColumnas(b.getInicio());
-		int MaxFilA = a.nFilas(a.getInicio().getCabeza());
-		int MaxFilB = b.nFilas(b.getInicio().getCabeza());
+		MaxColA = a.nColumnas(a.getInicio());
+		MaxColB = b.nColumnas(b.getInicio());
+		MaxFilA = a.nFilas(a.getInicio().getCabeza());
+		MaxFilB = b.nFilas(b.getInicio().getCabeza());
 		System.out.println("Matriz A -> MaxCol: " + MaxColA + " MaxFil: " + MaxFilA);
 		System.out.println("Matriz B -> MaxCol: " + MaxColB + " MaxFil: " + MaxFilB);
 	}
@@ -132,69 +161,119 @@ public class Window extends JFrame implements ActionListener {
 		a.mostrarlista(a.getInicio());
 		System.out.println("Matriz B");
 		b.mostrarlista(b.getInicio());
+		System.out.println("Matriz Resultado: ");
+		r.mostrarlista(r.getInicio());
+	}
+
+	public void showData() {
+	    a.mostrarlista(a.getInicio(), this.)
+	}
+
+	public void enviarMatriz() {
+		System.out.println("Datos enviados: Calculando...");
+
+		// Get data.
+		Validation validate = new Validation();
+
+		String stringMatrixA = getTxtMathA().getText();
+		System.out.println(stringMatrixA);
+		String[] splitMatrixA = stringMatrixA.split(";");
+
+		String stringMatrixB = getTxtMathB().getText();
+		System.out.println(stringMatrixB);
+		String[] splitMatrixB = stringMatrixB.split(";");
+
+		// Check data for MatrixA.
+		for (int i = 0; i < splitMatrixA.length; i++) {
+
+			if (validate.isValidFormat(splitMatrixA[i]) == false) {
+				checkDataMatrixA = false;
+				i = splitMatrixA.length;
+			} else {
+				checkDataMatrixA = true;
+			}
+		}
+
+		// Check data for MatrixB.
+		for (int i = 0; i < splitMatrixB.length; i++) {
+			if (validate.isValidFormat(splitMatrixB[i]) == false) {
+				checkDataMatrixB = false;
+				i = splitMatrixB.length;
+			} else {
+				checkDataMatrixB = true;
+			}
+		}
+		System.out.println(checkDataMatrixA + " <-Matrix A - Matrix B-> " + checkDataMatrixB);
+
+		// Send data.
+		if (checkDataMatrixB && (checkDataMatrixA)) {
+			System.out.println("Datos correctos: Calculando...");
+
+			// Send data for MatrixA.
+			for (int i = 0; i < splitMatrixA.length; i++) {
+				splitMatrixA[i] = splitMatrixA[i].replace("(", "");
+				splitMatrixA[i] = splitMatrixA[i].replace(")", "");
+				String[] tempValuesMatrixA = splitMatrixA[i].split(",");
+
+				boolean aux = false;
+				while (aux != true) {
+					addA(Integer.parseInt(tempValuesMatrixA[0]), Integer.parseInt(tempValuesMatrixA[1]),
+							Integer.parseInt(tempValuesMatrixA[2]));
+					aux = true;
+				}
+				// si metemos el crear nodo aca, sera que se rompe? // R: Ya vamos a ver
+			}
+
+			// Send data for MatrixB.
+			for (int i = 0; i < splitMatrixB.length; i++) {
+				splitMatrixB[i] = splitMatrixB[i].replace("(", "");
+				splitMatrixB[i] = splitMatrixB[i].replace(")", "");
+				String[] tempValuesMatrixB = splitMatrixB[i].split(",");
+				boolean aux = false;
+				while (aux != true) {
+					addB(Integer.parseInt(tempValuesMatrixB[0]), Integer.parseInt(tempValuesMatrixB[1]),
+							Integer.parseInt(tempValuesMatrixB[2]));
+					aux = true;
+				}
+			}
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMath) {
-			System.out.println("Datos enviados: Calculando...");
-
-			// Get data.
-			Validation validate = new Validation();
-
-			String stringMatrixA = getTxtMathA().getText();
-			System.out.println(stringMatrixA);
-			String[] splitMatrixA = stringMatrixA.split(";");
-
-			String stringMatrixB = getTxtMathB().getText();
-			System.out.println(stringMatrixB);
-			String[] splitMatrixB = stringMatrixB.split(";");
-
-			// Check data for MatrixA.
-			for (int i = 0; i < splitMatrixA.length; i++) {
-
-				if (validate.isValidFormat(splitMatrixA[i]) == false) {
-					checkDataMatrixA = false;
-					i = splitMatrixA.length;
-				} else {
-					checkDataMatrixA = true;
-				}
-			}
-
-			// Check data for MatrixB.
-			for (int i = 0; i < splitMatrixB.length; i++) {
-				if (validate.isValidFormat(splitMatrixB[i]) == false) {
-					checkDataMatrixB = false;
-					i = splitMatrixB.length;
-				} else {
-					checkDataMatrixB = true;
-				}
-			}
-			System.out.println(checkDataMatrixA + " <-Matrix A - Matrix B-> " + checkDataMatrixB);
-
-			// Send data.
-			if (checkDataMatrixB && (checkDataMatrixA)) {
-				System.out.println("Datos correctos: Calculando...");
-
-				// Send data for MatrixA.
-				for (int i = 0; i < splitMatrixA.length; i++) {
-					splitMatrixA[i] = splitMatrixA[i].replace("(", "");
-					splitMatrixA[i] = splitMatrixA[i].replace(")", "");
-					String[] tempValuesMatrixA = splitMatrixA[i].split(",");
-					for (int b = 0; b < splitMatrixA.length; b++) {
-						System.out.println(splitMatrixA[b]+"---");
-					}
-									
-					// si metemos el crear nodo aca, sera que se rompe?
-
-				}
+			enviarMatriz();
+			max();
+			if(MaxColA == MaxFilB) {
+				/*
+				 * 2x3-3x2->2x2
+				 * fila-columna 
+				 * columnas A = filas B
+				 */
+				NodoFila a1 = a.getInicio().getCabeza();//Fila 1A
+				NodoFila b1 = b.getInicio().getCabeza();//Fila 1B
+				NodoColumna a2 = a.getInicio();//Columna 1A
+				NodoColumna b2 = b.getInicio();//Columna 1B
+				int columna = a2.getCol() ;
+				int fila = b1.getFila();
+				int valor = r.multiplicar(a2,b1);
+				addResultado(columna,fila,valor);
 				
-				// Send data for MatrixB.
-				for (int i = 0; i < splitMatrixB.length; i++) {
-					splitMatrixB[i] = splitMatrixB[i].replace("(", "");
-					splitMatrixB[i] = splitMatrixB[i].replace(")", "");
-				}
+				
+				
+			}else {
+				JOptionPane.showMessageDialog(null,"Los tamaños de las matrices no son compatibles");
 			}
+
+			// Show the information in Sout.
+		} else if(e.getSource() == btnShow) {
+			// TODO
+			//showc();
+			showData();
+
+		} else if(e.getSource() == btnClean) {
+		    // TODO
+		    cleanData();
 		}
 	}
 
@@ -221,6 +300,10 @@ public class Window extends JFrame implements ActionListener {
 
 	public void setBtnMath(JButton btnMath) {
 		this.btnMath = btnMath;
+	}
+	
+	public JTextPane getTxtMathProductAB() {
+	    return txtMathProductAB;
 	}
 
 	public JTextPane getTxtMathA() {
@@ -278,4 +361,5 @@ public class Window extends JFrame implements ActionListener {
 	public void setLblMatrixB(JLabel lblMatrixB) {
 		this.lblMatrixB = lblMatrixB;
 	}
+
 }

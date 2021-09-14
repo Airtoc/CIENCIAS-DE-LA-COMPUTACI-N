@@ -1,14 +1,19 @@
 package Logic;
 
 import javax.swing.JOptionPane;
+importvax. javax.swing.*;
+import java.awt.*;
 
 public class Matriz {
+
+    private JTextPane txtMathProductAB;
 	private NodoColumna inicio;
 	private String listaCo = "";
 	private String tipo = "";
 	private String listaFilas ="";
 	private int maxFil;
 	private int maxCol;
+	private int val;
 	
 
 	public Matriz(String tp) {
@@ -83,7 +88,7 @@ public class Matriz {
         }
 	}
 
-	public void mostrarlista(NodoColumna list) {
+	public void mostrarlista(NodoColumna list, JTextPane txtMathProductAB) {
 		if (list != null) {
 			listaCo += "Columna: "+list.getCol()+"\n";
 			System.out.println("Columna: "+list.getCol()+"\n");//imprime columna
@@ -123,6 +128,19 @@ public class Matriz {
 			nFilas(fil.getAbajo());
 		}
 		return maxFil;
+	}
+
+	public int multiplicar(NodoColumna aCol, NodoFila bFil) {
+
+		if(aCol != null) {
+			val += aCol.getCol() * bFil.getFila();
+			multiplicar(aCol.getSiguiente(), bFil.getAbajo());
+			
+		}
+		System.out.println(val);
+		return val;
+		
+		
 	}
 
 	// Getters & Setters :

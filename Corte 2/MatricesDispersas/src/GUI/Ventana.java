@@ -26,11 +26,11 @@ public class Ventana extends JFrame implements ActionListener {
 		loadComponents();
 	}
 
-	public void addA() {
+	public void addA(int columna, int fila, int valor) {
 		// Action listener A
-		int columna = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte la columna").trim());
-		int fila = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte la fila").trim());
-		int valor = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte el valor").trim());
+		//int columna = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte la columna").trim());
+		//int fila = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte la fila").trim());
+		//int valor = Integer.parseInt(JOptionPane.showInputDialog(null, "inserte el valor").trim());
 		// Añade la columna
 		NodoColumna col = new NodoColumna(columna);
 		NodoFila fil = new NodoFila(fila, valor);
