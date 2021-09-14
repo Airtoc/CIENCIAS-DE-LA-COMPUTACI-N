@@ -135,9 +135,9 @@ public class Ventana extends JFrame implements ActionListener {
 		// Panel: GraphPanel.
 
 		// PRUEBA!!!
-		int values[] = { 1, 2, 3, 4, 5 };
+		/*int values[] = { 1, 2, 3, 4, 5 };
 		graphPanel = new JPanel();
-		graphPanel.add(new Graph(values));
+		graphPanel.add(new Graph(values));*/
 	}
 
 	@Override
