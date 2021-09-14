@@ -7,6 +7,9 @@ public class Matriz {
 	private String listaCo = "";
 	private String tipo = "";
 	private String listaFilas ="";
+	private int maxFil;
+	private int maxCol;
+	
 
 	public Matriz(String tp) {
 		tipo = tp;
@@ -91,6 +94,7 @@ public class Matriz {
 		//System.out.println(listaFilas);
 		
 	}
+	
 	public void mostrarListaFilas(NodoFila list) {
 		if(list != null) {
 			listaFilas += "Fila : "+list.getFila()+" Valor: "+list.getValor()+"\n";
@@ -98,6 +102,27 @@ public class Matriz {
 			mostrarListaFilas(list.getAbajo());
 		}
 		
+	}
+	public int nColumnas(NodoColumna col) {
+	
+		if(col!=null) {
+			
+			maxCol = col.getCol();
+			System.out.println("MAxCol-> "+maxCol);
+			nColumnas(col.getSiguiente());
+		}
+			
+		return maxCol;
+	}
+	
+	public int nFilas(NodoFila fil) {
+		if(fil != null) {
+			
+			maxFil = fil.getFila();
+			System.out.println("MaxFil-> "+maxFil);
+			nFilas(fil.getAbajo());
+		}
+		return maxFil;
 	}
 
 	// Getters & Setters :

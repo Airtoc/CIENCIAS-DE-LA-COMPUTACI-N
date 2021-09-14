@@ -1,4 +1,4 @@
-package test01;
+package GUI;
 
 import java.util.Arrays;
 
