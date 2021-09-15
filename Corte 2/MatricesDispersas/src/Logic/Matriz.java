@@ -81,7 +81,7 @@ public class Matriz {
 			}
 		} else {
 			listaCol.setCabeza(nuevo);
-			System.out.println(listaCol.getCabeza().getFila());
+			//System.out.println(listaCol.getCabeza().getFila());
 		}
 	}
 

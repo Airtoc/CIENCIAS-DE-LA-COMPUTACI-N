@@ -115,6 +115,7 @@ public class Window extends JFrame implements ActionListener {
 			a.addNodoColumna(col, a.getInicio(), fil);
 
 		}
+		System.out.println("fila bassic: " + fila + " Columna: " + columna + " Valor: " + valor+"\n");
 
 	}
 
@@ -132,6 +133,7 @@ public class Window extends JFrame implements ActionListener {
 			b.addNodoColumna(col, b.getInicio(), fil);
 
 		}
+		System.out.println("fila bassic: " + fila + " Columna: " + columna + " Valor: " + valor+"\n");
 	}
 
 	public void addResultado(int fila, int columna, int valor) {
@@ -148,6 +150,7 @@ public class Window extends JFrame implements ActionListener {
 			r.addNodoColumna(col, r.getInicio(), fil);
 
 		}
+		
 
 	}
 
@@ -156,8 +159,8 @@ public class Window extends JFrame implements ActionListener {
 		MaxColB = b.nColumnas(b.getInicio());
 		MaxFilA = a.nFilas(a.getInicio().getCabeza());
 		MaxFilB = b.nFilas(b.getInicio().getCabeza());
-		System.out.println("Matriz A -> MaxCol: " + MaxColA + " MaxFil: " + MaxFilA);
-		System.out.println("Matriz B -> MaxCol: " + MaxColB + " MaxFil: " + MaxFilB);
+		//System.out.println("Matriz A -> MaxCol: " + MaxColA + " MaxFil: " + MaxFilA);
+		//System.out.println("Matriz B -> MaxCol: " + MaxColB + " MaxFil: " + MaxFilB);
 	}
 
 	public void showData() {
@@ -202,7 +205,7 @@ public class Window extends JFrame implements ActionListener {
 				checkDataMatrixB = true;
 			}
 		}
-		System.out.println(checkDataMatrixA + " <-Matrix A - Matrix B-> " + checkDataMatrixB);
+		//System.out.println(checkDataMatrixA + " <-Matrix A - Matrix B-> " + checkDataMatrixB);
 
 		// Send data.
 		if (checkDataMatrixB && (checkDataMatrixA)) {
@@ -217,6 +220,8 @@ public class Window extends JFrame implements ActionListener {
 				boolean aux = false;
 				while (aux != true) {
 					// Fila,columna,valor
+					System.out.println("Matriz A __>"+"Fila>"+Integer.parseInt(tempValuesMatrixA[1])+" Columna> "+ Integer.parseInt(tempValuesMatrixA[0])+
+							" valor> "+Integer.parseInt(tempValuesMatrixA[2]));
 					addA(Integer.parseInt(tempValuesMatrixA[1]), Integer.parseInt(tempValuesMatrixA[0]),
 							Integer.parseInt(tempValuesMatrixA[2]));
 					aux = true;
@@ -232,6 +237,8 @@ public class Window extends JFrame implements ActionListener {
 				boolean aux = false;
 				while (aux != true) {
 					// Fila,columna,valor
+					System.out.println("Matriz B __>"+"Fila>"+Integer.parseInt(tempValuesMatrixB[1])+" Columna> "+ Integer.parseInt(tempValuesMatrixB[0])+
+							" valor> "+Integer.parseInt(tempValuesMatrixB[2]));
 					addB(Integer.parseInt(tempValuesMatrixB[1]), Integer.parseInt(tempValuesMatrixB[0]),
 							Integer.parseInt(tempValuesMatrixB[2]));
 					aux = true;
@@ -256,7 +263,7 @@ public class Window extends JFrame implements ActionListener {
 				NodoFila auxA = a.getInicio().getCabeza();
 				NodoColumna columna2 = a.getInicio();
 				NodoFila fila2 = a.getInicio().getCabeza();
-				System.out.println(MaxColA + "--" + MaxColB);
+				//System.out.println(MaxColA + "--" + MaxColB);
 
 					System.out.println("Hola");
 					int fila = 0;
