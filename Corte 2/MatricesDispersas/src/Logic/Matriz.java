@@ -8,10 +8,10 @@ public class Matriz {
 	private NodoColumna inicio;
 	private String listaCo = "";
 	private String tipo = "";
-	private String listaFilas ="";
+	private String listaFilas = "";
 	private int maxFil;
 	private int maxCol;
-	private int val;
+	private int val, itr;
 
 	public Matriz(String tp) {
 		tipo = tp;
@@ -21,115 +21,129 @@ public class Matriz {
 	// Metodos necesarios
 
 	public void addNodoColumna(NodoColumna nuevo, NodoColumna anterior, NodoFila fila) {
-		if(anterior != null) {
-			if(nuevo.getCol() == anterior.getCol()) {
-				//Si se repite la columna solo se añade la fila
-				addNodoFila(fila,anterior.getCabeza(),anterior);
-			}else {
-				if(nuevo.getCol() < anterior.getCol()) {
-					if(anterior == inicio) {
+		if (anterior != null) {
+			if (nuevo.getCol() == anterior.getCol()) {
+				// Si se repite la columna solo se añade la fila
+				addNodoFila(fila, anterior.getCabeza(), anterior);
+			} else {
+				if (nuevo.getCol() < anterior.getCol()) {
+					if (anterior == inicio) {
 						nuevo.setSiguiente(inicio);
 						inicio.setAnterior(nuevo);
 						inicio = nuevo;
-						addNodoFila(fila,nuevo.getCabeza(),nuevo);
-						
-					}else {
+						addNodoFila(fila, nuevo.getCabeza(), nuevo);
+
+					} else {
 						anterior.getAnterior().setSiguiente(nuevo);
 						nuevo.setAnterior(anterior.getAnterior());
 						nuevo.setSiguiente(anterior);
 						anterior.setAnterior(nuevo);
-						addNodoFila(fila,nuevo.getCabeza(),nuevo);
+						addNodoFila(fila, nuevo.getCabeza(), nuevo);
 					}
-				}else {
-					if(anterior.getSiguiente() == null) {
+				} else {
+					if (anterior.getSiguiente() == null) {
 						anterior.setSiguiente(nuevo);
 						nuevo.setAnterior(anterior);
-						addNodoFila(fila,anterior.getSiguiente().getCabeza(),anterior.getSiguiente());
-					}else {
-						addNodoColumna(nuevo,anterior.getSiguiente(),fila);
+						addNodoFila(fila, anterior.getSiguiente().getCabeza(), anterior.getSiguiente());
+					} else {
+						addNodoColumna(nuevo, anterior.getSiguiente(), fila);
 					}
 				}
 			}
 		}
 	}
 
-	public void addNodoFila(NodoFila nuevo,NodoFila listaFil, NodoColumna listaCol ) {
-		
-		if(listaFil != null){
-            if(nuevo.getFila() == listaFil.getFila()){
-                JOptionPane.showMessageDialog(null, "Ya existe un valor en esta posición");
-            }else{
-                if(nuevo.getFila()<listaFil.getFila()){
-                    if(listaFil == listaCol.getCabeza()){
-                        listaCol.getCabeza().setArriba(nuevo);
-                        nuevo.setAbajo(listaCol.getCabeza());
-                        listaCol.setCabeza(nuevo);
-                    }else{
-                        listaFil.getArriba().setAbajo(nuevo);
-                        nuevo.setArriba(listaFil.getArriba());
-                        nuevo.setAbajo(listaFil);
-                        listaFil.setArriba(nuevo);
-                    }
-                }else{
-                    if(listaFil.getAbajo() == null){
-                        listaFil.setAbajo(nuevo);
-                        nuevo.setArriba(listaFil);
-                    }else{
-                        addNodoFila(nuevo,listaFil.getAbajo(),listaCol);
-                    }
-                }
-            }
-        }else{
-            listaCol.setCabeza(nuevo);
-            System.out.println(listaCol.getCabeza().getFila());
-        }
+	public void addNodoFila(NodoFila nuevo, NodoFila listaFil, NodoColumna listaCol) {
+
+		if (listaFil != null) {
+			if (nuevo.getFila() == listaFil.getFila()) {
+				JOptionPane.showMessageDialog(null, "Ya existe un valor en esta posición");
+			} else {
+				if (nuevo.getFila() < listaFil.getFila()) {
+					if (listaFil == listaCol.getCabeza()) {
+						listaCol.getCabeza().setArriba(nuevo);
+						nuevo.setAbajo(listaCol.getCabeza());
+						listaCol.setCabeza(nuevo);
+					} else {
+						listaFil.getArriba().setAbajo(nuevo);
+						nuevo.setArriba(listaFil.getArriba());
+						nuevo.setAbajo(listaFil);
+						listaFil.setArriba(nuevo);
+					}
+				} else {
+					if (listaFil.getAbajo() == null) {
+						listaFil.setAbajo(nuevo);
+						nuevo.setArriba(listaFil);
+					} else {
+						addNodoFila(nuevo, listaFil.getAbajo(), listaCol);
+					}
+				}
+			}
+		} else {
+			listaCol.setCabeza(nuevo);
+			System.out.println(listaCol.getCabeza().getFila());
+		}
 	}
 
 	public void mostrarlista(NodoColumna list) {
 		if (list != null) {
-			listaCo += "Columna: "+list.getCol();
+			listaCo += "Columna: " + list.getCol();
 			mostrarListaFilas(list.getCabeza());
 			listaCo += "\n";
 			mostrarlista(list.getSiguiente());
 		}
 	}
 
-	
 	public void mostrarListaFilas(NodoFila list) {
-		if(list != null) {
-		    listaCo += " -> "+list.getFila()+", "+list.getValor();
+		if (list != null) {
+			listaCo += " -> " + list.getFila() + ", " + list.getValor();
 			mostrarListaFilas(list.getAbajo());
 		}
 	}
 
 	public String getListaString() {
-	    return listaCo;
+		return listaCo;
 	}
 
 	public int nColumnas(NodoColumna col) {
-		if(col!=null) {
+		if (col != null) {
 			maxCol = col.getCol();
 			nColumnas(col.getSiguiente());
 		}
 		return maxCol;
 	}
-	
+
 	public int nFilas(NodoFila fil) {
-		if(fil != null) {
+		if (fil != null) {
 			maxFil = fil.getFila();
 			nFilas(fil.getAbajo());
 		}
 		return maxFil;
 	}
 
-	public int multiplicar(NodoColumna aCol, NodoFila bFil) {
+	public NodoFila getMultFil(NodoColumna a) {
 
-		if(aCol != null && bFil != null) {
-			this.val += aCol.getCabeza().getValor() * bFil.getValor();
-			System.out.println("mult columna : "+aCol.getCabeza().getValor()+ "mult fila: "+ bFil.getValor());			
+		NodoFila ab = a.getCabeza();
+		if (itr > 0) {
+			for (int i = 0; i < itr; i++) {
+				ab = ab.getAbajo();
+
+			}
+		}
+		return ab;
+
+	}
+
+	public int multiplicar(NodoColumna aCol, NodoFila bFil) {
+		
+		if (aCol != null && bFil != null) {
+			NodoFila aFil = getMultFil(aCol);
+			this.val += aFil.getValor() * bFil.getValor();
+			System.out.println("mult columna : " + aFil.getValor() + " mult fila: " + bFil.getValor());
+			System.out.println("Multiplicidad: "+itr+ " Valor: "+val);
 			multiplicar(aCol.getSiguiente(), bFil.getAbajo());
 		}
-		//System.out.println(val);
+		// System.out.println(val);
 		return this.val;
 	}
 
@@ -158,12 +172,20 @@ public class Matriz {
 		this.listaFilas = listaFilas;
 	}
 
+	public void setVal(int val) {
+		this.val = val;
+	}
 
-    public void setVal(int val) {
-        this.val = val;
-    }
-    
-    public int getVal() {
-        return this.val;
-    }
+	public int getVal() {
+		return this.val;
+	}
+
+	public int getItr() {
+		return itr;
+	}
+
+	public void setItr(int itr) {
+		this.itr = itr;
+	}
+	
 }
