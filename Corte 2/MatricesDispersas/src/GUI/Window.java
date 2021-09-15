@@ -18,11 +18,11 @@ public class Window extends JFrame implements ActionListener {
 	private JPanel optionsPanel, mathPanel;
 	private JButton btnMath, btnShow, btnClean;
 	private JTextPane txtMathA, txtMathB, txtMathProductAB;
-	private JScrollPane scrollMathA, scrollMathB;
+	private JScrollPane scrollMathA, scrollMathB, scrollMathAB;
 	private JLabel lblTitle, lblMatrixA, lblMatrixB;
 	private boolean checkDataMatrixA, checkDataMatrixB = false;
 	private Matriz a, b, r;
-	private int MaxColA, MaxColB, MaxFilA, MaxFilB;
+	private int MaxColA, MaxColB, MaxFilA, MaxFilB,itr;
 
 	public Window(String title) {
 		a = new Matriz("a");
@@ -45,7 +45,7 @@ public class Window extends JFrame implements ActionListener {
 		// mathPanel = new JPanel();
 		// contentPanel.add(mathPanel);
 
-		lblMatrixA = new JLabel("Matriz A");
+		lblMatrixA = new JLabel("Matriz A (Fila, Columna, Valor)");
 		lblMatrixA.setBounds(10, 10, 380, 40);
 		lblMatrixA.setFont(new Font("courier", Font.BOLD, 20));
 		optionsPanel.add(lblMatrixA);
@@ -57,7 +57,7 @@ public class Window extends JFrame implements ActionListener {
 		scrollMathA.setBounds(10, 40, 380, 80);
 		optionsPanel.add(scrollMathA);
 
-		lblMatrixB = new JLabel("Matriz B");
+		lblMatrixB = new JLabel("Matriz B (Fila, Columna, Valor)");
 		lblMatrixB.setBounds(10, 170, 380, 40);
 		lblMatrixB.setFont(new Font("courier", Font.BOLD, 20));
 		optionsPanel.add(lblMatrixB);
@@ -82,8 +82,11 @@ public class Window extends JFrame implements ActionListener {
 		optionsPanel.add(btnShow);
 
 		txtMathProductAB = new JTextPane();
-		txtMathProductAB.setBounds(400, 10, 380, 500);
 		optionsPanel.add(txtMathProductAB);
+
+		scrollMathAB = new JScrollPane(txtMathProductAB);
+		scrollMathAB.setBounds(400, 10, 380, 480);
+		optionsPanel.add(scrollMathAB);
 
 		add(optionsPanel, BorderLayout.CENTER);
 		setVisible(true);
@@ -95,9 +98,10 @@ public class Window extends JFrame implements ActionListener {
 		r = new Matriz("r");
 		txtMathA.setText("");
 		txtMathB.setText("");
+		txtMathProductAB.setText("");
 	}
 
-	public void addA(int columna, int fila, int valor) {
+	public void addA(int fila,int columna, int valor) {
 
 		NodoColumna col = new NodoColumna(columna);
 		NodoFila fil = new NodoFila(fila, valor);
@@ -114,7 +118,7 @@ public class Window extends JFrame implements ActionListener {
 
 	}
 
-	public void addB(int columna, int fila, int valor) {
+	public void addB(int fila,int columna, int valor) {
 
 		NodoColumna col = new NodoColumna(columna);
 		NodoFila fil = new NodoFila(fila, valor);
@@ -130,7 +134,7 @@ public class Window extends JFrame implements ActionListener {
 		}
 	}
 
-	public void addResultado(int columna, int fila, int valor) {
+	public void addResultado(int fila,int columna, int valor) {
 
 		NodoColumna col = new NodoColumna(columna);
 		NodoFila fil = new NodoFila(fila, valor);
@@ -141,7 +145,7 @@ public class Window extends JFrame implements ActionListener {
 			col.setCabeza(fil);
 		} else {
 			// Añade el nodo
-			r.addNodoColumna(col, a.getInicio(), fil);
+			r.addNodoColumna(col, r.getInicio(), fil);
 
 		}
 
@@ -156,17 +160,15 @@ public class Window extends JFrame implements ActionListener {
 		System.out.println("Matriz B -> MaxCol: " + MaxColB + " MaxFil: " + MaxFilB);
 	}
 
-	public void showc() {
-		System.out.println("Matriz A");
-		a.mostrarlista(a.getInicio());
-		System.out.println("Matriz B");
-		b.mostrarlista(b.getInicio());
-		System.out.println("Matriz Resultado: ");
-		r.mostrarlista(r.getInicio());
-	}
-
 	public void showData() {
-	    a.mostrarlista(a.getInicio(), this.)
+	    a.mostrarlista(a.getInicio());
+	    b.mostrarlista(b.getInicio());
+	    r.mostrarlista(r.getInicio());
+	    txtMathProductAB.setText("Matriz A: \n"
+	            + a.getListaString()
+	            + "\n Matriz B: \n"
+	            + b.getListaString()+"\n Matriz A*B"
+	    		+ ": \n"+r.getListaString());
 	}
 
 	public void enviarMatriz() {
@@ -217,7 +219,8 @@ public class Window extends JFrame implements ActionListener {
 
 				boolean aux = false;
 				while (aux != true) {
-					addA(Integer.parseInt(tempValuesMatrixA[0]), Integer.parseInt(tempValuesMatrixA[1]),
+					//Fila,columna,valor
+					addA(Integer.parseInt(tempValuesMatrixA[1]), Integer.parseInt(tempValuesMatrixA[0]),
 							Integer.parseInt(tempValuesMatrixA[2]));
 					aux = true;
 				}
@@ -231,12 +234,25 @@ public class Window extends JFrame implements ActionListener {
 				String[] tempValuesMatrixB = splitMatrixB[i].split(",");
 				boolean aux = false;
 				while (aux != true) {
-					addB(Integer.parseInt(tempValuesMatrixB[0]), Integer.parseInt(tempValuesMatrixB[1]),
+					//Fila,columna,valor
+					addB(Integer.parseInt(tempValuesMatrixB[1]), Integer.parseInt(tempValuesMatrixB[0]),
 							Integer.parseInt(tempValuesMatrixB[2]));
 					aux = true;
 				}
 			}
 		}
+	}
+	public NodoFila getMultFil(NodoColumna a) {
+		
+		NodoFila ab = a.getCabeza();
+		if(itr > 0) {
+			for(int i = 0;i<itr;i++) {
+				ab = ab.getAbajo();
+				
+			}
+		}
+		return ab;
+				
 	}
 
 	@Override
@@ -250,14 +266,38 @@ public class Window extends JFrame implements ActionListener {
 				 * fila-columna 
 				 * columnas A = filas B
 				 */
-				NodoFila a1 = a.getInicio().getCabeza();//Fila 1A
+				
 				NodoFila b1 = b.getInicio().getCabeza();//Fila 1B
 				NodoColumna a2 = a.getInicio();//Columna 1A
-				NodoColumna b2 = b.getInicio();//Columna 1B
+				
+				System.out.println(MaxColA + "--"+MaxColB);
+				
+				while(b1 != null) {
+					System.out.println("Hola");
+					int fila = 0;
+					int columna = 0;
+					int valor = 0;
+					while(a2 != null) {
+					    columna = a2.getCol() ;
+						fila = b1.getFila();//2				
+						valor = r.multiplicar(a2,b1);
+						System.out.println("fila: "+fila+ " Columna: "+columna+ " Valor: "+valor);
+						addResultado(fila,columna,valor);
+						System.out.println("Valor de a2: "+ a2.getCabeza().getValor());
+						r.setVal(0);
+						a2 = a2.getSiguiente();
+					}
+					b1 = b.getInicio().getCabeza();
+					itr++;
+					a2 = a2.getSiguiente();
+				}
+
+				/*
 				int columna = a2.getCol() ;
 				int fila = b1.getFila();
 				int valor = r.multiplicar(a2,b1);
 				addResultado(columna,fila,valor);
+				*/
 				
 				
 				

@@ -1,12 +1,10 @@
 package Logic;
 
 import javax.swing.JOptionPane;
-importvax. javax.swing.*;
-import java.awt.*;
+import javax.swing.*;
 
 public class Matriz {
 
-    private JTextPane txtMathProductAB;
 	private NodoColumna inicio;
 	private String listaCo = "";
 	private String tipo = "";
@@ -14,7 +12,6 @@ public class Matriz {
 	private int maxFil;
 	private int maxCol;
 	private int val;
-	
 
 	public Matriz(String tp) {
 		tipo = tp;
@@ -88,43 +85,38 @@ public class Matriz {
         }
 	}
 
-	public void mostrarlista(NodoColumna list, JTextPane txtMathProductAB) {
+	public void mostrarlista(NodoColumna list) {
 		if (list != null) {
-			listaCo += "Columna: "+list.getCol()+"\n";
-			System.out.println("Columna: "+list.getCol()+"\n");//imprime columna
+			listaCo += "Columna: "+list.getCol();
 			mostrarListaFilas(list.getCabeza());
+			listaCo += "\n";
 			mostrarlista(list.getSiguiente());
 		}
-		//System.out.println(listaCo);
-		//System.out.println(listaFilas);
-		
 	}
+
 	
 	public void mostrarListaFilas(NodoFila list) {
 		if(list != null) {
-			listaFilas += "Fila : "+list.getFila()+" Valor: "+list.getValor()+"\n";
-			System.out.println("Fila : "+list.getFila()+" Valor: "+list.getValor());
+		    listaCo += " -> "+list.getFila()+", "+list.getValor();
 			mostrarListaFilas(list.getAbajo());
 		}
-		
 	}
+
+	public String getListaString() {
+	    return listaCo;
+	}
+
 	public int nColumnas(NodoColumna col) {
-	
 		if(col!=null) {
-			
 			maxCol = col.getCol();
-			System.out.println("MAxCol-> "+maxCol);
 			nColumnas(col.getSiguiente());
 		}
-			
 		return maxCol;
 	}
 	
 	public int nFilas(NodoFila fil) {
 		if(fil != null) {
-			
 			maxFil = fil.getFila();
-			System.out.println("MaxFil-> "+maxFil);
 			nFilas(fil.getAbajo());
 		}
 		return maxFil;
@@ -132,19 +124,16 @@ public class Matriz {
 
 	public int multiplicar(NodoColumna aCol, NodoFila bFil) {
 
-		if(aCol != null) {
-			val += aCol.getCol() * bFil.getFila();
+		if(aCol != null && bFil != null) {
+			this.val += aCol.getCabeza().getValor() * bFil.getValor();
+			System.out.println("mult columna : "+aCol.getCabeza().getValor()+ "mult fila: "+ bFil.getValor());			
 			multiplicar(aCol.getSiguiente(), bFil.getAbajo());
-			
 		}
-		System.out.println(val);
-		return val;
-		
-		
+		//System.out.println(val);
+		return this.val;
 	}
 
-	// Getters & Setters :
-
+	// Getters, Setters.
 	public NodoColumna getInicio() {
 		return inicio;
 	}
@@ -169,6 +158,12 @@ public class Matriz {
 		this.listaFilas = listaFilas;
 	}
 
-	
 
+    public void setVal(int val) {
+        this.val = val;
+    }
+    
+    public int getVal() {
+        return this.val;
+    }
 }
