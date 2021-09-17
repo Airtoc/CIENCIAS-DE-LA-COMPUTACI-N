@@ -9,9 +9,9 @@ public class Matriz {
 	private String listaCo = "";
 	private String tipo = "";
 	private String listaFilas = "";
-	private int maxFil;
+	private int maxFil=0;
 	private int maxCol;
-	private int val, itr;
+	private int val, itr,itrF,mode;
 
 	public Matriz(String tp) {
 		tipo = tp;
@@ -84,7 +84,81 @@ public class Matriz {
 			//System.out.println(listaCol.getCabeza().getFila());
 		}
 	}
-
+	
+	public void insertarColumnaR(NodoColumna nuevaColumna, NodoFila nuevaFila, NodoColumna nodoListaColumna){
+        if(nodoListaColumna != null){
+            if(nuevaColumna.getCol() == nodoListaColumna.getCol()){
+                insertarFilaR(nuevaFila,nodoListaColumna.getCabeza(),nodoListaColumna);
+            }else{
+                if(nuevaColumna.getCol()<nodoListaColumna.getCol()){
+                    if(nodoListaColumna == this.inicio){
+                        nuevaColumna.setSiguiente(inicio);
+                        this.inicio.setAnterior(nuevaColumna);
+                        this.inicio = nuevaColumna;
+                        insertarFilaR(nuevaFila,nuevaColumna.getCabeza(),nuevaColumna);
+                    }else{
+                        nodoListaColumna.getAnterior().setSiguiente(nuevaColumna);
+                        nuevaColumna.setAnterior(nodoListaColumna.getAnterior());
+                        nuevaColumna.setSiguiente(nodoListaColumna);
+                        nodoListaColumna.setAnterior(nuevaColumna);
+                        insertarFilaR(nuevaFila,nuevaColumna.getCabeza(),nuevaColumna);
+                    }
+                }else{
+                    if(nodoListaColumna.getSiguiente() == null){
+                        nodoListaColumna.setSiguiente(nuevaColumna);
+                        nuevaColumna.setAnterior(nodoListaColumna);
+                        insertarFilaR(nuevaFila,nuevaColumna.getCabeza(),nuevaColumna);
+                    }else{
+                        insertarColumnaR(nuevaColumna, nuevaFila, nodoListaColumna.getSiguiente());
+                    }
+                }
+            }
+        }
+    }
+	
+	private void insertarFilaR(NodoFila nuevaFila, NodoFila nodoListaFila, NodoColumna columna){
+        if(nodoListaFila != null){
+            if(nuevaFila.getFila() == nodoListaFila.getFila()){
+                nodoListaFila.setValor(nodoListaFila.getValor()+nuevaFila.getValor());
+                if(nodoListaFila.getValor() == 0){
+                    if(nodoListaFila == columna.getCabeza()){
+                        if(columna.getCabeza().getAbajo() != null){
+                            columna.setCabeza(columna.getCabeza().getAbajo());
+                            columna.getCabeza().setAbajo(null);
+                        }else{
+                            columna.setCabeza(null);
+                        }
+                    }else{
+                        nuevaFila.setAbajo(null);
+                        nuevaFila.setArriba(null);
+                    }
+                }    
+            }else{
+                if(nuevaFila.getFila()<nodoListaFila.getFila()){
+                    if(nodoListaFila == columna.getCabeza()){
+                        columna.getCabeza().setArriba(nuevaFila);
+                        nuevaFila.setAbajo(columna.getCabeza());
+                        columna.setCabeza(nuevaFila);
+                    }else{
+                        nodoListaFila.getArriba().setAbajo(nuevaFila);
+                        nuevaFila.setArriba(nodoListaFila.getArriba());
+                        nuevaFila.setAbajo(nodoListaFila);
+                        nodoListaFila.setArriba(nuevaFila);
+                    }
+                }else{
+                    if(nodoListaFila.getAbajo() == null){
+                        nodoListaFila.setAbajo(nuevaFila);
+                        nuevaFila.setArriba(nodoListaFila);
+                    }else{
+                        insertarFilaR(nuevaFila,nodoListaFila.getAbajo(),columna);
+                    }
+                }
+            }
+        }else{
+            columna.setCabeza(nuevaFila);
+        }
+    }
+	
 	public void mostrarlista(NodoColumna list) {
 		if (list != null) {
 			listaCo += "Columna: " + list.getCol();
@@ -113,10 +187,23 @@ public class Matriz {
 		return maxCol;
 	}
 
-	public int nFilas(NodoFila fil) {
-		if (fil != null) {
-			maxFil = fil.getFila();
-			nFilas(fil.getAbajo());
+	public int nFilas(NodoColumna col) {
+		if(col != null) {
+			NodoFila fil = col.getCabeza();
+			int i = 0;
+			while(fil!=null) {
+				if (fil != null) {
+					System.out.println("1.- max: "+ maxFil +" 2.- valor fila:"+fil.getFila());
+					if(maxFil < fil.getFila()) {
+						maxFil = fil.getFila();
+						itrF = i+1;
+					}
+					fil = fil.getAbajo();
+					i++;
+				}
+			};
+			nFilas(col.getSiguiente());
+			
 		}
 		return maxFil;
 	}
@@ -133,17 +220,52 @@ public class Matriz {
 		return ab;
 
 	}
+	public int iteradorCol(NodoColumna col) {
+		int itr = 0;
+		while(col != null) {
+			itr++;
+			col = col.getSiguiente();
+		}
+		return itr;
+		
+	}
+	
+	public int iteradorFil(NodoFila fil) {
+		int itr = 0;
+		while(fil != null) {
+			itr++;
+			fil = fil.getAbajo();
+		}
+		return itr;
+		
+	}
 
 	public int multiplicar(NodoColumna aCol, NodoFila bFil) {
-		
 		if (aCol != null && bFil != null) {
-			NodoFila aFil = getMultFil(aCol);
+		NodoFila aFil = getMultFil(aCol);//forma la columna dependiendo de el numero de fila 
+		System.out.println("valor columna : " + aCol.getCol() + " valor fila: " + bFil.getFila());
+		if(aCol.getCol()== bFil.getFila()) {
 			this.val += aFil.getValor() * bFil.getValor();
 			System.out.println("mult columna : " + aFil.getValor() + " mult fila: " + bFil.getValor());
 			System.out.println("Multiplicidad: "+itr+ " Valor: "+val);
+		}else {
 			multiplicar(aCol.getSiguiente(), bFil.getAbajo());
 		}
-		// System.out.println(val);
+		}
+		
+		/*
+		if (aCol != null && bFil != null) {
+			NodoFila aFil = getMultFil(aCol);
+			if(aFil==null || bFil ==null) {
+				System.out.println("skip");
+			}else {
+				this.val += aFil.getValor() * bFil.getValor();
+				System.out.println("mult columna : " + aFil.getValor() + " mult fila: " + bFil.getValor());
+				System.out.println("Multiplicidad: "+itr+ " Valor: "+val);
+				multiplicar(aCol.getSiguiente(), bFil.getAbajo());
+		}
+			multiplicar(aCol.getSiguiente(), bFil.getAbajo());
+		System.out.println(val);*/
 		return this.val;
 	}
 
@@ -187,5 +309,15 @@ public class Matriz {
 	public void setItr(int itr) {
 		this.itr = itr;
 	}
+
+	public int getItrF() {
+		return itrF;
+	}
+
+	public void setItrF(int itrF) {
+		this.itrF = itrF;
+	}
+	
+	
 	
 }

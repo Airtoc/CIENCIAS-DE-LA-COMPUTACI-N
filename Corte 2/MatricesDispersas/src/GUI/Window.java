@@ -9,6 +9,7 @@ import Logic.NodoFila;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class Window extends JFrame implements ActionListener {
@@ -88,6 +89,12 @@ public class Window extends JFrame implements ActionListener {
 		scrollMathAB.setBounds(400, 10, 380, 480);
 		optionsPanel.add(scrollMathAB);
 
+		btnClean = new JButton("Limpiar");
+		btnClean.setFocusable(false);
+		btnClean.setBounds(10, 300, 380, 50);
+		btnClean.addActionListener(this);
+		optionsPanel.add(btnClean);
+
 		add(optionsPanel, BorderLayout.CENTER);
 		setVisible(true);
 	}
@@ -136,31 +143,13 @@ public class Window extends JFrame implements ActionListener {
 		System.out.println("fila bassic: " + fila + " Columna: " + columna + " Valor: " + valor+"\n");
 	}
 
-	public void addResultado(int fila, int columna, int valor) {
-
-		NodoColumna col = new NodoColumna(columna);
-		NodoFila fil = new NodoFila(fila, valor);
-
-		if (r.getInicio() == null) {
-			// si no hay un nodo inicial , se convierte en el primero
-			r.setInicio(col);
-			col.setCabeza(fil);
-		} else {
-			// Añade el nodo
-			r.addNodoColumna(col, r.getInicio(), fil);
-
-		}
-		
-
-	}
-
 	public void max() {
 		MaxColA = a.nColumnas(a.getInicio());
 		MaxColB = b.nColumnas(b.getInicio());
-		MaxFilA = a.nFilas(a.getInicio().getCabeza());
-		MaxFilB = b.nFilas(b.getInicio().getCabeza());
-		//System.out.println("Matriz A -> MaxCol: " + MaxColA + " MaxFil: " + MaxFilA);
-		//System.out.println("Matriz B -> MaxCol: " + MaxColB + " MaxFil: " + MaxFilB);
+		MaxFilA = a.nFilas(a.getInicio());
+		MaxFilB = b.nFilas(b.getInicio());
+		System.out.println("Matriz A -> MaxCol: " + MaxColA + " MaxFil: " + MaxFilA);
+		System.out.println("Matriz B -> MaxCol: " + MaxColB + " MaxFil: " + MaxFilB);
 	}
 
 	public void showData() {
@@ -216,13 +205,19 @@ public class Window extends JFrame implements ActionListener {
 				splitMatrixA[i] = splitMatrixA[i].replace("(", "");
 				splitMatrixA[i] = splitMatrixA[i].replace(")", "");
 				String[] tempValuesMatrixA = splitMatrixA[i].split(",");
+                System.out.println(Arrays.toString(tempValuesMatrixA));
+                // splitMatrix[n] = "(c,f,v)[0]; (c,f,v)[1]"
 
 				boolean aux = false;
 				while (aux != true) {
 					// Fila,columna,valor
-					System.out.println("Matriz A __>"+"Fila>"+Integer.parseInt(tempValuesMatrixA[1])+" Columna> "+ Integer.parseInt(tempValuesMatrixA[0])+
-							" valor> "+Integer.parseInt(tempValuesMatrixA[2]));
-					addA(Integer.parseInt(tempValuesMatrixA[1]), Integer.parseInt(tempValuesMatrixA[0]),
+					System.out.println("Matriz A __>"+"Fila>"
+					        + Integer.parseInt(tempValuesMatrixA[0])+
+					        " Columna> "
+					        + Integer.parseInt(tempValuesMatrixA[1])+
+							" Valor> "
+							+ Integer.parseInt(tempValuesMatrixA[2]));
+					addA(Integer.parseInt(tempValuesMatrixA[0]), Integer.parseInt(tempValuesMatrixA[1]),
 							Integer.parseInt(tempValuesMatrixA[2]));
 					aux = true;
 				}
@@ -234,87 +229,65 @@ public class Window extends JFrame implements ActionListener {
 				splitMatrixB[i] = splitMatrixB[i].replace("(", "");
 				splitMatrixB[i] = splitMatrixB[i].replace(")", "");
 				String[] tempValuesMatrixB = splitMatrixB[i].split(",");
+				System.out.println(Arrays.toString(tempValuesMatrixB));
 				boolean aux = false;
 				while (aux != true) {
 					// Fila,columna,valor
-					System.out.println("Matriz B __>"+"Fila>"+Integer.parseInt(tempValuesMatrixB[1])+" Columna> "+ Integer.parseInt(tempValuesMatrixB[0])+
+					System.out.println("Matriz B __>"+"Fila>"+Integer.parseInt(tempValuesMatrixB[0])+" Columna> "+ Integer.parseInt(tempValuesMatrixB[1])+
 							" valor> "+Integer.parseInt(tempValuesMatrixB[2]));
-					addB(Integer.parseInt(tempValuesMatrixB[1]), Integer.parseInt(tempValuesMatrixB[0]),
+					addB(Integer.parseInt(tempValuesMatrixB[0]), Integer.parseInt(tempValuesMatrixB[1]),
 							Integer.parseInt(tempValuesMatrixB[2]));
 					aux = true;
 				}
 			}
 		}
 	}
+	public void nuevaMultiplicacion() {
+		System.out.println(MaxColA + "--" + MaxFilB);
+		if (MaxColA == MaxFilB) {
+			NodoColumna columnaA = a.getInicio();
+	        while(columnaA != null){
+	            NodoColumna columnaB = b.getInicio();
+	            while(columnaB != null){
+	                NodoFila filaB = columnaB.getCabeza();
+	                while(filaB != null){
+	                    if(columnaA.getCol() == filaB.getFila()){
+	                        NodoFila filaA = columnaA.getCabeza();
+	                        while(filaA != null){
+	                        	 NodoColumna nuevaColumna = new NodoColumna(columnaB.getCol());
+	                             NodoFila nuevaFila = new NodoFila(filaA.getFila(),filaA.getValor()*filaB.getValor());
+	                             if(r.getInicio() == null){
+	                                 r.setInicio(nuevaColumna);
+	                                 nuevaColumna.setCabeza(nuevaFila);
+	                             }else{
+	                                 r.insertarColumnaR(nuevaColumna, nuevaFila, r.getInicio());
+	                             }
+	                            filaA = filaA.getAbajo();
+	                        }
+	                    }
+	                    filaB = filaB.getAbajo();
+	                }
+	                columnaB = columnaB.getSiguiente();
+	            }
+	            columnaA = columnaA.getSiguiente();
+	        }
+	        
+	        }else {
+			//Los tamaños no son compatibles
+			JOptionPane.showMessageDialog(null, "Los tamaños de las matrices no son compatibles");
+		}
+		
+		
+	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMath) {
 			enviarMatriz();
-			max();
-			if (MaxColA == MaxFilB) {
-				/*
-				 * 2x3-3x2->2x2 fila-columna columnas A = filas B
-				 */
-				NodoColumna inicioColB = b.getInicio();
-				NodoFila inicioFilB = inicioColB.getCabeza();// Fila 1B
-				NodoColumna inicioColA = a.getInicio();// Columna 1A
-				NodoFila inicioFilA = inicioColB.getCabeza();// Fila 1B
-				NodoFila auxA = a.getInicio().getCabeza();
-				NodoColumna columna2 = a.getInicio();
-				NodoFila fila2 = a.getInicio().getCabeza();
-				//System.out.println(MaxColA + "--" + MaxColB);
-
-					System.out.println("Hola");
-					int fila = 0;
-					int columna = 0;
-					int valor = 0;
-					//r21-r22
-					while (auxA != null) {
-						inicioColB = b.getInicio();
-						inicioFilB = inicioColB.getCabeza();
-						inicioColA = a.getInicio();
-						inicioFilA = inicioColB.getCabeza();
-						//r11-r12
-						while (inicioColB != null) {
-							columna = inicioColA.getCol();
-							fila = inicioFilB.getFila();
-							valor = r.multiplicar(inicioColA, inicioFilB);
-							System.out.println("fila: " + fila2.getFila() + " Columna: " + columna2.getCol() + " Valor: " + valor+"\n");
-							addResultado(fila2.getFila(), columna2.getCol(), valor);
-							
-							System.out.println("Valor de a2: " + inicioColA.getCabeza().getValor());
-							r.setVal(0);//reset val r
-							
-							inicioColB = inicioColB.getSiguiente();
-							if(inicioColB!=null) {
-								inicioFilB = inicioColB.getCabeza();
-								columna2 = inicioColA.getSiguiente();
-								/*if(r.getItr()>=1) {
-									fila2 = inicioFilA.getAbajo();
-								}*/
-								
-							}								
-						}
-						//Baja una fila 
-						
-						r.setItr(r.getItr() + 1);	
-						fila2 = inicioFilA.getAbajo();
-						columna2 = a.getInicio();
-						//fila2 = a.getInicio().getCabeza();
-						auxA = auxA.getAbajo();
-					}
-
-				/*
-				 * int columna = a2.getCol() ; int fila = b1.getFila(); int valor =
-				 * r.multiplicar(a2,b1); addResultado(columna,fila,valor);
-				 */
-
-			} else {
-				JOptionPane.showMessageDialog(null, "Los tamaños de las matrices no son compatibles");
-			}
-
-			// Show the information in Sout.
+			max();		
+			nuevaMultiplicacion();
+			
 		} else if (e.getSource() == btnShow) {
 			// TODO
 			// showc();
