@@ -11,7 +11,7 @@ public class Matriz {
 	private String listaFilas = "";
 	private int maxFil=0;
 	private int maxCol;
-	private int val, itr,itrF,mode;
+	private int val, itr,itrF;
 
 	public Matriz(String tp) {
 		tipo = tp;
@@ -84,38 +84,38 @@ public class Matriz {
 			//System.out.println(listaCol.getCabeza().getFila());
 		}
 	}
-	
-	public void insertarColumnaR(NodoColumna nuevaColumna, NodoFila nuevaFila, NodoColumna nodoListaColumna){
-        if(nodoListaColumna != null){
-            if(nuevaColumna.getCol() == nodoListaColumna.getCol()){
-                insertarFilaR(nuevaFila,nodoListaColumna.getCabeza(),nodoListaColumna);
+	//Igual que insertar columna pero si hace llamado a insertar fila Respuesta:
+	public void insertarColumnaR(NodoColumna nuevo, NodoFila fila, NodoColumna columna){
+        if(columna != null){
+            if(nuevo.getCol() == columna.getCol()){
+                insertarFilaR(fila,columna.getCabeza(),columna);
             }else{
-                if(nuevaColumna.getCol()<nodoListaColumna.getCol()){
-                    if(nodoListaColumna == this.inicio){
-                        nuevaColumna.setSiguiente(inicio);
-                        this.inicio.setAnterior(nuevaColumna);
-                        this.inicio = nuevaColumna;
-                        insertarFilaR(nuevaFila,nuevaColumna.getCabeza(),nuevaColumna);
+                if(nuevo.getCol()<columna.getCol()){
+                    if(columna == this.inicio){
+                        nuevo.setSiguiente(inicio);
+                        this.inicio.setAnterior(nuevo);
+                        this.inicio = nuevo;
+                        insertarFilaR(fila,nuevo.getCabeza(),nuevo);
                     }else{
-                        nodoListaColumna.getAnterior().setSiguiente(nuevaColumna);
-                        nuevaColumna.setAnterior(nodoListaColumna.getAnterior());
-                        nuevaColumna.setSiguiente(nodoListaColumna);
-                        nodoListaColumna.setAnterior(nuevaColumna);
-                        insertarFilaR(nuevaFila,nuevaColumna.getCabeza(),nuevaColumna);
+                        columna.getAnterior().setSiguiente(nuevo);
+                        nuevo.setAnterior(columna.getAnterior());
+                        nuevo.setSiguiente(columna);
+                        columna.setAnterior(nuevo);
+                        insertarFilaR(fila,nuevo.getCabeza(),nuevo);
                     }
                 }else{
-                    if(nodoListaColumna.getSiguiente() == null){
-                        nodoListaColumna.setSiguiente(nuevaColumna);
-                        nuevaColumna.setAnterior(nodoListaColumna);
-                        insertarFilaR(nuevaFila,nuevaColumna.getCabeza(),nuevaColumna);
+                    if(columna.getSiguiente() == null){
+                        columna.setSiguiente(nuevo);
+                        nuevo.setAnterior(columna);
+                        insertarFilaR(fila,nuevo.getCabeza(),nuevo);
                     }else{
-                        insertarColumnaR(nuevaColumna, nuevaFila, nodoListaColumna.getSiguiente());
+                        insertarColumnaR(nuevo, fila, columna.getSiguiente());
                     }
                 }
             }
         }
     }
-	
+	//Igual que insertar fila, pero si las filas son iguales, suma los valores:
 	private void insertarFilaR(NodoFila nuevaFila, NodoFila nodoListaFila, NodoColumna columna){
         if(nodoListaFila != null){
             if(nuevaFila.getFila() == nodoListaFila.getFila()){
@@ -252,20 +252,6 @@ public class Matriz {
 			multiplicar(aCol.getSiguiente(), bFil.getAbajo());
 		}
 		}
-		
-		/*
-		if (aCol != null && bFil != null) {
-			NodoFila aFil = getMultFil(aCol);
-			if(aFil==null || bFil ==null) {
-				System.out.println("skip");
-			}else {
-				this.val += aFil.getValor() * bFil.getValor();
-				System.out.println("mult columna : " + aFil.getValor() + " mult fila: " + bFil.getValor());
-				System.out.println("Multiplicidad: "+itr+ " Valor: "+val);
-				multiplicar(aCol.getSiguiente(), bFil.getAbajo());
-		}
-			multiplicar(aCol.getSiguiente(), bFil.getAbajo());
-		System.out.println(val);*/
 		return this.val;
 	}
 

@@ -244,32 +244,36 @@ public class Window extends JFrame implements ActionListener {
 	}
 	public void nuevaMultiplicacion() {
 		System.out.println(MaxColA + "--" + MaxFilB);
-		if (MaxColA == MaxFilB) {
+		if (MaxColA == MaxFilB) {//Col A = filas B
 			NodoColumna columnaA = a.getInicio();
-	        while(columnaA != null){
-	            NodoColumna columnaB = b.getInicio();
-	            while(columnaB != null){
-	                NodoFila filaB = columnaB.getCabeza();
-	                while(filaB != null){
-	                    if(columnaA.getCol() == filaB.getFila()){
-	                        NodoFila filaA = columnaA.getCabeza();
-	                        while(filaA != null){
-	                        	 NodoColumna nuevaColumna = new NodoColumna(columnaB.getCol());
-	                             NodoFila nuevaFila = new NodoFila(filaA.getFila(),filaA.getValor()*filaB.getValor());
-	                             if(r.getInicio() == null){
-	                                 r.setInicio(nuevaColumna);
-	                                 nuevaColumna.setCabeza(nuevaFila);
-	                             }else{
-	                                 r.insertarColumnaR(nuevaColumna, nuevaFila, r.getInicio());
-	                             }
-	                            filaA = filaA.getAbajo();
+	        while(columnaA != null){//Mientras que hayan elementos en la columna A inicial
+	        	
+	        NodoColumna columnaB = b.getInicio();
+	        while(columnaB != null){//Mientras hayan elementos en la Columna B inicial
+	            	
+	        NodoFila filaB = columnaB.getCabeza();
+	        while(filaB != null){//Mientras hayan elementos en la FilaB inicial
+	             if(columnaA.getCol() == filaB.getFila()){//si los indices de colA = filB
+	                    	
+	                NodoFila filaA = columnaA.getCabeza();
+	                while(filaA != null){//itera sobre la columna A
+	                        	
+	            	 NodoColumna nuevaColumna = new NodoColumna(columnaB.getCol());
+	                 NodoFila nuevaFila = new NodoFila(filaA.getFila(),filaA.getValor()*filaB.getValor());
+	                 if(r.getInicio() == null){
+	                       r.setInicio(nuevaColumna);
+	                       nuevaColumna.setCabeza(nuevaFila);
+	                        }else{
+	                         r.insertarColumnaR(nuevaColumna, nuevaFila, r.getInicio());
 	                        }
-	                    }
-	                    filaB = filaB.getAbajo();
-	                }
-	                columnaB = columnaB.getSiguiente();
-	            }
-	            columnaA = columnaA.getSiguiente();
+	                            filaA = filaA.getAbajo();//aumenta fila A
+	                 }
+	             }
+	             filaB = filaB.getAbajo();//aumenta fila B
+	        }
+	        columnaB = columnaB.getSiguiente();//aumenta columna B
+	        }
+	        columnaA = columnaA.getSiguiente(); //aumenta Columna A
 	        }
 	        
 	        }else {
