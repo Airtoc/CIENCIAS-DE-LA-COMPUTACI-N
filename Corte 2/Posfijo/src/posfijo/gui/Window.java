@@ -1,10 +1,11 @@
 package posfijo.gui;
 
+import posfijo.logic.InfixToPostfix;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import posfijo.logic.InfixPostfix;
 
 public class Window extends JFrame implements ActionListener {
 
@@ -28,7 +29,7 @@ public class Window extends JFrame implements ActionListener {
         contentPane = new JPanel(null);
         setContentPane(contentPane);
 
-        lblMath = new JLabel("Digite SIN ESPACIOS + - / * ^ ( )");
+        lblMath = new JLabel("Digite + - / * ^ ( )");
         lblMath.setBounds(5,10, WIDTH,20);
         lblMath.setFont(new Font("consolas", Font.BOLD, 20));
 
@@ -76,14 +77,11 @@ public class Window extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Math.
         if (e.getSource() == btnMAth){
-            InfixPostfix converter = new InfixPostfix();
-            System.out.println("Calculando...");
-            String infix = getTxtMath().getText();
-            String postfix = converter.infixToPostfix(infix);
-            System.out.println(postfix);
-            int resultValue = converter.evaluatePostfix(postfix);
-            getTxtPostfix().setText(postfix);
-            getTxtResult().setText(String.valueOf(resultValue));
+            InfixToPostfix pila=new InfixToPostfix();
+            String Infijo= getTxtMath().getText();
+            pila.Operadores(Infijo);
+            getTxtPostfix().setText(""+pila.getResultPostfix());
+            getTxtResult().setText(pila.Resultado());
         }
 
     }
