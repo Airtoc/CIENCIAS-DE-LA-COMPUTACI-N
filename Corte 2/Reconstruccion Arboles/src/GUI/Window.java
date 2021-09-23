@@ -17,6 +17,9 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
+
+import Logic.Tree;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -103,6 +106,12 @@ public class Window {
 		btnPreIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Action listener 1
+				String[] pre = txtPreorder1.getText().split("");
+				String[] ino = txtInorder1.getText().split("");
+				
+				Tree a = new Tree(pre,ino);
+				
+				
 			}
 		});
 		btnPreIn.setBounds(266, 196, 133, 23);
@@ -143,6 +152,12 @@ public class Window {
 		btnInPos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Actionlistener2
+				String[] ino = txtInorder2.getText().split("");
+				String[] pos = txtInorder2.getText().split("");
+				
+				Tree a = new Tree(pos,ino);
+				
+				
 			}
 		});
 		btnInPos.setBounds(266, 368, 133, 23);
