@@ -1,93 +1,172 @@
 package Logic;
 
-import.javax.swing.*;
+//import.javax.swing.*;
 
 public class Tree {
 
-	private Node raiz;
+	private Node raizT;
 	int fila;
-	String[] pre,ino;
-	
-	public Tree(String[] arr1, String[]arr2){
-		raiz = null;
-		this.pre = arr1;
-		this.ino = arr2;
-	}
-	
-	public void insertar(String a) {
-		Node p,q;
-		
-		if(this.raiz == null) {
-			raiz = new Node(a);
-		}
-		
-	}
-	
-	public void addIzq(Node e,String a) {
-		Node nuevo = new Node(a);
-		e.izq = nuevo;
-		nuevo.setRaiz(e);
-	}
-	public void addDer(Node e,String a) {
-		Node nuevo = new Node(a);
-		e.der = nuevo;
-		nuevo.setRaiz(e);
-	}
-	
-	public void reconstruir1(String inOrder, String preOrder) { 
-	    String[] in = inOrder.split("");
-	    String[] pre = preOrder.split("");
-	    
-	    if(in.length == pre.length){
-	    
-	    
-	    }else {
-	        JOptionPane.showMessageDialog(null, "Error: Mismo tamaño.");
-	    }
+	String[] pre, ino;
+	int i = 1;
+
+	public Tree() {
+		raizT = null;
 	}
 
-	public void reconstruir2() { //Inorder & Posorder
-		
-	}
-	
-	public void subcadenaIzq(String[] cadena,String nodo,Node no) {
-		int division;
-		for(int i= 0;i<cadena.length;i++) {
-			if(cadena[i] == nodo) {
-				division = i;
-			}
-		}
-		for (int i = 0; i<division;i++) {
-			cadena[i]
-		}
-		no.setBizq(cadena);
-	}
-	
-	public void subcadenaDer(String[] cadena) {
-		for(int i= 0;)
-	}
-	
-	
+	public void addIzq(Node inicio, String[] aux) {
 
-	/*
-	 * p = q = raiz;
-		
-		while(q!=null & p.name != a) {
-			p = q;
-			if(a.indexOf(a)< p.name.indexOf(a) ) {// Modificar para verificar el orden en el arboll
-				q = q.izq;
+		if (aux != null) {// Full izq
+			System.out.println("\n+Raiz izq: " + pre[i]);
+			Node b = new Node(pre[i]);
+			subCadenaIzq(aux, pre[i], b);// null
+			subCadenaDer(aux, pre[i], b);// null
+			b.setRaiz(inicio);
+			inicio.setIzq(b);
+			inicio.setBizq(null);
+			i++;
+			addIzq(b, b.bizq);
+		} else {
+			if (inicio.getRaiz().getBder() == null && inicio.getRaiz().getBizq() == null) {
+				System.out.println("hey " + inicio.getRaiz().getBizq());
+				System.out.println("hey2 " + inicio.getRaiz().getBder());
+				System.out.println("terminamos");			
+				while (inicio.getRaiz().getBder() == null && inicio.getRaiz().getBizq() == null) {
+					inicio = inicio.getRaiz();
+					System.out.println("\n+Raiz NEW 2: " + inicio.name);
+				}
+				addDer(inicio.getRaiz(),inicio.bder);
 			}else {
-				q = q.der;
+			System.out.println("hey " + inicio.getRaiz().getBizq());
+			System.out.println("hey2 " + inicio.getRaiz().getBder());
+			System.out.println("\n+Raiz izq2: " + inicio.getRaiz().name);
+			addDer(inicio, inicio.getRaiz().getBder());
 			}
-			if(a.equals(p.name)==true) {
-				System.out.println("el nodo se encuentra repetido");
-			}else if (a.indexOf(a)< p.name.indexOf(a)) {
-				addIzq(p,a);
-			}else {
-				addDer(p,a);
-			}
-			
 		}
-		*/
+	}
+
+	public void addDer(Node inicio, String[] aux) {
+		if (aux != null) {// Full izq
+			System.out.println("\n+Raiz der: " + pre[i]);
+			Node b = new Node(pre[i]);
+			subCadenaIzq(aux, pre[i], b);// null
+			subCadenaDer(aux, pre[i], b);// null
+			b.setRaiz(inicio.getRaiz());
+			System.out.println("RA: " + b.getRaiz().name);
+			inicio.setDer(b);
+			inicio.setBder(null);
+			i++;
+			addIzq(b, b.bizq);
+		} else {
+			System.out.println("termine subarbol 1");
+			/*
+			System.out.println("hey DER" + inicio.getRaiz().getDer());
+			System.out.println("\n+Raiz der 2: " + inicio.getRaiz().name);
+			if (inicio.getRaiz().name != pre[0]) {
+				if (inicio.getRaiz().getBder() != null || inicio.getRaiz().getBizq() != null) {
+					inicio = inicio.getRaiz();
+				}
+				while (inicio.getRaiz().getBder() == null && inicio.getRaiz().getBizq() == null) {
+					inicio = inicio.getRaiz();
+					System.out.println("\n+Raiz NEW 2: " + inicio.getRaiz().name);
+				}
+				System.out.println(inicio.getRaiz().name);
+				addDer(inicio, inicio.getBder());
+			}*/
+		}
+	}
+
+	public void goBack() {
+		
+	}
+	public void reconstruir1(String inOrder, String preOrder) {
+		String[] in = inOrder.split("");
+		String[] pre = preOrder.split("");
+
+		if (in.length == pre.length) {
+
+		} else {
+			// JOptionPane.showMessageDialog(null, "Error: Mismo tamaño.");
+		}
+	}
+
+	public void reconstruir2() { // Inorder & Posorder
+
+	}
+
+	public void subCadenaIzq(String[] cadena, String nodo, Node no) {
+		if (cadena[0].equals(nodo) == false) {
+			int division = 0;
+
+			for (int i = 0; i < cadena.length; i++) {
+
+				if (cadena[i].equals(nodo) == true) {
+					division = i;
+				}
+			}
+			String[] sub = new String[division];
+			for (int i = 0; i < division; i++) {
+				sub[i] = cadena[i];
+			}
+
+			for (int i = 0; i < sub.length; i++) {
+				System.out.println("izq: " + sub[i]);
+				;
+			}
+			no.setBizq(sub);
+		} else {
+			no.setBizq(null);
+		}
+	}
+
+	public void subCadenaDer(String[] cadena, String nodo, Node no) {
+		if (cadena[cadena.length - 1].equals(nodo) == false) {
+			int division = 0;
+
+			for (int i = 0; i < cadena.length; i++) {
+				if (cadena[i].equals(nodo) == true) {
+					division = i;
+				}
+			}
+			String[] sub = new String[cadena.length - (division + 1)];
+			int a = 0;
+			for (int i = division + 1; i < cadena.length; i++) {
+				sub[a] = cadena[i];
+				a++;
+			}
+
+			for (int i = 0; i < sub.length; i++) {
+				System.out.println("der: " + sub[i]);
+				;
+			}
+			no.setBder(sub);
+		} else {
+			no.setBder(null);
+		}
+	}
+
+	// Getters & setters
+	public Node getRaizT() {
+		return raizT;
+	}
+
+	public void setRaizT(Node raiz) {
+		this.raizT = raiz;
+	}
+
+	public String[] getPre() {
+		return pre;
+	}
+
+	public void setPre(String[] pre) {
+		this.pre = pre;
+	}
+
+	public String[] getIno() {
+		return ino;
+	}
+
+	public void setIno(String[] ino) {
+		this.ino = ino;
+	}
 
 }

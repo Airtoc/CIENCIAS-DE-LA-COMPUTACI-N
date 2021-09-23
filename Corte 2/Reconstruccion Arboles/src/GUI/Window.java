@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 
+import Logic.Node;
 import Logic.Tree;
 
 import java.awt.event.ActionListener;
@@ -30,6 +31,7 @@ public class Window {
 	private JTextField txtInorder1;
 	private JTextField txtInorder2;
 	private JTextField txtPosOrder1;
+	private Tree a;
 
 	/**
 	 * Launch the application.
@@ -52,6 +54,7 @@ public class Window {
 	 */
 	public Window() {
 		initialize();
+		 a = new Tree();
 	}
 
 	/**
@@ -108,12 +111,22 @@ public class Window {
 				//Action listener 1
 				String[] pre = txtPreorder1.getText().split("");
 				String[] ino = txtInorder1.getText().split("");
-				
-				Tree a = new Tree(pre,ino);
+				Node nodo = new Node(pre[0]);
+				if (a.getRaizT() == null) {
+		            // si no hay un nodo inicial , se convierte en el primero
+		            a.setRaizT(nodo);
+		            a.setPre(pre);
+		            a.setIno(ino);		            
+		            a.subCadenaDer(ino,pre[0],a.getRaizT());
+		            a.subCadenaIzq(ino, pre[0],a.getRaizT());
+		            a.addIzq(a.getRaizT(),a.getRaizT().getBizq());
+		        } else {
+				//a.subCadenaIzq(ino, "F", null);
+				//a.subCadenaDer(ino, "F", null);
 				
 				
 			}
-		});
+		}});
 		btnPreIn.setBounds(266, 196, 133, 23);
 		dataPanel.add(btnPreIn);
 		
@@ -155,7 +168,9 @@ public class Window {
 				String[] ino = txtInorder2.getText().split("");
 				String[] pos = txtInorder2.getText().split("");
 				
-				Tree a = new Tree(pos,ino);
+				Tree a = new Tree();
+				a.subCadenaIzq(pos, "F", null);
+				a.subCadenaDer(pos, "F", null);
 				
 				
 			}
