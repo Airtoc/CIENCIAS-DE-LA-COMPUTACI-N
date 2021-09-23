@@ -24,22 +24,28 @@ public class Tree {
 			inicio.setIzq(b);
 			inicio.setBizq(null);
 			i++;
-			addIzq(b, b.bizq);
+			if(i != pre.length) {
+				addIzq(b, b.bizq);
+			}else {
+				System.out.println("se acabo todo ");
+			}
+			
 		} else {
+			
 			if (inicio.getRaiz().getBder() == null && inicio.getRaiz().getBizq() == null) {
-				System.out.println("hey " + inicio.getRaiz().getBizq());
+				/*System.out.println("hey " + inicio.getRaiz().getBizq());
 				System.out.println("hey2 " + inicio.getRaiz().getBder());
-				System.out.println("terminamos");			
-				while (inicio.getRaiz().getBder() == null && inicio.getRaiz().getBizq() == null) {
+				System.out.println("terminamos");*/
+				while (inicio.getBder() == null && inicio.getBizq() == null) {
 					inicio = inicio.getRaiz();
 					System.out.println("\n+Raiz NEW 2: " + inicio.name);
 				}
-				addDer(inicio.getRaiz(),inicio.bder);
+				addDer(inicio,inicio.getBder());
 			}else {
 			System.out.println("hey " + inicio.getRaiz().getBizq());
 			System.out.println("hey2 " + inicio.getRaiz().getBder());
 			System.out.println("\n+Raiz izq2: " + inicio.getRaiz().name);
-			addDer(inicio, inicio.getRaiz().getBder());
+			addDer(inicio.getRaiz(), inicio.getRaiz().getBder());
 			}
 		}
 	}
@@ -50,48 +56,17 @@ public class Tree {
 			Node b = new Node(pre[i]);
 			subCadenaIzq(aux, pre[i], b);// null
 			subCadenaDer(aux, pre[i], b);// null
-			b.setRaiz(inicio.getRaiz());
+			b.setRaiz(inicio);
+			inicio.setBder(null);
 			System.out.println("RA: " + b.getRaiz().name);
 			inicio.setDer(b);
-			inicio.setBder(null);
 			i++;
 			addIzq(b, b.bizq);
 		} else {
 			System.out.println("termine subarbol 1");
-			/*
-			System.out.println("hey DER" + inicio.getRaiz().getDer());
-			System.out.println("\n+Raiz der 2: " + inicio.getRaiz().name);
-			if (inicio.getRaiz().name != pre[0]) {
-				if (inicio.getRaiz().getBder() != null || inicio.getRaiz().getBizq() != null) {
-					inicio = inicio.getRaiz();
-				}
-				while (inicio.getRaiz().getBder() == null && inicio.getRaiz().getBizq() == null) {
-					inicio = inicio.getRaiz();
-					System.out.println("\n+Raiz NEW 2: " + inicio.getRaiz().name);
-				}
-				System.out.println(inicio.getRaiz().name);
-				addDer(inicio, inicio.getBder());
-			}*/
 		}
 	}
 
-	public void goBack() {
-		
-	}
-	public void reconstruir1(String inOrder, String preOrder) {
-		String[] in = inOrder.split("");
-		String[] pre = preOrder.split("");
-
-		if (in.length == pre.length) {
-
-		} else {
-			// JOptionPane.showMessageDialog(null, "Error: Mismo tamaño.");
-		}
-	}
-
-	public void reconstruir2() { // Inorder & Posorder
-
-	}
 
 	public void subCadenaIzq(String[] cadena, String nodo, Node no) {
 		if (cadena[0].equals(nodo) == false) {
