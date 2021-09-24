@@ -117,16 +117,20 @@ public class Window {
 		            a.setRaizT(nodo);
 		            a.setPre(pre);
 		            a.setIno(ino);		            
-		            a.subCadenaDer(ino,pre[0],a.getRaizT());
-		            a.subCadenaIzq(ino, pre[0],a.getRaizT());
-		            a.addIzq(a.getRaizT(),a.getRaizT().getBizq());
+		            a.subCadenaDer(ino, pre[0], a.getRaizT());
+		            a.subCadenaIzq(ino, pre[0], a.getRaizT());
+		            if(a.getRaizT().getBizq()==null) {
+		            	a.addDer(a.getRaizT(),a.getRaizT().getBder());
+		            }else {
+		                a.addIzq(a.getRaizT(),a.getRaizT().getBizq());
+		            }
 		        } else {
-				//a.subCadenaIzq(ino, "F", null);
-				//a.subCadenaDer(ino, "F", null);
-				
-				
-			}
-		}});
+			    }
+				Canvas can = new Canvas();
+				ControladorGraph obj = new ControladorGraph(can,a);
+				obj.iniciar();
+				graphPanel.add(can);
+	    	}});
 		btnPreIn.setBounds(266, 196, 133, 23);
 		dataPanel.add(btnPreIn);
 		
@@ -166,17 +170,39 @@ public class Window {
 			public void actionPerformed(ActionEvent e) {
 				//Actionlistener2
 				String[] ino = txtInorder2.getText().split("");
-				String[] pos = txtInorder2.getText().split("");
+				String[] pos = txtPosOrder1.getText().split("");
+				Node nodo = new Node(pos[pos.length-1]);
 				
-				Tree a = new Tree();
-				a.subCadenaIzq(pos, "F", null);
-				a.subCadenaDer(pos, "F", null);
+				if (a.getRaizT() == null) {
+				    a.setRaizT(nodo);
+                    a.setPos(pos);
+                    a.setIno(ino);
+                    a.subCadenaDer(ino, pos[pos.length-1], a.getRaizT());
+                    a.subCadenaIzq(ino, pos[pos.length-1], a.getRaizT());
+                    a.setJ(pos.length-2);
+                    if(a.getRaizT().getBizq() == null) {
+                    	a.addIzqN(a.getRaizT(), a.getRaizT().getBizq());
+                    }else {
+                    	a.addDerN(a.getRaizT(), a.getRaizT().getBder());
+                    }
+                    
+                    
+				}
 				
 				
 			}
 		});
 		btnInPos.setBounds(266, 368, 133, 23);
 		dataPanel.add(btnInPos);
+		
+		JButton btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Tree a = new Tree();
+			}
+		});
+		btnLimpiar.setBounds(310, 243, 89, 23);
+		dataPanel.add(btnLimpiar);
 		frmReforestar.getContentPane().add(graphPanel);
 	}
 }

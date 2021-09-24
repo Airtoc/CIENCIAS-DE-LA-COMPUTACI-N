@@ -6,12 +6,15 @@ public class Tree {
 
 	private Node raizT;
 	int fila;
-	String[] pre, ino;
+	String[] pre, ino, pos;
 	int i = 1;
+	int j;
 
 	public Tree() {
 		raizT = null;
 	}
+
+	// Edison.... [Pre..In]
 
 	public void addIzq(Node inicio, String[] aux) {
 
@@ -24,28 +27,29 @@ public class Tree {
 			inicio.setIzq(b);
 			inicio.setBizq(null);
 			i++;
-			if(i != pre.length) {
+			if (i != pre.length) {
 				addIzq(b, b.bizq);
-			}else {
+			} else {
 				System.out.println("se acabo todo ");
 			}
-			
+
 		} else {
-			
 			if (inicio.getRaiz().getBder() == null && inicio.getRaiz().getBizq() == null) {
-				/*System.out.println("hey " + inicio.getRaiz().getBizq());
-				System.out.println("hey2 " + inicio.getRaiz().getBder());
-				System.out.println("terminamos");*/
+				/*
+				 * System.out.println("hey " + inicio.getRaiz().getBizq());
+				 * System.out.println("hey2 " + inicio.getRaiz().getBder());
+				 * System.out.println("terminamos");
+				 */
 				while (inicio.getBder() == null && inicio.getBizq() == null) {
 					inicio = inicio.getRaiz();
 					System.out.println("\n+Raiz NEW 2: " + inicio.name);
 				}
-				addDer(inicio,inicio.getBder());
-			}else {
-			System.out.println("hey " + inicio.getRaiz().getBizq());
-			System.out.println("hey2 " + inicio.getRaiz().getBder());
-			System.out.println("\n+Raiz izq2: " + inicio.getRaiz().name);
-			addDer(inicio.getRaiz(), inicio.getRaiz().getBder());
+				addDer(inicio, inicio.getBder());
+			} else {
+				System.out.println("hey " + inicio.getRaiz().getBizq());
+				System.out.println("hey2 " + inicio.getRaiz().getBder());
+				System.out.println("\n+Raiz izq2: " + inicio.getRaiz().name);
+				addDer(inicio.getRaiz(), inicio.getRaiz().getBder());
 			}
 		}
 	}
@@ -61,12 +65,69 @@ public class Tree {
 			System.out.println("RA: " + b.getRaiz().name);
 			inicio.setDer(b);
 			i++;
-			addIzq(b, b.bizq);
+			if (i != pre.length) {
+				addIzq(b, b.bizq);
+			} else {
+				System.out.println("se acabo todo ");
+
+			}
 		} else {
 			System.out.println("termine subarbol 1");
 		}
 	}
 
+	// Daniel [In..Pos]
+
+	public void addIzqN(Node inicio, String[] aux) {
+
+		if (aux != null) {// Full izq
+			System.out.println("\n+Raiz izq: " + pos[j]);
+			Node b = new Node(pos[j]);
+			subCadenaIzq(aux, pos[j], b);// null
+			subCadenaDer(aux, pos[j], b);// null
+			b.setRaiz(inicio);
+			inicio.setIzq(b);
+			inicio.setBizq(null);
+			j--;
+			if (j != -1) {
+				addDerN(b, b.bder);
+			} else {
+				System.out.println("se acabo todo");
+			}
+		}
+	}
+
+	public void addDerN(Node inicio, String[] aux) {
+		if (aux != null) {// Full izq
+			System.out.println("\n+Raiz der: " + pos[j]);
+			Node b = new Node(pos[j]);
+			subCadenaIzq(aux, pos[j], b);// null
+			subCadenaDer(aux, pos[j], b);// null
+			b.setRaiz(inicio);
+			inicio.setBder(null);
+			System.out.println("RA: " + b.getRaiz().name);
+			inicio.setDer(b);
+			j--;
+			if (j != -1) {
+            	addDerN(b, b.bder);
+            } else {
+            	System.out.println("se acabo todo ");
+            }
+		} else {
+			if (inicio.getRaiz().getBder() == null && inicio.getRaiz().getBizq() == null) {
+				while (inicio.getBder() == null && inicio.getBizq() == null) {
+					inicio = inicio.getRaiz();
+					System.out.println("\n+Raiz NEW 2: " + inicio.name);
+				}
+				addIzqN(inicio, inicio.getBizq());
+			} else {
+				System.out.println("hey " + inicio.getRaiz().getBder());
+				System.out.println("hey2 " + inicio.getRaiz().getBizq());
+				System.out.println("\n+Raiz izq2: " + inicio.getRaiz().name);
+				addIzqN(inicio.getRaiz(), inicio.getRaiz().getBizq());
+			}
+		}
+	}
 
 	public void subCadenaIzq(String[] cadena, String nodo, Node no) {
 		if (cadena[0].equals(nodo) == false) {
@@ -136,12 +197,24 @@ public class Tree {
 		this.pre = pre;
 	}
 
-	public String[] getIno() {
-		return ino;
+	public String[] getPos() {
+		return pos;
 	}
 
 	public void setIno(String[] ino) {
 		this.ino = ino;
+	}
+
+	public String[] getIno() {
+		return ino;
+	}
+
+	public void setPos(String[] ino) {
+		this.pos = ino;
+	}
+
+	public void setJ(int j) {
+		this.j = j;
 	}
 
 }
