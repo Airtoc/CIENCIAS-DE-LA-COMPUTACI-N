@@ -86,6 +86,7 @@ public class Tree {
 			subCadenaIzq(aux, pos[j], b);// null
 			subCadenaDer(aux, pos[j], b);// null
 			b.setRaiz(inicio);
+			System.out.println("RB: " + b.getRaiz().name);
 			inicio.setIzq(b);
 			inicio.setBizq(null);
 			j--;
@@ -121,12 +122,18 @@ public class Tree {
 				}
 				addIzqN(inicio, inicio.getBizq());
 			} else {
-				System.out.println("hey " + inicio.getRaiz().getBder());
-				System.out.println("hey2 " + inicio.getRaiz().getBizq());
-				System.out.println("\n+Raiz izq2: " + inicio.getRaiz().name);
-				addIzqN(inicio.getRaiz(), inicio.getRaiz().getBizq());
-			}
-		}
+				if(inicio.bizq != null) {
+					addIzqN(inicio, inicio.getBizq());
+				}else {
+					System.out.println("hey3 " + inicio.getName());
+					System.out.println("hey " + inicio.getRaiz().getBder());
+					System.out.println("hey2 " + inicio.getRaiz().getBizq());
+					System.out.println("\n+Raiz der2: " + inicio.getRaiz().name);
+					addIzqN(inicio.getRaiz(), inicio.getRaiz().getBizq());
+				}
+				
+			}}
+		
 	}
 
 	public void subCadenaIzq(String[] cadena, String nodo, Node no) {

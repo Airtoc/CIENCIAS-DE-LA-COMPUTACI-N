@@ -24,6 +24,8 @@ import Logic.Node;
 import Logic.Tree;
 
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class Window {
@@ -131,9 +133,12 @@ public class Window {
 						}
 					}
 					if (!rep) {
-						if (ino[0].equals(pre[0])) {
+						if (igualdad(pre,ino) == false) {
 							JOptionPane.showMessageDialog(null, "Los arboles no coinciden");
 						} else {
+							 if(ino[0].equals(pre[pre.length-1]) && ino[ino.length-1].equals(pre[0])){
+				                    JOptionPane.showMessageDialog(null,"Los arboles no coinciden");
+				                }else{
 							// Inicio
 							Node nodo = new Node(pre[0]);
 							if (a.getRaizT() == null) {
@@ -162,7 +167,7 @@ public class Window {
 					        ventana.setVisible(true);
 					        ventana.setLocationRelativeTo(null);
 						}
-
+						}
 					} else {
 						JOptionPane.showMessageDialog(null, "Letras repetidas");
 					}
@@ -211,7 +216,6 @@ public class Window {
 				// Actionlistener2
 				String[] ino = txtInorder2.getText().split("");
 				String[] pos = txtPosOrder1.getText().split("");
-
 				// Verificaciones
 				if (ino.length == pos.length) {
 					boolean rep = false;
@@ -225,10 +229,13 @@ public class Window {
 						}
 					}
 					if (!rep) {
-						if (ino[0].equals(pos[pos.length - 1])) {
+						if (igualdad(pos,ino) == false) {
 							JOptionPane.showMessageDialog(null, "Los arboles no coinciden");
 						} else {
 							// Inicio
+							if(ino[0].equals(pos[pos.length-1]) && ino[ino.length-1].equals(pos[0])){
+			                    JOptionPane.showMessageDialog(null,"Los arboles no coinciden");
+			                }else{
 							Node nodo = new Node(pos[pos.length - 1]);
 							if (a.getRaizT() == null) {
 								a.setRaizT(nodo);
@@ -237,7 +244,7 @@ public class Window {
 								a.subCadenaDer(ino, pos[pos.length - 1], a.getRaizT());
 								a.subCadenaIzq(ino, pos[pos.length - 1], a.getRaizT());
 								a.setJ(pos.length - 2);
-								if (a.getRaizT().getBizq() == null) {
+								if (a.getRaizT().getBder() == null) {
 									a.addIzqN(a.getRaizT(), a.getRaizT().getBizq());
 								} else {
 									a.addDerN(a.getRaizT(), a.getRaizT().getBder());
@@ -255,6 +262,7 @@ public class Window {
 					        ventana.setVisible(true);
 					        ventana.setLocationRelativeTo(null);
                             }
+							}
 
 					} else {
 						JOptionPane.showMessageDialog(null, "Letras repetidas");
@@ -271,11 +279,21 @@ public class Window {
 		JButton btnLimpiar = new JButton("Limpiar");
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Tree a = new Tree();
+				Tree b = new Tree();
+				a = b;
 			}
 		});
 		btnLimpiar.setBounds(310, 243, 89, 23);
 		dataPanel.add(btnLimpiar);
 		frmReforestar.getContentPane().add(graphPanel);
+	}
+	public Boolean igualdad(String[] uno, String[] dos) {
+		  List<String> list = Arrays.asList(uno);
+		  List<String> list2 = Arrays.asList(dos);
+		  if(list.containsAll(list2) && list2.containsAll(list)) {
+			  return true;
+		  }else {
+			  return false;
+		  }
 	}
 }
