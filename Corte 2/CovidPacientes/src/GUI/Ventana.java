@@ -6,7 +6,9 @@ import GUI.Lienzo;
 import GUI.Controlador;
 import Logic.Reporte;
 import Logic.Nodo;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
@@ -71,73 +73,94 @@ public class Ventana {
 	private void initialize() {
             LocalDateTime fechHoy = LocalDateTime.now();
             
-		frame = new JFrame();
-		frame.setBounds(100, 100, 550, 571);
+		frame = new JFrame("Reporte Covid");
+		frame.setBounds(100, 100, 600, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setLocationRelativeTo(null);
+                frame.getContentPane().setBackground(Color.BLACK);
 		frame.getContentPane().setLayout(null);
+
+                
+                JLabel lblTitle = new JLabel("Informacion paciente:");
+                lblTitle.setFont(new Font("Arial", Font.PLAIN, 18));
+		lblTitle.setBounds(21, 25, 180, 18);
+                lblTitle.setForeground(Color.WHITE);
+		frame.getContentPane().add(lblTitle);
 		
 		JLabel lblCodigo = new JLabel("Codigo: ");
-		lblCodigo.setBounds(21, 25, 96, 14);
+		lblCodigo.setBounds(21, 85, 96, 14);
+                lblCodigo.setForeground(Color.WHITE);
 		frame.getContentPane().add(lblCodigo);
 		
 		JLabel lblNombre = new JLabel("Nombre: ");
 		lblNombre.setBounds(21, 55, 96, 14);
+                lblNombre.setForeground(Color.WHITE);
 		frame.getContentPane().add(lblNombre);
 		
 		txtCodigo = new JTextField();
-		txtCodigo.setBounds(89, 22, 400, 20);
+		txtCodigo.setBounds(89, 85, 200, 20);
 		frame.getContentPane().add(txtCodigo);
 		txtCodigo.setColumns(10);
 		
 		txtNombre = new JTextField();
-		txtNombre.setBounds(89, 50, 400, 20);
+		txtNombre.setBounds(89, 55, 200, 20);
 		frame.getContentPane().add(txtNombre);
 		txtNombre.setColumns(10);
 		
+                JLabel lblformato = new JLabel("Fecha tipo AAAA/MM/DD ");
+		lblformato.setBounds(21, 120, 200, 14);
+                lblformato.setForeground(Color.WHITE);
+		frame.getContentPane().add(lblformato);
+                
+                
+                JLabel lblFecha = new JLabel("Fecha: ");
+		lblFecha.setBounds(21, 140, 96, 14);
+                lblFecha.setForeground(Color.WHITE);
+		frame.getContentPane().add(lblFecha);
+                
 		txtFecha = new JTextField();
-		txtFecha.setBounds(89, 129, 400, 20);
+		txtFecha.setBounds(89, 140, 200, 20);
 		frame.getContentPane().add(txtFecha);
 		txtFecha.setColumns(10);
 		
 		JLabel lblPreorden = new JLabel("Preorden: ");
 		lblPreorden.setBounds(21, 185, 83, 14);
+                lblPreorden.setForeground(Color.WHITE);
 		frame.getContentPane().add(lblPreorden);
 		
 		JLabel lblInorden = new JLabel("Inorden: ");
 		lblInorden.setBounds(21, 215, 83, 14);
+                lblInorden.setForeground(Color.WHITE);
 		frame.getContentPane().add(lblInorden);
 		
 		JLabel lblPosorden = new JLabel("Posorden: ");
 		lblPosorden.setBounds(21, 245, 83, 14);
+                lblPosorden.setForeground(Color.WHITE);
 		frame.getContentPane().add(lblPosorden);
 		
 		txtPreorden = new JTextField();
-		txtPreorden.setBounds(95, 182, 400, 20);
+		txtPreorden.setBounds(95, 182, 200, 20);
 		frame.getContentPane().add(txtPreorden);
 		txtPreorden.setColumns(10);
 		
 		txtInorden = new JTextField();
-		txtInorden.setBounds(95, 212, 400, 20);
+		txtInorden.setBounds(95, 212, 200, 20);
 		frame.getContentPane().add(txtInorden);
 		txtInorden.setColumns(10);
 		
 		txtPosorden = new JTextField();
-		txtPosorden.setBounds(95, 242, 400, 20);
+		txtPosorden.setBounds(95, 242, 200, 20);
 		frame.getContentPane().add(txtPosorden);
 		txtPosorden.setColumns(10);
 		
-		JLabel lblCod = new JLabel("Codigo: ");
+		/*JLabel lblCod = new JLabel("Codigo: ");
 		lblCod.setBounds(21, 107, 96, 14);
-		frame.getContentPane().add(lblCod);
+		frame.getContentPane().add(lblCod);*/
 		
-		JLabel lblFecha = new JLabel("Fecha: ");
-		lblFecha.setBounds(21, 132, 96, 14);
-		frame.getContentPane().add(lblFecha);
-		
-		txtCod = new JTextField();
+		/*txtCod = new JTextField();
 		txtCod.setBounds(89, 104, 400, 20);
 		frame.getContentPane().add(txtCod);
-		txtCod.setColumns(10);
+		txtCod.setColumns(10);*/
 		
 		JButton btnAgregar = new JButton("Agregar Paciente");
 		btnAgregar.addActionListener(new ActionListener() {
@@ -168,7 +191,7 @@ public class Ventana {
 		        }
 			}
 		});
-		btnAgregar.setBounds(20, 400, 240, 23);
+		btnAgregar.setBounds(320, 50, 230, 23);
 		frame.getContentPane().add(btnAgregar);
 		
 		JButton btnEliminar = new JButton("Eliminar Paciente");
@@ -206,7 +229,7 @@ public class Ventana {
                                 }
 			}
 		});
-		btnEliminar.setBounds(20, 450, 240, 23);
+		btnEliminar.setBounds(320, 90, 230, 23);
 		frame.getContentPane().add(btnEliminar);
 		
 		JButton btnFecha = new JButton("Agregar Fecha de vacunacion");
@@ -228,7 +251,7 @@ public class Ventana {
                                     }else{
                                         fech = formato.parse(txtFecha.getText());
                                     }
-					if(arbol.vacuna1(Integer.parseInt(txtCod.getText()), fech)){
+					if(arbol.vacuna1(Integer.parseInt(txtCodigo.getText()), fech)){
                                             JOptionPane.showMessageDialog(null, "Fecha registrada");
                                             txtFecha.setText("");
                                         }else{
@@ -245,31 +268,31 @@ public class Ventana {
 				
 			}
 		});
-		btnFecha.setBounds(280, 400, 245, 23);
+		btnFecha.setBounds(320, 120, 230, 23);
 		frame.getContentPane().add(btnFecha);
 		
-		JButton btnDibujar = new JButton("Dibujar Arbol de pacientes");
+		JButton btnDibujar = new JButton("Graficar Informacion");
 		btnDibujar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent dibujar) {
                             
                             Lienzo objLienzo = new Lienzo();
                             Controlador objControlador = new Controlador(objLienzo, arbol);
                             objControlador.iniciar();
-                            JFrame ventana = new JFrame();
+                            JFrame ventana = new JFrame("Grafica datos");
                             ventana.getContentPane().add(objLienzo);
                             ventana.setSize(600, 600);
                             ventana.setVisible(true);
 			}
 		});
-		btnDibujar.setBounds(100, 285, 350, 80);
+		btnDibujar.setBounds(320, 150, 230, 23);
 		frame.getContentPane().add(btnDibujar);
                 
-                JButton btnInformacion = new JButton("Informacion de los pacientes");
+                JButton btnInformacion = new JButton("Ver Info");
 		btnInformacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent info) {
                             
                             Reporte ini = new Reporte(arbol.infoPaciente(Integer.parseInt(txtCodigo.getText())));
-                            JFrame ven = new JFrame("");
+                            JFrame ven = new JFrame("Informacion usuarios");
                             ven.add(ini);
                             ven.setLocation(100, 150);
                             ven.setSize(450, 150);
@@ -277,7 +300,7 @@ public class Ventana {
 			}
 		});
                 //
-		btnInformacion.setBounds(280, 450, 240, 23);
+		btnInformacion.setBounds(320, 180, 230, 23);
 		frame.getContentPane().add(btnInformacion);
 	}
 }
