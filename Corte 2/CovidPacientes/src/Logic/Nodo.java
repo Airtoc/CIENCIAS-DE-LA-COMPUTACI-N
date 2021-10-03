@@ -1,5 +1,6 @@
 package Logic;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -184,13 +185,15 @@ public class Nodo {
             tex = tex + "Codigo: " + temp.getCod() + "\n Nombre: " + temp.getNombre();
             System.out.println(temp.getCod() + " " + temp.getNombre());
             if (temp.getV1()) {
-
-                tex = tex + " \n Primera dosis: " + temp.getFecha1();
+                DateFormat d = DateFormat.getDateInstance();
+                String f1 = d.format(temp.getFecha1());
+                tex = tex + " \n Primera dosis: " + f1;
                 if (temp.getV2()) {
-
-                    tex = tex + " \n Segunda dosis: " + temp.getFecha2();
+                DateFormat da = DateFormat.getDateInstance();
+                String f2 = da.format(temp.getFecha2());
+                    tex = tex + " \n Segunda dosis: " + f2;
                 } else {
-                    tex = tex + "\n El paciente no tiene segunda dosis";
+                    tex = tex + "\n Aun sin Registrar";
                 }
             } else {
                 tex = tex + "\n El paciente no ha sido vacunado";

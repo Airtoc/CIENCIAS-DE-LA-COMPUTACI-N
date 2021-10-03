@@ -187,7 +187,7 @@ public class Ventana {
 		            }
 
 		        } catch (NullPointerException e) {
-		            System.out.println(e);
+		            System.out.println("nulo");
 		        }
 			}
 		});
@@ -225,14 +225,14 @@ public class Ventana {
                                         JOptionPane.showMessageDialog(null, "El valor no se encuentra en el arbol");
                                     }
                                 } catch (NullPointerException e) {
-                                    
+                                    System.out.println("null 2");
                                 }
 			}
 		});
 		btnEliminar.setBounds(320, 90, 230, 23);
 		frame.getContentPane().add(btnEliminar);
 		
-		JButton btnFecha = new JButton("Agregar Fecha de vacunacion");
+		JButton btnFecha = new JButton("Vacunar");
 		btnFecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent fecha) {
 				SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
@@ -240,7 +240,7 @@ public class Ventana {
                                 
 				try {
                                     if(txtFecha.getText().equals("")){
-                                        JOptionPane.showMessageDialog(null, "Se agregará la fecha de hoy");
+                                        JOptionPane.showMessageDialog(null, "Vacunacion dia actual");
                                         Calendar fechActual = new GregorianCalendar();
                                         int año = fechActual.get(Calendar.YEAR);
                                         int mes = fechActual.get(Calendar.MONTH);
@@ -255,11 +255,11 @@ public class Ventana {
                                             JOptionPane.showMessageDialog(null, "Fecha registrada");
                                             txtFecha.setText("");
                                         }else{
-                                            if(arbol.vacuna2(Integer.parseInt(txtCod.getText()), fech)){
+                                            if(arbol.vacuna2(Integer.parseInt(txtCodigo.getText()), fech)){
                                                 JOptionPane.showMessageDialog(null, "Fecha registrada");
                                                 txtFecha.setText("");
                                             }else{
-                                                JOptionPane.showMessageDialog(null, "Fecha no gegistrada");
+                                                JOptionPane.showMessageDialog(null, "Necesita por lo menos 30 dias entre vacunas");
                                             }
                                         }
 				} catch (ParseException e) {
@@ -294,7 +294,7 @@ public class Ventana {
                             Reporte ini = new Reporte(arbol.infoPaciente(Integer.parseInt(txtCodigo.getText())));
                             JFrame ven = new JFrame("Informacion usuarios");
                             ven.add(ini);
-                            ven.setLocation(100, 150);
+                            ven.setLocationRelativeTo(null);
                             ven.setSize(450, 150);
                             ven.setVisible(true);
 			}
