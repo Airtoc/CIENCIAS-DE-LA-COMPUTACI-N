@@ -108,7 +108,7 @@ public class Menu extends JFrame {
         
         btnInorden.addActionListener((event) -> {
             ArbolAvlController controller = ArbolAvlController.getInstance();
-            String[] columns = {"Telefono", "Nombre"};
+            String[] columns = {"Factor de Balance", "Nombre","Telefono"};
             MenuInorden menu = new MenuInorden();
             menu.initTemplate(controller.showIn(), columns);
         });
