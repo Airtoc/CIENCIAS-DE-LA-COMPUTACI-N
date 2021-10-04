@@ -110,7 +110,6 @@ public class ArbolAvl {
         if (r != null) {
             In_orden(r.getIzquierda());
             in.add(r);
-            System.out.println("ino -> "+r.getEstudiante().getNombre());
             In_orden(r.getDerecha());
         }
     }
@@ -121,13 +120,13 @@ public class ArbolAvl {
             posorden(r.getIzquierda());
             posorden(r.getDerecha());
             pos.add(r);
-            System.out.println("pos -> "+r.getEstudiante().getNombre());
         }
     }
     
     //Obtener padre
     public NodoAvl getParent(NodoAvl nodo) {
         in = new ArrayList<>();
+        pos = new ArrayList<>();
         In_orden(raiz);
         posorden(raiz);
         for (NodoAvl e : in) {
@@ -343,6 +342,7 @@ public class ArbolAvl {
     //?
     public NodoAvl retornarNodoDesbalanceado() {
         in = new ArrayList<>();
+        pos = new ArrayList<>();
         In_orden(raiz);
         posorden(raiz);
         ArrayList<NodoAvl> results = new ArrayList<>();

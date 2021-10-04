@@ -52,7 +52,6 @@ public class ArbolAvlController {
 
     //Mostrar en inorder
     public String[][] showIn() {
-        System.out.println(arbol.getIn().size());
         String[][] retorno = new String[arbol.getIn().size()][3];//Columnas 
         for (int i = 0; i < retorno.length; i++) {
             for (int j = 0; j < retorno[i].length; j++) {
@@ -70,7 +69,6 @@ public class ArbolAvlController {
 
     //Mostrar en posorden
     public String[][] showPos() {
-        System.out.println(arbol.getPos().size());
         String[][] retorno = new String[arbol.getPos().size()][3];
         for (int i = 0; i < retorno.length; i++) {
             for (int j = 0; j < retorno[i].length; j++) {
