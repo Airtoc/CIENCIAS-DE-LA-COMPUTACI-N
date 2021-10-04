@@ -6,6 +6,7 @@ public class ArbolAvl {
 
     private NodoAvl raiz;
     private ArrayList<NodoAvl> in = new ArrayList<>();
+    private ArrayList<NodoAvl> pos = new ArrayList<>();
 
     //Balancear
     public void calcularBalances(NodoAvl r) {
@@ -109,7 +110,18 @@ public class ArbolAvl {
         if (r != null) {
             In_orden(r.getIzquierda());
             in.add(r);
+            System.out.println("ino -> "+r.getEstudiante().getNombre());
             In_orden(r.getDerecha());
+        }
+    }
+    
+    //Generar recorrido posorder
+    public void posorden(NodoAvl r) {
+        if(r != null){
+            posorden(r.getIzquierda());
+            posorden(r.getDerecha());
+            pos.add(r);
+            System.out.println("pos -> "+r.getEstudiante().getNombre());
         }
     }
     
@@ -117,6 +129,7 @@ public class ArbolAvl {
     public NodoAvl getParent(NodoAvl nodo) {
         in = new ArrayList<>();
         In_orden(raiz);
+        posorden(raiz);
         for (NodoAvl e : in) {
             if (e.getIzquierda() == (nodo) || e.getDerecha() == (nodo)) {
                 if (nodo == raiz) {
@@ -155,6 +168,7 @@ public class ArbolAvl {
         if (raiz == null) {
             raiz = new NodoAvl(estudiante);
             In_orden(raiz);
+            posorden(raiz);
             return 1;
         }
 
@@ -330,6 +344,7 @@ public class ArbolAvl {
     public NodoAvl retornarNodoDesbalanceado() {
         in = new ArrayList<>();
         In_orden(raiz);
+        posorden(raiz);
         ArrayList<NodoAvl> results = new ArrayList<>();
         for (NodoAvl e : in) {
             if (e.getBalance() == -2 || e.getBalance() == 2) {
@@ -400,5 +415,15 @@ public class ArbolAvl {
     public void setIn(ArrayList<NodoAvl> in) {
         this.in = in;
     }
+
+    public ArrayList<NodoAvl> getPos() {
+        return pos;
+    }
+
+    public void setPos(ArrayList<NodoAvl> pos) {
+        this.pos = pos;
+    }
+    
+    
 
 }

@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 public class Menu extends JFrame {
 
     private final int ancho, alto;
-    private JButton btnInsertar, btnRetirar, btnDibujar, btnInorden, btnBuscarAlumno,btnReset;
+    private JButton btnInsertar, btnRetirar, btnDibujar, btnInorden, btnBuscarAlumno,btnReset,btnPosorden;
     private JLabel title;
     private JPanel backGroundTitle;
 
@@ -71,11 +71,19 @@ public class Menu extends JFrame {
         btnInorden.setFocusable(false);
         btnInorden.setBackground(Color.WHITE);
         add(btnInorden);
+        
+        btnPosorden = new JButton("<html><head><meta charset='UTF-8'></head><body>Recorrido Posorden</body></html>");
+        btnPosorden.setSize(new Dimension(250, 30));
+        btnPosorden.setFont(new Font("CaskaydiaCove NF", Font.PLAIN, 20));
+        btnPosorden.setLocation(300, 180);
+        btnPosorden.setFocusable(false);
+        btnPosorden.setBackground(Color.WHITE);
+        add(btnPosorden);
 
         btnBuscarAlumno = new JButton("<html><head><meta charset='UTF-8'></head><body>Buscar Estudiante</body></html>");
         btnBuscarAlumno.setSize(new Dimension(250, 30));
         btnBuscarAlumno.setFont(new Font("CaskaydiaCove NF", Font.PLAIN, 20));
-        btnBuscarAlumno.setLocation(300, 180);
+        btnBuscarAlumno.setLocation(300, 230);
         btnBuscarAlumno.setFocusable(false);
         btnBuscarAlumno.setBackground(Color.WHITE);
         add(btnBuscarAlumno);
@@ -83,7 +91,7 @@ public class Menu extends JFrame {
         btnReset = new JButton("<html><head><meta charset='UTF-8'></head><body>Limpiar Arbol</body></html>");
         btnReset.setSize(new Dimension(250, 30));
         btnReset.setFont(new Font("CaskaydiaCove NF", Font.PLAIN, 20));
-        btnReset.setLocation(300, 230);
+        btnReset.setLocation(200, 280);
         btnReset.setFocusable(false);
         btnReset.setBackground(Color.WHITE);
         add(btnReset);
@@ -111,6 +119,13 @@ public class Menu extends JFrame {
             String[] columns = {"Factor de Balance", "Nombre","Telefono"};
             MenuInorden menu = new MenuInorden();
             menu.initTemplate(controller.showIn(), columns);
+        });
+        
+        btnPosorden.addActionListener((event) -> {
+           ArbolAvlController controller = ArbolAvlController.getInstance();
+           String[] columns = {"Factor de Balance", "Nombre","Telefono"};
+           MenuPosorden menu = new MenuPosorden();
+           menu.initTemplate(controller.showPos(), columns);
         });
         
         btnBuscarAlumno.addActionListener((event) -> {

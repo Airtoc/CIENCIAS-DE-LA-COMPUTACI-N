@@ -26,7 +26,7 @@ public class MenuInsertar extends JFrame {
     
     
     private void initComponents(){
-        title = new JLabel("<html><head><meta charset='UTF-8'></head><body>Añadir estudiante</body></html>");
+        title = new JLabel("<html><head><meta charset='UTF-8'></head><body>Insertar estudiante</body></html>");
         title.setSize(new Dimension(ancho,30));
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setFont(new Font("CaskaydiaCove NF", Font.BOLD, 27));
