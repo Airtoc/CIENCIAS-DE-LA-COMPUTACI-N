@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 public class Menu extends JFrame {
 
     private final int ancho, alto;
-    private JButton btnInsertar, btnRetirar, btnDibujar, btnInorden, btnBuscarAlumno,btnReset,btnPosorden;
+    private JButton btnInsertar, btnRetirar, btnDibujar, btnInorden, btnBuscarAlumno,btnReset,btnPosorden,btnNivel;
     private JLabel title;
     private JPanel backGroundTitle;
 
@@ -63,6 +63,14 @@ public class Menu extends JFrame {
         btnDibujar.setFocusable(false);
         btnDibujar.setBackground(Color.WHITE);
         add(btnDibujar);
+        
+        btnNivel = new JButton("<html><head><meta charset='UTF-8'></head><body>Recorrido Niveles</body></html>");
+        btnNivel.setSize(new Dimension(250, 30));
+        btnNivel.setFont(new Font("CaskaydiaCove NF", Font.PLAIN, 20));
+        btnNivel.setLocation(20, 280);
+        btnNivel.setFocusable(false);
+        btnNivel.setBackground(Color.WHITE);
+        add(btnNivel);
 
         btnInorden = new JButton("<html><head><meta charset='UTF-8'></head><body>Recorrido Inorden</body></html>");
         btnInorden.setSize(new Dimension(250, 30));
@@ -91,7 +99,7 @@ public class Menu extends JFrame {
         btnReset = new JButton("<html><head><meta charset='UTF-8'></head><body>Limpiar Arbol</body></html>");
         btnReset.setSize(new Dimension(250, 30));
         btnReset.setFont(new Font("CaskaydiaCove NF", Font.PLAIN, 20));
-        btnReset.setLocation(200, 280);
+        btnReset.setLocation(300, 280);
         btnReset.setFocusable(false);
         btnReset.setBackground(Color.WHITE);
         add(btnReset);
@@ -126,6 +134,13 @@ public class Menu extends JFrame {
            String[] columns = {"Factor de Balance", "Nombre","Telefono"};
            MenuPosorden menu = new MenuPosorden();
            menu.initTemplate(controller.showPos(), columns);
+        });
+        
+        btnNivel.addActionListener((event) -> {
+            ArbolAvlController controller = ArbolAvlController.getInstance();
+            String[] columns = {"Balance", "Nombre","Telefono"};
+            MenuNiveles menu = new MenuNiveles();
+            menu.initTemplate(controller.showNiv(), columns);
         });
         
         btnBuscarAlumno.addActionListener((event) -> {

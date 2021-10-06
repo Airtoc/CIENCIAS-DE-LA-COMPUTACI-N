@@ -67,7 +67,49 @@ public class ArbolAvlController {
         return retorno;
     }
 
-    //Mostrar en posorden
+    //Mostrar en inorder
+    public String[][] showNiv() {
+        
+        String[][] retorne = new String[arbol.getIn().size()][3];//Columnas 
+        //aumenta el general
+        int niv = 0;
+        //Obtiene el nivel max
+        for (int i = 0; i < retorne.length; i++) {
+            if (arbol.GetNivelXNodo(arbol.getIn().get(i).getEstudiante().getTelefono()) > niv) {
+                niv = arbol.GetNivelXNodo(arbol.getIn().get(i).getEstudiante().getTelefono());
+            }
+        }
+        //Itera por niveles
+        for (int a = 0; a < niv+1; a++) {
+            //itera por nodos
+            for (int i = 0; i < retorne.length; i++) {
+                if(arbol.GetNivelXNodo(arbol.getIn().get(i).getEstudiante().getTelefono()) == a){
+                    
+                    System.out.println("nombre: " + arbol.getIn().get(i).getEstudiante().getNombre());
+                    System.out.println("altura: " + arbol.GetNivelXNodo(arbol.getIn().get(i).getEstudiante().getTelefono()));//Obtener altura
+                    
+                    for (int j = 0; j < retorne[i].length; j++) {
+                    if (j == 1) {
+                        retorne[i][j] = arbol.getIn().get(i).getEstudiante().getNombre();
+                    } else if (j == 2) {
+                        retorne[i][j] = "" + arbol.getIn().get(i).getEstudiante().getTelefono();
+                        
+                    } else {
+                        retorne[i][j] = "" + arbol.getIn().get(i).getBalance();
+                    }
+                }
+                    System.out.println("nombre insertado: "+retorne[i][1]);
+                    System.out.println("codigo insertado: "+retorne[i][2]);
+                }
+                
+            }
+
+        }
+
+        return retorne;
+    }
+
+    //Mostrar en pos
     public String[][] showPos() {
         String[][] retorno = new String[arbol.getPos().size()][3];
         for (int i = 0; i < retorno.length; i++) {
