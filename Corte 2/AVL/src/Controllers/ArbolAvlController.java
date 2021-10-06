@@ -67,7 +67,7 @@ public class ArbolAvlController {
         return retorno;
     }
 
-    //Mostrar en inorder
+    //Mostrar por niveles
     public String[][] showNiv() {
         
         String[][] retorne = new String[arbol.getIn().size()][3];//Columnas 
@@ -80,26 +80,22 @@ public class ArbolAvlController {
             }
         }
         //Itera por niveles
+        int index = 0;
         for (int a = 0; a < niv+1; a++) {
             //itera por nodos
             for (int i = 0; i < retorne.length; i++) {
                 if(arbol.GetNivelXNodo(arbol.getIn().get(i).getEstudiante().getTelefono()) == a){
-                    
-                    System.out.println("nombre: " + arbol.getIn().get(i).getEstudiante().getNombre());
-                    System.out.println("altura: " + arbol.GetNivelXNodo(arbol.getIn().get(i).getEstudiante().getTelefono()));//Obtener altura
-                    
                     for (int j = 0; j < retorne[i].length; j++) {
                     if (j == 1) {
-                        retorne[i][j] = arbol.getIn().get(i).getEstudiante().getNombre();
+                        retorne[index][j] = arbol.getIn().get(i).getEstudiante().getNombre();
                     } else if (j == 2) {
-                        retorne[i][j] = "" + arbol.getIn().get(i).getEstudiante().getTelefono();
+                        retorne[index][j] = "" + arbol.getIn().get(i).getEstudiante().getTelefono();
                         
                     } else {
-                        retorne[i][j] = "" + arbol.getIn().get(i).getBalance();
+                        retorne[index][j] = "" + arbol.getIn().get(i).getBalance();
                     }
                 }
-                    System.out.println("nombre insertado: "+retorne[i][1]);
-                    System.out.println("codigo insertado: "+retorne[i][2]);
+                    index = index +1;
                 }
                 
             }
