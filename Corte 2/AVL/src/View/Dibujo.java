@@ -14,7 +14,7 @@ public class Dibujo extends JFrame {
     private JScrollPane jsp;
 
     public Dibujo() {
-        ancho = 800;
+        ancho = 1000;
         alto = 600;
         controller = ArbolAvlController.getInstance();
 

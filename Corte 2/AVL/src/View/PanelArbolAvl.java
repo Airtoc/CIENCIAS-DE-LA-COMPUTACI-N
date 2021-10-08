@@ -24,8 +24,12 @@ public class PanelArbolAvl extends JPanel {
     public void pintar(Graphics g, int x, int y, NodoAvl raiz) {
         if (raiz != null) {
             int extra = raiz.nodosComletos(raiz) * (ancho /2); //Espacio extra para que los nodos no queden pegados
+            if(raiz.getEstudiante().getEstado()== true ){
+                g.setColor(Color.BLUE);
+                g.drawRect(x, y, 100, 50);
+            }else{
             g.drawRect(x, y, 100, 50);
-            
+            }
             g.drawString(raiz.getEstudiante().getNombre(), x+5, y + 18); //Dibujar Nombre del estudiante
             g.drawString(String.valueOf(raiz.getEstudiante().getTelefono()), x+5, y + 35); //Dibujar ódigo del estidiante
             g.setColor(Color.RED);
@@ -44,7 +48,7 @@ public class PanelArbolAvl extends JPanel {
             pintar(g, x - ancho - extra, y + ancho, raiz.getIzquierda());
             pintar(g, x + ancho + extra, y + ancho, raiz.getDerecha());
         }
-
+           
     }
 
     @Override
